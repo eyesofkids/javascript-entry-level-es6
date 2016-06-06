@@ -9,6 +9,6 @@
    * [ES6環境說明](part2/lesson_02.md)
    * [輸出](part2/lesson_03.md)
 * [Part III](part3/README.md)
-   * [變與不變](part3/lesson_01.md)
+   * [值與符號](part3/lesson_01.md)
    * [函式、作用域](part3/lesson_02.md)
 
