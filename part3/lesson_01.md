@@ -42,9 +42,20 @@ const NAMES_LIKE_THIS = "Hello"
 let numberOfLegs = 2
 ```
 
+> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。
+
+### 風格指引
+
+- (crockford)(airbnb 13.2)建議一行一個變數(或常數)宣告與註解，然後最好是按英文字母排列。
+- (crockford)在函式中的最前面的敘述宣告變數。(註：不要在程式碼中間的敘述來宣告)
+- (airbnb 13.3)把let宣告的放在一起，const宣告的放在一起。
+- (google)總是使用var來宣告。(註：變數記得要宣告)
+- (google)使用NAMES_LIKE_THIS這樣的命名方式，來命名常數。
 
 ## 符號
 
 ## 加減乘除
 
 ## 值
+
+
