@@ -21,7 +21,7 @@ let b = 5
 
 尤其Javascript程式語言的程式設計師，在之前常會犯有不宣告就直接使用的壞習慣。我建議你最好在宣告常數或變數時，就給定一個值。變數並沒有要求一開始要給定值，只有常數才有這個要求。
 
-因此，通常在程式碼撰寫中，我們使用const的情況會遠比let高。除非你很確定這個變數等會會需要被改變，或是它是一個在類別定義裡的變數，不然就用const就對了。另外還有一個常見的風格指引建議是"一行宣告一個變數或常數"，範例如下:
+因此，通常在程式碼撰寫中，我們使用const的情況會遠比let高。除非你很確定這個變數等會會需要被改變，或是它是一個在類別定義裡的變數，不然就用const就對了。另外還有一個常見的風格指引建議是"**一行宣告一個變數或常數**"，範例如下:
 
 ```js
 //不好的宣告方式
@@ -39,7 +39,7 @@ const dragonball = 'z'
 
 > 常數指的"不能再次指定數值"(not re-assigned)，而不是"無法改變其中數值"(immutable)，是有差異的概念，物件類型的常數內容屬性是可以改變的，在這個情況會是一個常數指標。Javascript中並沒有immutable的內建特性。例如下面的程式碼是可以使用的，來自[Constant Reference, Not Value](https://strongloop.com/strongblog/es6-variable-declarations/):
 
-```
+```js
 const names = []
 names.push( "Jordan" )
 console.log( names )
@@ -93,13 +93,13 @@ class Student{}
 
 在許多風格樣式指引中，會建議使用全大寫英文命名，字詞間使用下底線(_)連接:
 
-```
+```js
 const NAMES_LIKE_THIS='Hello'
 ```
 
 不過，因為ES6中加入了const用於指示為常數後，其實這個規則並沒有那麼需要，程式檢查工具或執行時都會用常數的方式來檢查。所以你可以用一般對變數的命名規則就可以了:
 
-```
+```js
 const helloString='Hello'
 ```
 
@@ -123,25 +123,26 @@ const helloString='Hello'
 
 陣列之類的集合結構，有數量很多的意思，大部份都用「複數」或會加上資料的類型來分別，例如：
 
-```
-studentArray students
+```js
+studentArray 
+students
 ```
 
 執行的動作（函式或方法），如果針對單一個變數的行為，用單數：
 
-```
+```js
 addItem()
 ```
 
 如果針對多個數的行為，用複數：
 
-```
+```js
 addItems()
 ```
 
 針對全體的行為，會用「All」：
 
-```
+```js
 removeAll()
 ```
 
