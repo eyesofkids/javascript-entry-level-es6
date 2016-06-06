@@ -3,6 +3,7 @@
 * [關於本書](README.md)
    * [寫作格式](style.md)
    * [更新日誌](changelog.md)
+   * [問答與回饋](issue.md)
 * [Part I 介紹](part1/README.md)
    * [歷史](part1/lesson_01.md)
    * [發展](part1/lesson_02.md)
