@@ -4,7 +4,7 @@
 
 程式語言充份反應了人類社會的情況，因為它是人類所設計的，也是設計給人類所使用的。
 
-程式語言中需要以一個標示，代表這個用於存放值(value)的名稱，它是可變或是不可變的，當然這是指在這個程式執行的生命週期中。
+程式語言中需要以一個標示，代表這個用於存放值(value)的代表名稱，在這個程式執行的生命週期中，它是可變或是不可變的。範例如下:
 
 ```js
 //這是不變的
@@ -13,7 +13,14 @@ const a=10
 //這是可變的
 let b=5
 ```
+你可把常數和變數想像是一個盒子:
 
+- 常數const(卡死): 裝入東西(值)之後就封起來的盒子
+- 變數let(累): 暫時存放值的盒子，盒子是打開的，可以更動裡面的值
+
+尤其Javascript程式語言的程式設計師，在之前常會犯有不宣告就直接使用的壞習慣。我建議你最好在宣告常數或變數時，就給定一個值。雖然變數並沒有要求一開始要給定值，常數才有這個要求。
+
+> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。Javascript中並沒有immutable的內建特性。
 > ES5以前都只會用"var"(肉<台>)作為標記，它是variable(買<台>里哦波)的縮寫。"let"與"const"是ES6的新加入特性，你應該開始使用它們。
 
 > 本書的所有程式碼，每行後面都"不"再使用分號(semicolon)(;)作為程式碼段落之用，只需要記得分行就行了。現在的Javascript可以不需要用分號來分行。
@@ -27,22 +34,95 @@ let(累)，中譯是"讓..."，
 
 ## 命名
 
-我們需要先為這些數值的代表名稱命名，稱為常數名稱(constant name)或變數名稱(variable name)。你可把常數名稱和變數名稱想像是一個盒子:
+我們需要先為這些數值的代表名稱命名，稱為常數名稱(constant name)或變數名稱(variable name)。
 
-- 常數const(卡死): 裝入東西(值)之後就封起來的盒子
-- 變數let(累): 暫時存放值的盒子，盒子是打開的，可以更動裡面的值
+什麼是一個好的變數（函式、類別）命名？
 
-尤其Javascript程式語言的程式設計師，在之前常會犯有不宣告就直接使用的壞習慣。我建議你最好在宣告常數或變數時，就給定一個值。雖然變數並沒有要求一開始要給定值，常數才有這個要求:
+### 變數與函式，都用小駝峰式的命名。類別用大駝峰式命名。 
 
+例如
 ```js
-//常數
-const NAMES_LIKE_THIS = "Hello"
-
-//變數
-let numberOfLegs = 2
+let numberOfStudents
+const numberOfLegs
+function setBackgroundColor() 
+class Student{}
 ```
 
-> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。Javascript中並沒有immutable的內建特性。
+### 少用簡寫或自行發明縮寫
+
+例如:
+
+- 不好的命名：setBgColor 
+- 好的命合：setBackgroundColor
+
+- 不好的命名：userAdr
+- 好的命名：userAddress
+
+- 不好的命名：fName, lName 
+- 好的命名：firstName, lastName
+
+3.語意不明或對象不明
+
+不好的命名：insert() 這是要插入什麼？ 好的命名：insertDiv()
+
+不好的命名：isOk() 什麼東西ok不ok？ 好的命名：isConnected 連上線了嗎？
+
+4.拼錯英文單字
+
+錯誤的拼字：memuItem 正確的拼字：menuItem
+
+錯誤的拼字：pueryString 正確的拼字：queryString
+
+5.英文單複數
+
+陣列之類的集合結構，有數量很多的意思，大部份都用「複數」或會加上資料的類型來分別，例如：
+
+studentArray students
+
+執行的動作（函式或方法），如果針對單一個變數的行為，用單數：
+
+addItem()
+
+如果針對多個數的行為，用複數：
+
+addItems()
+
+針對全體的行為，會用「All」：
+
+removeAll()
+
+6.常見的英文計量字詞：
+
+count numberOf amountOf price cost length width height speed
+
+6-1.常見的布林值開頭字詞：
+
+isEmpty hasBasket
+
+6-2.常見的字串值開頭字詞：
+
+string name description label text
+
+6-3.常用的動作詞（函數用）開頭
+
+make take
+
+move
+
+add 加上、相加 remove 移除 delete
+
+insert 單體 splice 複合體
+
+extend append
+
+set get
+
+print
+
+put
+
+reset link repeat replace find xxxxTo
+
 
 ### 風格指引
 
