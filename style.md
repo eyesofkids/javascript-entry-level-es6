@@ -29,6 +29,17 @@ props(屬性)
 使用 擴充套件->管理 進入這個管理的頁面。
 ```
 
+## 不使用分號作為每行程式碼的結尾
+
+本書的所有程式碼，每行後面都"不"再使用分號(semicolon)(;)作為程式碼段落之用，程式碼只需要記得有分行就行了。
+
+有許多現代新式的程式語言，也是不需要用分號(;)來作每行程式碼的結尾，例如Swift、Python或Ruby。而實際上，Javascript現在也可以不需要用分號(;)來分行，有許多知名的函式庫例如npm、jQuery都已經採用這個撰寫風格。所以，我們鼓勵所有的Javascript程式設計師，使用這種方式，讓程式碼看起來會更加簡潔。
+
+更多參考資訊:
+
+- [Semicolons in JavaScript are optional](http://mislav.net/2010/05/semicolons/)
+- [An Open Letter to JavaScript Leaders Regarding Semicolons](http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding)
+
 ## 讀音(用中文拼音)
 
 為了方便初學者能很容易的唸出英文字詞的讀音，本書使用"以中文讀音拼出英文字詞"的作法。這是參考日本使用五十音來拼英文字詞的作法，方法好不好或對不對見人見智。拼音只針對重要字詞，以前後斜線(/)符號含括中文拼音，例如:
