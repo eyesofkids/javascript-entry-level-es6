@@ -45,23 +45,22 @@ props(屬性)
 為了方便初學者能很容易的唸出英文字詞的讀音，本書使用"以中文讀音拼出英文字詞"的作法。這是參考日本使用五十音來拼英文字詞的作法，方法好不好或對不對見人見智。拼音只針對重要字詞，以前後斜線(/)符號含括中文拼音，例如:
 
 ```
-const/卡死/ 是 constant/卡死撐/ 的縮寫，中譯是"常數"的意思。
+const/康死/ 是 constant/康死撐/ 的縮寫，中譯是"常數"的意思。
 ```
 
 ## 英文字詞解說
 
 針對重要的專業字詞，提供英文解說，並加入相關的字詞說明。如果可以的話，提供有趣的範例加深學習印象。
 
-## 風格樣式
+## 風格指引
 
-這是參考目前網路上知名的數個Javascript程式碼撰寫風格，提供在每個段落相關的建議。目前參考的的主要風格樣式有以下幾個:
+這是參考目前網路上知名的數個Javascript程式碼撰寫風格指引，提供在每個段落相關的建議。不過有些風格指引是針對ES5的，僅作參考而已，還是會以章節內容為主。目前參考的風格樣式指引有以下幾個:
 
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Principles of Writing Consistent, Idiomatic JavaScript](https://github.com/rwaldron/idiomatic.js/)
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml)
 - [Code Conventions for the JavaScript Programming Language](http://javascript.crockford.com/code.html)
 
-> 有些風格樣式是針對ES5的，就參考而已。還是以章節主要內容為主。
 
 ## 其他參考
 
