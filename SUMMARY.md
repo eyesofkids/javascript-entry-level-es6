@@ -2,8 +2,8 @@
 
 
 * [Part I](part1/README.md)
-    * [Writing is nice](part1/writing.md)
-    * [GitBook is nice](part1/gitbook.md)
+    * [歷史](part1/lesson_01.md)
+    * [發展](part1/lesson_02.md)
 * [Part II](part2/README.md)
-    * [We love feedback](part2/feedback_please.md)
-    * [Better tools for authors](part2/better_tools.md)
+    * [變與不變](part2/lesson_01.md)
+    * [函式](part2/lesson_02.md)
