@@ -251,11 +251,11 @@ slash(死內需)有猛砍、鞭打的意思，大概是右撇子英文，因為�
 
 #### 括號(()) 
 
-英文為Parentheses/波潤捨西斯/，英文有"插入語"、"插曲"的其他意思。中文也有稱為圓括號、小括號。在Javascript的用途主要是函式呼叫、包括流程敘述以及分隔運算的優先次序。有另一英文講法是
+英文為Parentheses/波潤捨西斯/，英文有"插入語"、"插曲"的其他意思。中文也有稱為圓括號、小括號。在Javascript的用途主要是函式呼叫、包括流程敘述以及分隔運算的優先次序。
 
 #### 中括號([])
 
-英文為Brackets/布累克特斯/，英文就有"支架"、"括住"的意思。主要用於Javascript中的陣列(Array)宣告。
+英文為Brackets/布累克特斯/，或是square/史魁兒/ brackets，英文就有"支架"、"括住"的意思。主要用於Javascript中的陣列(Array)宣告。
 
 #### 大括號({})
 
@@ -271,15 +271,74 @@ slash(死內需)有猛砍、鞭打的意思，大概是右撇子英文，因為�
 
 英文為Single/醒狗/ Quote/括特/。在Javascript語言中用於字串的宣告。
 
-## 加減乘除餘
+## 算術運算符(Arithmetic /額瑞捨鐵克/)
 
-- 逗號(,)
-- (.)
-- (!)
-- (?)
+### 標準算術運算符
 
-- 下底線(_)underscore
-- 重音符號(`)
+在所有的程式語言都是使用相同的算術運算符：
+
+- 加(+) addition/額弟遜/
+- 減(-) subtraction /捨吹遜/
+- 乘(*) multiplication /摸特佛K遜/
+- 除(/) division /第V俊/
+
+### Javascript提供的其他的算術運算符
+
+- 餘(%) Remainder/瑞妹的兒/
+- 遞增(++) Increment/盈虧門/
+- 遞減(--) Decrement/第虧門/
+- 正號(+) Unary plus
+- 負號(-) Unary negation
+
+> Unary/油呢瑞/ 是"一元的"意思，代表運算單一個參與的值。上面的遞增與遞減也是一元的運算符，例如以下的範例:
+
+```js
+const a = 3++
+const b = 5
+const c = -b
+const d = +"3"
+```
+
+> 註: (+=)這個符號稱為加法指定(Addition assignment)，它屬於指定運算符。`a+=b`相當於`a=a+b`，其他的像(-=)(*=)(/=)(%=)都是類似的方式。
+
+### 字串運算
+
+只有以下兩個運算符可以用在字串連接(concatenate)時使用，其他的並不能使用:
+
+- 加(+) addition/額弟遜/
+- 加法指定(+=) Addition assignment
+
+### 邏輯運算符
+
+- 邏輯與(&&) Logical AND
+- 邏輯或(||) Logical OR
+- 邏輯非(!) Logical NOT
+
+### 比較運算符
+
+除了上面的已說明的等號(=)相關的比較較運算外，還有以下幾個常用的:
+
+- 大於(>) Greater/貴特兒/ than
+- 小於(<) less/蕾絲/ than
+- 大於等於(>=) Greater than or equal
+- 小於等於(<=) Less than or equal
+
+> 註: 如果你搞不清大於與小於符號哪個是哪個，舉起你的右手，打開虎口就像">"，所以它也是右撇子符號，其實這和人類社會書寫習慣有關，目前來說，我們都是從左至右書寫程式碼，哪天換成從右至左方向，符的方向又會變了。
+
+### 其他常用符號
+
+- 逗號(,) Comma
+- 冒號(:) Colon
+- 分號(;) Semicolon
+- 句點(.) dot/搭/
+- 驚嘆號(!) exclamation mark
+- 問號(?) question mark`
+- 下底線(_) underscore
+- 重音符號(`) back-tick quotes (Grave accent)
+- 連接號(-) Hyphen
+- 星號(*) asterisks
+
+> 連接號(-)與負號(-)、破折號(-)這三個在通用的電腦鍵盤上長得是一樣的。實際上它們三個的英文單字不同，分別是hyphen、minus sign與dash，用途也各有不同。
 
 ## 小結
 
