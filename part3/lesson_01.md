@@ -110,25 +110,28 @@ string name description label text
 
 #### 常用的動作詞（函數用）開頭
 
-make take
+- make take 作某…事
+- move 移動
+- add 加上、相加   
+- delete/remove 移除
+- insert 單體 splice 複合體
+- extend append 展開
+- set 設定
+- get 獲得
+- print 印出
+- list 列出
+- reset 重置
+- link 連至
+- repeat 重覆
+- replace 取代
+- find search 尋找
+- xxxxTo 到xxx
 
-move
+#### 具時間意義的英文字詞
 
-add 加上、相加  移除 delete/remove
-
-insert 單體 splice 複合體
-
-extend append
-
-set get
-
-print
-
-put
-
-reset link repeat replace find xxxxTo
-
-
+- will 通常指即將發生但未發生
+- did 已發生
+- should 應該發生
 
 ## 註解 Comment
 
