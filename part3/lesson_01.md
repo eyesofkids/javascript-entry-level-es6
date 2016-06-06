@@ -42,7 +42,7 @@ const NAMES_LIKE_THIS = "Hello"
 let numberOfLegs = 2
 ```
 
-> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。
+> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。Javascript中並沒有immutable的內建特性。
 
 ### 風格指引
 
