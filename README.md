@@ -1,5 +1,2 @@
-{
-    "structure": {
-        "readme": "myIntro.md"
-    }
-}
+
+# 關於本書
