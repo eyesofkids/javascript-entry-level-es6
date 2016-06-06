@@ -7,10 +7,10 @@
 程式語言中需要以一個標示，說明這個用於存放值(value)的代表名稱，在這個程式執行的生命週期中，它是可變或是不可變的。範例如下:
 
 ```js
-//這個a是不可變的
+//這個a是不可變的，指定它的值為10
 const a = 10
 
-//這個b是可變的
+//這個b是可變的，指定它的值為5
 let b = 5
 ```
 
@@ -23,7 +23,7 @@ let b = 5
 
 因此，通常在程式碼撰寫中，我們使用const的情況會遠比let高。除非你很確定這個變數等會會需要被改變，或是它是一個在類別定義裡的變數，不然就用const就對了。另外還有一個常見的風格指引建議是"一行宣告一個變數或常數"，範例如下:
 
-```
+```js
 //不好的宣告方式
 const items = getItems(),
     goSportsTeam = true,
@@ -35,11 +35,17 @@ const goSportsTeam = true
 const dragonball = 'z'
 ```
 
-這大概是想要偷懶少打一些const，不過明顯這樣作是個壞習慣(雖然Javascript允許你可以這樣作)。你可能會問這樣作有什麼差異，好的宣告方式除了清楚明白外，其實它在程式除錯時可以很清楚的理解是哪一行作什麼事情。
+這大概是想要偷懶少打一些const，不過明顯這樣作是個壞習慣(雖然Javascript允許你可以這樣作)。你可能會問這樣作有什麼差異，好的宣告方式除了清楚明白外，最大的優點是它在程式除錯時，可以很清楚的理解是哪一行作什麼事。
 
-> "不能再次指定數值"(not re-assigned)，與 "無法改變其中數值"(immutable)，是有差異的概念。常數指的是前面那種意思。Javascript中並沒有immutable的內建特性。
+> 常數指的"不能再次指定數值"(not re-assigned)，而不是"無法改變其中數值"(immutable)，是有差異的概念，物件類型的常數內容屬性是可以改變的，在這個情況會是一個常數指標。Javascript中並沒有immutable的內建特性。例如下面的程式碼是可以使用的，來自[Constant Reference, Not Value](https://strongloop.com/strongblog/es6-variable-declarations/):
 
-> ES5以前都只會用"var"(肉<台>)作為標記，它是variable(買<台>里哦波)的縮寫。"let"與"const"是ES6的新加入特性，你應該開始使用它們。
+```
+const names = []
+names.push( "Jordan" )
+console.log( names )
+```
+
+> ES5以前都只會用"var"(肉<台>)作為標記，它是variable(買<台>里哦波)的縮寫。"let"與"const"是ES6的新加入特性，你應該開始使用它們，本書不使用var來宣告變數。不要混用兩種用法。關於這兩種宣告方式的差異請參考: [這裡的問答與範例](http://stackoverflow.com/questions/762011/let-keyword-vs-var-keyword)與[這篇文章的說明](https://strongloop.com/strongblog/es6-variable-declarations/)
 
 ### 英文解說
 
