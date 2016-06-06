@@ -32,15 +32,28 @@ const(卡死)是constant(卡死撐)的縮寫，中譯是"常數"的意思。
 let(累)，中譯是"讓..."，
 例如"let's go"大概是"大家一起走吧"或"please let me go"(讓我走吧...其實是常用在男女朋友"分手"的意思) 
 
+### 風格指引
+
+- (crockford)(airbnb 13.2)建議一行一個變數(或常數)宣告與註解，然後最好是按英文字母排列。
+- (crockford)在函式中的最前面的敘述宣告變數。(註：不要在程式碼中間的敘述來宣告)
+- (airbnb 13.3)把let宣告的放在一起，const宣告的放在一起。
+- (google)總是使用var來宣告。(註：變數記得要宣告)
+- (google)使用NAMES_LIKE_THIS這樣的命名方式，來命名常數。
+
 ## 命名
 
 我們需要先為這些數值的代表名稱命名，稱為常數名稱(constant name)或變數名稱(variable name)。
 
-什麼是一個好的變數（函式、類別）命名？
+### 命名規則
 
-### 變數與函式，都用小駝峰式的命名。類別用大駝峰式命名。 
+- The first character must be an ASCII letter (either uppercase or lowercase), or an underscore (_) character. Note that a number cannot be used as the first character.
+- Subsequent characters must be letters, numbers, or underscores (_).
+- The variable name must not be a reserved word.
 
-例如
+### 好的變數（函式、類別）命名
+
+#### 變數與函式，都用小駝峰式的命名。類別用大駝峰式命名。 
+
 ```js
 let numberOfStudents
 const numberOfLegs
@@ -48,68 +61,60 @@ function setBackgroundColor()
 class Student{}
 ```
 
-### 少用簡寫或自行發明縮寫
+#### 少用簡寫或自行發明縮寫
 
-例如:
+- 不好的命名：setBgColor / 好的命合：setBackgroundColor
+- 不好的命名：userAdr / 好的命名：userAddress
+- 不好的命名：fName, lName / 好的命名：firstName, lastName
 
-- 不好的命名：setBgColor 
-- 好的命合：setBackgroundColor
+#### 語意不明或對象不明
 
-- 不好的命名：userAdr
-- 好的命名：userAddress
+- 不好的命名：insert() 這是要插入什麼？/ 好的命名：insertDiv()
+- 不好的命名：isOk() 什麼東西ok不ok？ / 好的命名：isConnected 連上線了嗎？
 
-- 不好的命名：fName, lName 
-- 好的命名：firstName, lastName
+#### 不要拼錯英文單字
 
-3.語意不明或對象不明
+- 錯誤的拼字：memuItem / 正確的拼字：menuItem
+- 錯誤的拼字：pueryString / 正確的拼字：queryString
 
-不好的命名：insert() 這是要插入什麼？ 好的命名：insertDiv()
-
-不好的命名：isOk() 什麼東西ok不ok？ 好的命名：isConnected 連上線了嗎？
-
-4.拼錯英文單字
-
-錯誤的拼字：memuItem 正確的拼字：menuItem
-
-錯誤的拼字：pueryString 正確的拼字：queryString
-
-5.英文單複數
+#### 英文單複數
 
 陣列之類的集合結構，有數量很多的意思，大部份都用「複數」或會加上資料的類型來分別，例如：
-
+```
 studentArray students
-
+```
 執行的動作（函式或方法），如果針對單一個變數的行為，用單數：
-
+```
 addItem()
-
+```
 如果針對多個數的行為，用複數：
-
+```
 addItems()
-
+```
 針對全體的行為，會用「All」：
-
+```
 removeAll()
+```
 
-6.常見的英文計量字詞：
+#### 常見的英文計量字詞：
 
 count numberOf amountOf price cost length width height speed
 
-6-1.常見的布林值開頭字詞：
+#### 常見的布林值開頭字詞：
 
 isEmpty hasBasket
 
-6-2.常見的字串值開頭字詞：
+#### 常見的字串值開頭字詞：
 
 string name description label text
 
-6-3.常用的動作詞（函數用）開頭
+#### 常用的動作詞（函數用）開頭
 
 make take
 
 move
 
-add 加上、相加 remove 移除 delete
+add 加上、相加  移除 delete/remove
 
 insert 單體 splice 複合體
 
@@ -124,13 +129,6 @@ put
 reset link repeat replace find xxxxTo
 
 
-### 風格指引
-
-- (crockford)(airbnb 13.2)建議一行一個變數(或常數)宣告與註解，然後最好是按英文字母排列。
-- (crockford)在函式中的最前面的敘述宣告變數。(註：不要在程式碼中間的敘述來宣告)
-- (airbnb 13.3)把let宣告的放在一起，const宣告的放在一起。
-- (google)總是使用var來宣告。(註：變數記得要宣告)
-- (google)使用NAMES_LIKE_THIS這樣的命名方式，來命名常數。
 
 ## 註解 Comment
 
