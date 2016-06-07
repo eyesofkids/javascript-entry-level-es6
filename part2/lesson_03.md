@@ -4,9 +4,12 @@ Javascript是搭配HTML使用的，最終輸出(呈現結果)的方式，可以�
 
 ```js
 console.log('Hello')
+console.log('變數abc的值', abc)
 ```
 
 > 注意: console.log並非涵蓋所有瀏覽器版本與品牌的標準方法，有些比較舊版本的瀏覽器中(尤其是Microsoft Internet Explorer6、7)是不能使用的，會造成程式錯誤。
+
+> 註: 更多資訊請參考Google Chrome中的[console API](https://developer.chrome.com/devtools/docs/console-api#consolelogobject-object)
 
 ## 其他的輸出方式
 

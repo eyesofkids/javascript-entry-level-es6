@@ -43,15 +43,78 @@ const negNumber= -5.5
 
 電腦中的程式語言在數學上的運算，總會有處理上的極限與無法處理的情況。Javascript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況:
 
-- +Infinity: 正無限值
+- +Infinity: 正無限值(相當於Infinity)
 - -Infinity: 負無限值
 - NaN: 不是數字
 
 ```
-const aNumber = 1/0
-const bNumber = -1/0
+console.log(1/0)
+console.log(1/-0) //0有分+0與-0，這種有點算陷阱
+console.log(Infinity - Infinity) //NaN
 ```
 
+數字的最大與最小值，可以使用`Number.MAX_VALUE`與`Number.MIN_VALUE`得到。
+
+```
+console.log(Number.MAX_VALUE)
+console.log(Number.MIN_VALUE)
+```
+
+### 整數進位的轉換
+
+以整數來說，整數的進位是一個問題，一般的整數進位有2、8、16，以及最常使用的10進位。Javascript中直接可以用`0x`開頭來定義16進位(Hexadecimal):
+
+```
+const x = 0xFF
+const y = 0xAA33BC   
+```
+
+8進位並沒有內建的直接可定義方式，需要透過一個字串的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
+
+```
+//8進位
+const octalNumber = parseInt('071',8);
+
+//2進位
+const binaryNumber = parseInt('0111',2);
+
+//16進位
+const hexNumber = parseInt('0xFF',16);
+```
+
+> 註: 不論是2、8、16進位，直接輸出到HTML碼中必定會自動轉成10進位輸出。
+
+另一個情況是要將10進位數字以不同的進位基數(radix)轉為字串，通常是用在輸出時，這時要使用數字的方法 - `toString([radix])`
+
+```
+const decimalNumber = 125
+console.log(decimalNumber.toString())
+console.log(decimalNumber.toString(2))
+console.log(decimalNumber.toString(8))
+console.log(decimalNumber.toString(16))
+```
+
+### 浮點數的轉換
+
+對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，對於Javascript來說，數字就是數字。以下是範例:
+
+```
+const aNumber = parseFloat("10")  //10
+const bNumber = parseFloat("10.00") //10
+const cNumber = parseFloat("10.33") //10.33
+const dNumber = parseFloat("34 45 66") //34
+const eNumber = parseFloat("40 years") //40
+const fNumber = parseFloat("He was 40")  //NaN
+```
+
+至於浮點數要轉換為整數，需要使用Math物件中的幾個方法來轉換，因為浮點數是要轉換為直接進位，還是四捨五入，還是直接去掉小數點，就看你需要的情況:
+
+```
+const floatValue = 10.55
+const intValueOne = Math.floor( floatValue ) //地板值 10
+const intValueTwo = Math.ceil( floatValue ) //天花板值 11
+const intValueThree = Math.round( floatValue ) //四捨五入值 11
+```
 
 ### 數字的精確問題
 
@@ -62,8 +125,8 @@ const bNumber = -1/0
 問題一：
 
 ```
-alert(999999999999999);
-alert(9999999999999999);
+console.log(999999999999999)
+console.log(9999999999999999)
 ```
 
 問題二：
@@ -78,7 +141,7 @@ while(i != 10) {
 問題三：
 
 ```
-var x = 0.2 + 0.1; 
+const x = 0.2 + 0.1
 ```
 
 ## 字串(String)
@@ -140,6 +203,15 @@ escape `<a>${who}</a>`
 - (Airbnb 6.6) 避免在字串中使用不必要的跳脫字元
 
 
-## 資料類型 - 布林值（boolean）
+## 布林值(boolean)
 
-## 特殊資料類型 - Null, Undefined
+## 空(Null)
+
+空就是空，不是空白(space)。空代表的是沒有值。
+
+
+## 未定義(Undefined)
+
+## 判斷資料類型 - typeof
+
+
