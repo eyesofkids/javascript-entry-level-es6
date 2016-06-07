@@ -6,7 +6,7 @@
 (\#)  問題修正Issue Fix
 (\$)  語言修正或更動 Language fix or change
 (\+)  新增 Addition
-(\^)  更動 Change
+(^)  更動 Change
 (\-)  移除 Removed
 (\!)  注意 Note
 
