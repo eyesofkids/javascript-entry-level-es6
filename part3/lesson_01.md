@@ -39,7 +39,7 @@ const dragonball = 'z'
 
 這大概是想要偷懶少打一些const，不過明顯這樣作是個壞習慣(雖然Javascript允許你可以這樣作)。你可能會問這樣作有什麼差異，好的宣告方式除了清楚明白外，最大的優點是它在程式除錯時，可以很清楚的理解是哪一行作什麼事。
 
-> 常數指的"不能再次指定數值"(not re-assigned)，而不是"無法改變其中數值"(immutable)，是有差異的概念，物件類型的常數內容屬性是可以改變的，在這個情況會是一個常數指標。Javascript中並沒有immutable的內建特性。例如下面的程式碼是可以使用的，來自[Constant Reference, Not Value](https://strongloop.com/strongblog/es6-variable-declarations/):
+> 註: 常數指是的"不能再次指定數值"(not re-assigned)，而不是"完全無法改變其中數值"(immutable)，這兩個是有差異的概念。在之後的內容中會說明，物件類型的常數內容屬性是可以改變的，而在這個情況下常數會是一個常數指標。基本上，Javascript語言中並沒有immutable(不可改變的)的內建特性。例如下面的程式碼是可以使用的，來自[Constant Reference, Not Value](https://strongloop.com/strongblog/es6-variable-declarations/):
 
 ```js
 const names = []
@@ -47,7 +47,7 @@ names.push( "Jordan" )
 console.log( names )
 ```
 
-> ES5以前都只會用"var"(肉<台>)作為標記，它是variable(買<台>里哦波)的縮寫。"let"與"const"是ES6的新加入特性，你應該開始使用它們，本書不使用var來宣告變數。不要混用兩種用法。關於這兩種宣告方式的差異請參考: [這裡的問答與範例](http://stackoverflow.com/questions/762011/let-keyword-vs-var-keyword)與[這篇文章的說明](https://strongloop.com/strongblog/es6-variable-declarations/)
+> 註: ES5以前都只會用"var"(肉<台>)作為標記，它是variable(買<台>里哦波)的縮寫。"let"與"const"是ES6的新加入特性，你應該開始使用它們，本書不使用var來宣告變數。不要混用兩種用法。關於這兩種宣告方式的差異請參考: [這裡的問答與範例](http://stackoverflow.com/questions/762011/let-keyword-vs-var-keyword)與[這篇文章的說明](https://strongloop.com/strongblog/es6-variable-declarations/)
 
 ### 英文解說
 
