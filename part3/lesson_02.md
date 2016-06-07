@@ -96,6 +96,8 @@ console.log(decimalNumber.toString(16))
 
 ### 浮點數的轉換
 
+#### 字串轉浮點數
+
 對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，對於Javascript來說，數字就是數字。以下是範例:
 
 ```
@@ -107,6 +109,8 @@ const eNumber = parseFloat("40 years") //40
 const fNumber = parseFloat("He was 40")  //NaN
 ```
 
+####  浮點數轉整數
+
 至於浮點數要轉換為整數，需要使用Math物件中的幾個方法來轉換，因為浮點數是要轉換為直接進位，還是四捨五入，還是直接去掉小數點，就看你需要的情況:
 
 ```
@@ -116,42 +120,65 @@ const intValueTwo = Math.ceil( floatValue ) //天花板值 11
 const intValueThree = Math.round( floatValue ) //四捨五入值 11
 ```
 
+#### 整數轉浮點數
+
+再強調一下，對於Javascript來說，數字就是數字，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在Javascript中來說都是一樣的，3.00依然會用3來顯示。
+
+唯一可能的情況，是希望調整輸出的格式。這時可以用數字物件中的`toFixed([digits])`方法來達成，不過它會回傳成字串，這已經不是數字了:
+
+```
+const myString = (3).toFixed(2) //string, 3.00
+
+const numObj = 12345.6789 
+const numObjString = numObj.toFixed() //string, 123456
+```
+
 ### 數字的精確問題
 
-1. 數字並非是永無極限的，有最大的數值上限也有最小的下限。
+數字並非是永無極限的，有最大的數值上限也有最小的下限。上面已有說明它的最大與最小值怎麼獲得，但在運算時，有時候會出現不如你想像的情況，這些都與浮點數的精確度(precision)，有關以下是幾個典型的範例:
 
-範例來自[這裡](http://javascript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)與[這裡](http://www.w3schools.com/js/js_number_methods.asp)
+#### 範例一：
 
-問題一：
+第二行的值失去精確，它會變成另一個值
 
 ```
 console.log(999999999999999)
 console.log(9999999999999999)
 ```
 
-問題二：
+#### 範例二
 
-```
-var i = 0
-while(i != 10) { 
-  i += 0.2
-}
-```
-
-問題三：
+x並不是0.3
 
 ```
 const x = 0.2 + 0.1
 ```
 
+#### 範例三
+
+注意: i永遠不會等於10，這個程式是無窮迴圈，可能會讓網頁當掉。
+
+```
+let i = 0
+while(i != 10) { 
+  i += 0.2
+}
+```
+
+> 註: 範例來自[Number, Math](http://javascript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)
+
+因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。程式語言永遠有其限制，這不是在Javascript語言才會出現的，其他的程式語言也有可能有類似的問題。
+
 ## 字串(String)
 
-### 範例
+字串類型用於描述一般的字串值，是使用相當廣泛的值。例如：
 
-用於描述一般的字串。例如：
+```
+const aString = '你好'
+const bString = 'Hello'
+```
 
-- '你好'
-- 'string'
+對於Javascript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是一樣的。但推薦只使用**單引號標記('')**，原因是HTML碼中也會使用引號來作為標記屬性值的定義，而Javascript經常需要與HTML碼搭配使用，所以這個也變成一個約定俗成的撰寫習慣。
 
 ### 字串與字元
 
@@ -187,7 +214,7 @@ escape `<a>${who}</a>`
 
 字串中有很多運算用的函式與記號，以下是常用的幾個：
 
-1. 字串連接
+#### 字串連接
 
 使用加號(+)是最直覺的方式，效能也比`concat()`好，這兩種方式都是同樣的結果，範例如下：
 
@@ -202,16 +229,53 @@ escape `<a>${who}</a>`
 - (Airbnb 6.3) 字串中的長度超過100字元時，需分成多個字串，然後使用字串的連接符號(+)
 - (Airbnb 6.6) 避免在字串中使用不必要的跳脫字元
 
-
 ## 布林值(boolean)
 
-## 空(Null)
+## 空(null)與未定義(undefined)
 
-空就是空，不是空白(space)。空代表的是沒有值。
+空(null)就是空值，不是空白(space)。空代表的是沒有值(empty)，不存在值的意思。
 
+未定義(undefined)即是尚未定義，沒有任何的定義。
 
-## 未定義(Undefined)
+這兩個資料類型常會被拿來比較，何為"空"又何為"未定義"?目前看到最好的解說如下:
+
+```
+當name從來未被定義過時
+```
+
+你問Javascript: name是什麼?
+Javascript回答: name? 從來沒聽過? 我不知道你在說什麼?
+
+```
+name = null 
+```
+
+你問Javascript: name是什麼?
+Javascript回答: 我不知道
+
+以上的回答來自: [Why is null an object and what's the difference between null and undefined?](http://stackoverflow.com/questions/801032/why-is-null-an-object-and-whats-the-difference-between-null-and-undefined)
+
+### 比較運算
+
+null與undefined作比較運算時，在值的比較(==)是相等的，而在值與類型比較(===)時，是不相等的，這是能夠比較出兩個差異的地方。
+
+```
+null  == undefined // true
+null === undefined // false
+```
+
+類型的部份，目前null的類型仍然是object，而不是null。這也呼應了上面的值與類型比較。
+
+```
+typeof null        // object (bug in ECMAScript, should be null)
+typeof undefined   // undefined
+```
 
 ## 判斷資料類型 - typeof
+
+
+## 小結
+
+## 作業
 
 
