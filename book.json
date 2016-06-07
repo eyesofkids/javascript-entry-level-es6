@@ -1,6 +1,7 @@
 {
     "plugins": [
-        "-anchorjs"
+        "-anchorjs",
+        "anchors"
     ],
     "pluginsConfig": {}
 }
