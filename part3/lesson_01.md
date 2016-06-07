@@ -14,6 +14,8 @@ const a = 10
 let b = 5
 ```
 
+> 是的，你所看到這本書中的程式碼，將不會使用分號(;)作為程式碼的結尾，請參考[寫作格式](https://eyesofkids.gitbooks.io/javascript-entry-level-es6/content/style.html)這一章的說明。
+
 你可把常數和變數想像是一個盒子:
 
 - 常數const/康死/: 裝入東西(值)之後就上鎖的盒子，之後不可以更動裡面的值
