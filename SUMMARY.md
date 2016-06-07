@@ -13,6 +13,7 @@
    * [輸出](part2/lesson_03.md)
 * [Part III 基礎](part3/README.md)
    * [變數、常數與命名](part3/lesson_01.md)
+      * [常數與變數(可變與不可變)](part3/lesson_01.md#常數與變數可變與不可變)
    * [資料類型(值)](part3/lesson_02.md)
    * [函式與作用域](part3/lesson_03.md)
    * [迴圈與流程控制](part3/lesson_04.md)
