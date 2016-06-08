@@ -209,7 +209,7 @@ string name description label text
 - 用`// FIXME:`與`// TODO:`來標示目前問題的位置與未來需要要作的功能處
 - 用註解來說明函式的參數(params)與回傳值(return)
 
-> 提示: 就已經英文很破為何還要逼你寫英文註解？主要的原因是為了**"加快與專注在程式碼上的撰寫"**。因為要輸入中文註解還需要切換到中文輸入法，一下子寫程式碼又要切回英文輸入法，除了按鍵不同，符號的輸入也不同。能專心寫程式就寫程式碼不是很好嗎？這只是一個建議的該養成的習慣而已。
+> 提示: 就已經英文很破為何還要逼你寫英文註解？主要的原因是為了**"加快與專注在程式碼上的撰寫"**。因為要輸入中文註解還需要切換到中文輸入法，一下子寫程式碼又要切回英文輸入法，除了按鍵不同，符號的輸入也不同。能專心寫程式就寫程式碼不是很好嗎？這只是一個建議養成的習慣而已。
 
 單行註解用的是雙斜線(//)(double slash/打波 死內需/)符號。以下為範例:
 
@@ -267,7 +267,7 @@ slash/死內需/有猛砍、鞭打的意思，大概是右撇子英文，因為�
 
 #### 中括號([])
 
-英文為Brackets/布累克特斯/，或是square/史魁兒/ brackets，英文就有"支架"、"括住"的意思。主要用於Javascript中的陣列(Array)宣告。
+英文為Brackets/布累克特斯/，或是方括號(square/史魁兒/ brackets)，英文就有"支架"、"括住"的意思。主要用於Javascript中的陣列(Array)宣告。
 
 #### 大括號({})
 
@@ -346,10 +346,10 @@ const d = +"3"
 - 驚嘆號(!) exclamation mark /A死客妹遜/ /馬克/
 - 問號(?) question mark /虧遜/ /馬克/
 - 下底線(_) underscore /昂得死過/
-- 重音符號(`) back-tick quotes (Grave accent) /背踢克/
-- 連接號(-) Hyphen /嗨芬/ 
+- 重音符號(`) back-tick /背踢克/
+- 連接號(-) hyphen /嗨芬/ 
 - 星號(*) asterisks /A死特瑞死/
-- 錢號($) dollar signs /打惹/
+- 錢號($) dollar signs /打惹/ /賽/
 
 > 連接號(-)與負號(-)、破折號(-)這三個在通用的電腦鍵盤上長得是一樣的。實際上它們三個的英文單字不同，分別是hyphen、minus sign與dash，用途也各有不同。
 
@@ -361,7 +361,7 @@ const d = +"3"
 const abc = 10
 ```
 
-用很通俗的講法，先看一下英文會怎麼說(以下來自MDN的說法):
+先看一下英文會怎麼說(以下來自MDN的說法):
 
 ```
 // define abc as a constant and give it the value 10
@@ -409,9 +409,9 @@ xyz = 5
 - [JavaScript Reserved Words(W3Schools)](http://www.w3schools.com/js/js_reserved.asp)
 - [Keywords(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords)
 
-> 註: 對於保留字你可以不用那麼緊張，因為現在已經有很多linter(程式碼檢查工具)，都加入了保留字的檢查功能，如果你有誤用時會出現對應的錯誤或警告訊息。另外，保留字詞通常很短，而且是有意義的英文字詞，如果你在寫自己的命名時，儘可能用組合的字詞(例如firstName, studentName)，然後長度長一些，誤用到保留字詞的機會少之又少。
+> 註: 對於保留字你可以先不用那麼緊張，因為現在已經有很多linter(程式碼檢查工具)，都加入了保留字的檢查功能，如果你有誤用時，工具會出現錯誤或警告訊息。另外，保留字詞通常很短，而且是有意義的英文字詞。當你在寫自己的命名時，儘可能用組合的字詞(例如firstName, studentName)，然後長度長一些，誤用到保留字詞的機會大概不會有。
 
-> 註：這裡說的英文關鍵字var，指的是"全部小寫"的英文單字，不能寫成"vAr", "VAR", "Var"。
+> 註：這裡說的保留字，在使用上是用"全部小寫"的英文單字，例如let不能寫成"lEt", "LET", "Let"。
 
 ## 小結
 

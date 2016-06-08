@@ -56,9 +56,7 @@ console.log(typeof null) //'object'
 
 ## 數字(Number)
 
-JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於Java語言的`double`/搭波/資料類型，並不存在如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在Javascript中，`1`與`1.0`指的是相同的類型與值。數字可以使用算術運算符(+-*/%)等來進行運算。
-
-以下是幾個宣告的範例:
+JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於Java語言的`double`/打波/資料類型，並沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在Javascript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
 
 ```js
 const intValue = 123
