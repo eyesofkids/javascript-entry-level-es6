@@ -1,8 +1,8 @@
 # 資料類型(值) Data Type
 
-Javascript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及兩種特殊情況的null(空)與undefined(未定義)，ES6標準中加入了符號(symbol)。
+JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及兩種特殊情況的null(空)與undefined(未定義)，ES6標準中加入了符號(symbol)。
 
-Javascript中還有另一個非常重要的第7種資料類型 - Object(物件)。
+JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)。
 
 我們常常會把屬於物件的Array(陣列)、Data(日期時間)、Function(函式)、RegExp(正規表述式)獨立出來說明，因為這些物件都有特殊的功能和作用，算是特別的物件類型。
 
@@ -25,13 +25,13 @@ Javascript中還有另一個非常重要的第7種資料類型 - Object(物件)�
 - array(陣列)
 - object(物件)
 
-> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，Javascript語言中也存在名稱為String、Number、Boolean對應原始資料類型的物件，它們是包裝物件(wrapper object)，提供了原始資料類型的一些延申的應用屬性與方法，真正會用到這些物件只有在特殊情況下。
+> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean對應原始資料類型的物件，它們是包裝物件(wrapper object)，提供了原始資料類型的一些延申的應用屬性與方法，真正會用到這些物件只有在特殊情況下。
 
-> 註: 是的，Javascript的確是一個物件導向的程式語言。不過，Javascript的物件導向特性與其他語言例如Java、C++等有很大的不同。
+> 註: 是的，JavaScript的確是一個物件導向的程式語言。不過，JavaScript的物件導向特性與其他語言例如Java、C++等有很大的不同。
 
 ## 鬆散資料類型
 
-Javascript語言是一個鬆散資料類型(loosely typed)或稱為動態的程式語言(dynamic language)。這代表你不需要為變數or常數在宣告時，就規定它的資料類型，而只是指定值。Javascript會依照指定值決定變數or常數的資料類型。
+JavaScript語言是一個鬆散資料類型(loosely typed)或稱為動態的程式語言(dynamic language)。這代表你不需要為變數or常數在宣告時，就規定它的資料類型，而只是指定值。JavaScript會依照指定值決定變數or常數的資料類型。
 
 ```
 let foo = 42    // foo現在是Number資料類型
@@ -56,7 +56,7 @@ console.log(typeof null) //'object'
 
 ## 數字(Number)
 
-JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於Java語言的`double`/打波/資料類型，並沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在Javascript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
+JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於Java語言的`double`/打波/資料類型，並沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在JavaScript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
 
 ```js
 const intValue = 123
@@ -64,7 +64,7 @@ const floatValue = 10.01
 const negValue= -5.5
 ```
 
-電腦中的程式語言在數學上的運算，總會有處理上的極限與無法處理的情況。Javascript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況:
+電腦中的程式語言在數學上的運算，總會有處理上的極限與無法處理的情況。JavaScript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況:
 
 - +Infinity: 正無限值(相當於Infinity)
 - -Infinity: 負無限值
@@ -85,7 +85,7 @@ console.log(Number.MIN_VALUE)
 
 ### 整數進位
 
-以整數來說，整數的進位是一個問題，一般的整數進位有2、8、16，以及最常使用的10進位。Javascript中直接可以用`0x`開頭來定義16進位(Hexadecimal):
+以整數來說，整數的進位是一個問題，一般的整數進位有2、8、16，以及最常使用的10進位。JavaScript中直接可以用`0x`開頭來定義16進位(Hexadecimal):
 
 ```js
 const x = 0xFF
@@ -121,7 +121,7 @@ console.log(decimalNumber.toString(16))
 
 #### 字串轉浮點數
 
-對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，對於Javascript來說，數字就是數字。以下是範例:
+對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，對於JavaScript來說，數字就是數字。以下是範例:
 
 ```js
 const aNumber = parseFloat("10")  //10
@@ -143,11 +143,11 @@ const intValueTwo = Math.ceil( floatValue ) //天花板值 11
 const intValueThree = Math.round( floatValue ) //四捨五入值 11
 ```
 
-> 註: Math是專門用於數學運算使用的Javascript語言內建物件，裡面有很多好用的數學方法，請參考[Math(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)與[JavaScript Math Object](http://www.w3schools.com/js/js_math.asp)
+> 註: Math是專門用於數學運算使用的JavaScript語言內建物件，裡面有很多好用的數學方法，請參考[Math(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)與[JavaScript Math Object](http://www.w3schools.com/js/js_math.asp)
 
 #### 整數轉浮點數
 
-再強調一下，對於Javascript來說，數字就是數字，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在Javascript中來說都是一樣的，直接轉出數字3.00依然會用3來顯示。
+再強調一下，對於JavaScript來說，數字就是數字，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在JavaScript中來說都是一樣的，直接轉出數字3.00依然會用3來顯示。
 
 唯一可能的情況，是希望調整輸出的格式。這時可以用數字物件中的`toFixed([digits])`方法來達成，不過它會回傳成字串，這已經不是數字了:
 
@@ -190,9 +190,9 @@ while(i != 10) {
 }
 ```
 
-> 註: 範例來自[Number, Math](http://javascript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)
+> 註: 範例來自[Number, Math](http://JavaScript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)
 
-因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。程式語言永遠有其限制，這不是在Javascript語言才會出現的，其他的程式語言也有可能有類似的問題。
+因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。程式語言永遠有其限制，這不是在JavaScript語言才會出現的，其他的程式語言也有可能有類似的問題。
 
 ## 字串(String)
 
@@ -203,11 +203,11 @@ const aString = '你好'
 const bString = 'Hello'
 ```
 
-對於Javascript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是一樣的。但推薦只使用**單引號標記('')**，原因是HTML碼中也會使用引號來作為標記屬性值的定義，而Javascript經常需要與HTML碼搭配使用，所以這個也變成一個約定俗成的撰寫習慣。
+對於JavaScript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是一樣的。但推薦只使用**單引號標記('')**，原因是HTML碼中也會使用引號來作為標記屬性值的定義，而JavaScript經常需要與HTML碼搭配使用，所以這個也變成一個約定俗成的撰寫習慣。
 
 ### 字串與字元
 
-存取一個字串中的字元，可以用類似陣列的存取方式，或是用`charAt()`方法。不過，Javascript中並沒有所謂的字元(Character)類型，所以它依然是個字串(String)資料類型，只是只有一個字元而已。
+存取一個字串中的字元，可以用類似陣列的存取方式，或是用`charAt()`方法。不過，JavaScript中並沒有所謂的字元(Character)類型，所以它依然是個字串(String)資料類型，只是只有一個字元而已。
 
 ```js
 const a = 'cat'.charAt(1)   //  'a'
@@ -292,17 +292,17 @@ console.log( 4 + 3 + '5' + 3 )
 當name從來未被定義過時
 ```
 
-你問Javascript: name是什麼?
+你問JavaScript: name是什麼?
 
-Javascript回答: name? 從來沒聽過? 我不知道你在說什麼?
+JavaScript回答: name? 從來沒聽過? 我不知道你在說什麼?
 
 ```js
 name = null 
 ```
 
-你問Javascript: name是什麼?
+你問JavaScript: name是什麼?
 
-Javascript回答: 我不知道
+JavaScript回答: 我不知道
 
 以上的回答來自: [Why is null an object and what's the difference between null and undefined?](http://stackoverflow.com/questions/801032/why-is-null-an-object-and-whats-the-difference-between-null-and-undefined)
 
