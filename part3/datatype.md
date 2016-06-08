@@ -18,12 +18,12 @@ JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)�
 
 - null(空)
 - undefined(未定義)
-- symbol(符號)
+- Symbol(符號)
 
 複合型(composite)或參考型(reference)的資料類型:
 
-- array(陣列)
-- object(物件)
+- Array(陣列)
+- Object(物件)
 
 > 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean對應原始資料類型的物件，它們是包裝物件(wrapper object)，提供了原始資料類型的一些延申的應用屬性與方法，真正會用到這些物件只有在特殊情況下。
 
@@ -158,6 +158,51 @@ const numObj = 12345.6789
 const numObjString = numObj.toFixed() //string, 123456
 ```
 
+### 其他類型轉換為整數
+
+#### 兩條毛毛蟲(\~\~)
+
+取代符號Tilde(~)，在JavaScript語言中的運算符名稱為Bitwise NOT，這是長得像毛毛蟲的樣子。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
+
+```js
+const a = ~10 //a is -11
+```
+
+那如果是兩條毛毛蟲(Double Bitwise NOT)(\~\~)呢？上面的例子會變成如何:
+
+```js
+const b = ~~10 //b is 10
+```
+
+兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在正數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。重點是它的效能在某些瀏覽器非常快。所以有很多設計師使用這樣的寫法。
+
+```js
+console.log(~~'-1')  // -1
+console.log(~~'0')   // 0
+console.log(~~'1')   // 1
+console.log(~~true)  // 1
+console.log(~~false) // 0
+console.log(~~null) // 0
+console.log(~~undefined) // 0
+```
+
+> 註: `parseInt`雖然主要是傳入字串，轉換為整數。但也有傳入浮點數，轉換為整數的功能。
+
+#### 正號(+)
+
+正號(Unary Plus)(+)也是一個一元的運算符，它也有轉換其他類型為數字的能力，不過它的功能接近`parseFloat`，但並不完全相等。負號(-)也有同樣的功用，但很少被使用。
+
+```js
+console.log(+'2.3') //2.3
+console.log(+'0') //0
+console.log(+'foo') //NaN
+console.log(+true) //1
+console.log(+false) //0
+console.log(+null) //0
+```
+
+> 註: 這份網路上的[Stackoverflow問答](http://stackoverflow.com/questions/17106681/parseint-vs-unary-plus-when-to-use-which)中有一張表，列出所有轉換的情況。
+
 ### 數字的精確問題
 
 數字並非是永無極限的，有最大的數值上限也有最小的下限。上面已有說明它的最大與最小值怎麼獲得，但在運算時，有時候會出現不如你想像的情況，這些都與浮點數的精確度(precision)，有關以下是幾個典型的範例，這些都算是陷阱題目:
@@ -272,13 +317,67 @@ console.log( 3 + 4 + '5' )
 console.log( 4 + 3 + '5' + 3 )
 ```
 
+所以，當你想要轉換某個類型為字串時，直接與一個空白字串作加號(+)運算，就會變成字串類型了。
+
+```js
+const a = 6 + ''
+const b = true + ''
+```
+
 ### 風格指引
 
 - (Airbnb 6.2) 雖然使用雙引號(")與單引號(')都是一樣的宣告方式，但建議使用單引號(')
 - (Airbnb 6.3) 字串中的長度超過100字元時，需分成多個字串，然後使用字串的連接符號(+)
 - (Airbnb 6.6) 避免在字串中使用不必要的跳脫字元
 
-## 布林值(boolean)
+## 布林(Boolean)
+
+布林(Boolean/布林/)或簡稱為 Bool/布爾/，它是由發明的科學家George Boole命名。是一種兩分法(黑白/陽陰/真假)的值，在JavaScript以關鍵字`true`與`false`來作為布林值。布林值通常用於判斷式中，與比較運算符有關，也就是用於流程控制的結構中。 例如以下的範例:
+
+```js
+const a = true
+const b = false
+
+console.log(typeof a) //boolean
+console.log(1=='1') //true
+console.log(typeof (1=='1')) //boolean
+console.log(b!=a) //true
+```
+
+> 記住: 所有的JavaScript關鍵字(保留字)都是小寫的英文，像`true`的話，如果寫成True、 TRUE、TrUe，都是不對的寫法。
+
+布林(Boolean)直接在HTML格式中輸出時，true會輸出true字串，false輸出false字串。不過因為HTML輸入時(或是在HTML上抓取數值時)，有可能需要將true字串或false字串轉成布林值的情況，這時候要用像下面的轉換方式:
+
+```js
+const aString = 'true'
+const bString = 'false'
+const aBool = (aString === 'true')
+const bBool = (bString === 'true')
+
+console.log(aBool, typeof aBool) //true "boolean"
+console.log(bBool, typeof bBool) //false "boolean"
+```
+
+驚嘆號(!)之前有說過是個邏輯運算符，名稱為"Logic NOT"，用在布林值上具有反轉(Inverted)的功能，雙驚嘆號(!!)就等於反轉再反轉，等於轉回原本的布林值:
+
+```
+const aBool = true
+const bBool = !aBool //false
+const cBool = !!aBool //true
+```
+
+雙驚嘆號(!!)並不單純是在這樣用的，它是為了要轉換一些可以形成布林值的情況值，列出如下:
+
+- false: 0, -0, null, false, NaN, undefined, 空白字串('')
+- true: 不是false的其他情況
+
+```
+const aBool = !!0 //false
+const bBool = !!'false' //true
+const cBool = !!NaN //false
+```
+
+> 註: 雖然你也可以用Boolean物件來作轉換的這件事，但很少這樣使用。
 
 ## 空(null)與未定義(undefined)
 
