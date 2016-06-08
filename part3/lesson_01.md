@@ -451,4 +451,23 @@ xyz = 5
 
 現在要請你把這些資料的項目，寫成變數或常數的名稱，請你進行命名的工作。
 
+### 作業三
+
+打字練習對於提升撰寫程式碼的速度是很有幫助的。有人說很多學寫程式的人，最後只會兩個按鍵組合，一個是複製(Ctrl+C)，另一個是貼上(Ctrl+V)。對於我們有遠大理想的未來優秀程式設計師，這樣的按鍵組合是不足的，所以需要多練習打字。請依照以下的兩個區域，打出這些常用的關鍵字與符號了。如果你覺得太簡單，可以把行數對調再練習下一次，而且最好能練習到不看鍵盤就能打出來:
+
+```
+if else else if const let let const
+import export return import export return 
+switch case default break case switch break 
+class extends super class extends super
+for in do while continue while for in do
+try throw function catch function try catch
+if else function const let for return
+```
+
+```
++-*/% {!?:} (++--) [1][0][3] 
+(){_-/\} (_.){}() => >= 
+<= == !== && ||
+```
 
