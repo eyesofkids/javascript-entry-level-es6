@@ -1,6 +1,6 @@
 # 輸出
 
-Javascript是搭配HTML使用的，最終輸出(呈現結果)的方式，可以用HTML的輸出格式作為輸出。不過在一開始學習時，或是在開發時簡單測試時，我們可以使用以下的語法在瀏覽器的除錯主控台中輸出數值:
+JavaScript是搭配HTML使用的，最終輸出(呈現結果)的方式，可以用HTML的輸出格式作為輸出。不過在一開始學習時，或是在開發時簡單測試時，我們可以使用以下的語法在瀏覽器的除錯主控台中輸出數值:
 
 ```js
 console.log('Hello')
@@ -56,7 +56,7 @@ document.getElementById("demo").innerHTML = 'Hello'
 <div id="demo"></div>
 ```
 
-> 註: 這個方式是推薦的輸出方式，也是現今很多Javascript函式庫用來輸出結果的方式。
+> 註: 這個方式是推薦的輸出方式，也是現今很多JavaScript函式庫用來輸出結果的方式。
 
 ### createTextNode
 
