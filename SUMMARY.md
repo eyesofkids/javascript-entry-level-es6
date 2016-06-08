@@ -1,7 +1,7 @@
 # Summary
 
 * [關於本書](README.md)
-   * [序](intro.md)
+   * [序言](intro.md)
    * [寫作格式](style.md)
    * [更新日誌](changelog.md)
    * [問答與回饋](issue.md)
