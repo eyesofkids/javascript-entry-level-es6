@@ -19,7 +19,6 @@
       * [註解](part3/var_const_naming.md#註解-comment)
       * [符號](part3/var_const_naming.md#符號)
       * [保留字詞](part3/var_const_naming.md#保留字詞)
-      * [家庭作業](part3/var_const_naming.md#家庭作業)
    * [資料類型(值)](part3/datatype.md)
    * [迴圈與流程控制](part3/loop_flowcontrol.md)
    * [函式與作用域](part3/function_scope.md)
