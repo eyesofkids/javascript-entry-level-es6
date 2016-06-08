@@ -272,7 +272,6 @@ console.log( 3 + 4 + '5' )
 console.log( 4 + 3 + '5' + 3 )
 ```
 
-
 ### 風格指引
 
 - (Airbnb 6.2) 雖然使用雙引號(")與單引號(')都是一樣的宣告方式，但建議使用單引號(')
@@ -294,6 +293,7 @@ console.log( 4 + 3 + '5' + 3 )
 ```
 
 你問Javascript: name是什麼?
+
 Javascript回答: name? 從來沒聽過? 我不知道你在說什麼?
 
 ```js
@@ -301,6 +301,7 @@ name = null
 ```
 
 你問Javascript: name是什麼?
+
 Javascript回答: 我不知道
 
 以上的回答來自: [Why is null an object and what's the difference between null and undefined?](http://stackoverflow.com/questions/801032/why-is-null-an-object-and-whats-the-difference-between-null-and-undefined)
@@ -320,11 +321,6 @@ null === undefined // false
 typeof null        // object (bug in ECMAScript, should be null)
 typeof undefined   // undefined
 ```
-
-## symbol
-
-
-
 
 ## 小結
 
