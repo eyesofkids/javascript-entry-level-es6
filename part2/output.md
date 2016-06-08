@@ -72,4 +72,4 @@ demo.appendChild(newText)
 
 ## 小結
 
-不論是`innerHTML`、`alert`、`createTextNode`、`document.write`，因為輸出到網頁上的HTML碼中，所以必定會轉變為字串值。也就是不論這轉出的值原本是數字的2進位、8進位、16進位，就會變成10進位，而其他的類型的值也會自動轉成字串值。在開發時並不會用這樣的輸出方式，所以還是只有console.log這方式可用。
+不論是`innerHTML`、`alert`、`createTextNode`、`document.write`，因為輸出到網頁上的HTML碼中，所以必定會轉變為字串值。也就是不論這轉出的值原本是數字的2進位、8進位、16進位，就會變成10進位，而其他的類型的值也會自動轉成字串值。在開發時並不會用這樣的輸出方式，所以還是只有`console.log`這方式可用。
