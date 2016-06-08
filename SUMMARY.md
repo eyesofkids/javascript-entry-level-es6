@@ -30,5 +30,6 @@
    * [this](part4/lesson_01.md)
    * [Callback](part4/lesson_02.md)
    * [Closure](part4/lesson_03.md)
-   * [Promise](part4/lesson_04.md)
+   * [AJAX](part4/lesson_04.md)
+   * [Promise](part4/lesson_05.md)
 
