@@ -1,6 +1,8 @@
 # 資料類型(值) Data Type
 
-JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及兩種特殊情況的null(空)與undefined(未定義)，ES6標準中加入了符號(symbol)。
+資料是所有電腦運算的基礎，輸入電腦的、或是電腦運算後產生的，一開始大概就是數字、字串之類資料，其他的類型，都是以此為基礎再組合出來的。
+
+JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及null(空)與undefined(未定義)兩種特殊情況，ES6中加入了符號(symbol)。
 
 JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)。
 
@@ -25,7 +27,7 @@ JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)�
 - Array(陣列)
 - Object(物件)
 
-> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean對應原始資料類型的物件，它們是包裝物件(wrapper object)，提供了原始資料類型的一些延申的應用屬性與方法，真正會用到這些物件只有在特殊情況下。
+> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean的物件，用來對應原始資料類型，它們是一種包裝物件(wrapper object)，提供了原始資料類型使用的一些延申的屬性與方法，真正會用到這些物件只有在特殊情況下。
 
 > 註: 是的，JavaScript的確是一個物件導向的程式語言。不過，JavaScript的物件導向特性與其他語言例如Java、C++等有很大的不同。
 
@@ -52,11 +54,11 @@ console.log(typeof true) //'boolean'
 console.log(typeof null) //'object'
 ```
 
-> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對typeof結果的規定，就是回傳'object'。不過有一些反對的聲音，認為null是原始資料類型，應當回傳自己本身的資料類型。目前至ES6仍然沒有更動。
+> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對typeof結果的規定，就是回傳'object'。目前有一些反對的聲音，認為null是原始資料類型，應當回傳自己本身的資料類型。不過，至ES6這一規定仍然沒有更動。
 
 ## 數字(Number)
 
-JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於Java語言的`double`/打波/資料類型，並沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在JavaScript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
+JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/資料類型。而且沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在JavaScript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
 
 ```js
 const intValue = 123
@@ -160,7 +162,7 @@ const numObjString = numObj.toFixed() //string, 123456
 
 ### 其他類型轉換為整數
 
-#### 兩條毛毛蟲(\~\~)
+#### 兩條毛毛蟲(Double Bitwise NOT)(\~\~)
 
 取代符號Tilde(~)，在JavaScript語言中的運算符名稱為Bitwise NOT，這是長得像毛毛蟲的樣子。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
 
@@ -174,7 +176,7 @@ const a = ~10 //a is -11
 const b = ~~10 //b is 10
 ```
 
-兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在正數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。重點是它的效能在某些瀏覽器非常快。所以有很多設計師使用這樣的寫法。
+兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在"正"數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。重點是它的效能在某些瀏覽器非常快。所以有很多程式設計師會使用這樣的寫法。
 
 ```js
 console.log(~~'-1')  // -1
@@ -218,26 +220,16 @@ console.log(9999999999999999)
 
 #### 範例二
 
-注意: x並不是0.3
+注意: x, y都不是你想的結果
 
 ```js
 const x = 0.2 + 0.1
-```
-
-#### 範例三
-
-注意: i永遠不會等於10，這個程式是無窮迴圈，可能會讓網頁當掉。
-
-```js
-let i = 0
-while(i != 10) { 
-  i += 0.2
-}
+const y = 0.3 - 0.1
 ```
 
 > 註: 範例來自[Number, Math](http://JavaScript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)
 
-因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。程式語言永遠有其限制，這不是在JavaScript語言才會出現的，其他的程式語言也有可能有類似的問題。
+因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。如果你遇到需要處理浮點數的運算，可以尋找合適的函式庫。例如[BigDecimal.js](https://github.com/dtrebbien/BigDecimal.js)或[decimal.js](https://github.com/MikeMcl/decimal.js/)
 
 ## 字串(String)
 
@@ -263,30 +255,42 @@ console.log(typeof a)
 
 ### 跳脫字元(escape characters)
 
-當需要在雙引號符號(")中使用雙引號(")，或在單引號(')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。常見用於在英文縮寫，例如：
+當需要在雙引號符號("")中使用雙引號(")，或在單引號('')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。常見用於在英文縮寫，例如：
 
 ```js
-'It\'s alright';
-'This is a blackslash \\'
+const aString = 'It\'s ok'
+const bString = 'This is a blackslash \\'
 ```
 
 ### 樣版字串(Template strings)
 
-ES6中新式的字串寫法，稱為樣版字串(Template strings)，使用的是重音符號backtick(``)來敘述字串。樣版字串可以多行、加入字串變數，以及其他延申的用法。範例如下：
+ES6中新的字串寫法，稱為樣版字串(Template strings)，使用的是重音符號backtick(``)來敘述字串。樣版字串可以多行、加入字串變數，以及其他延申的用法。範例如下：
 
 ```js
-`hello world`
-`hello!
+const aString = `hello world`
+const aString = `hello!
+
  world!`
-`hello ${who}`
-escape `<a>${who}</a>`
+```
+
+```js
+const firstName = 'Eddy';
+
+console.log(`Hello ${firstName}!
+Do you want some
+rabbits tonight?`);
+
+// Output:
+// Hello Eddy!
+// Do you want some
+// rabbits tonight?
 ```
 
 ### 字串運算
 
 字串中有很多運算用的函式與記號，以下是常用的幾個：
 
-#### 字串連接
+#### 字串串接
 
 使用加號(+)是最直覺的方式，效能也比`concat()`好，這兩種方式都是同樣的結果，範例如下：
 
@@ -323,6 +327,8 @@ console.log( 4 + 3 + '5' + 3 )
 const a = 6 + ''
 const b = true + ''
 ```
+
+#### 子字串
 
 ### 風格指引
 
