@@ -1,6 +1,6 @@
 # 資料類型(值) Data Type
 
-資料是所有電腦運算的基礎，輸入電腦的、或是電腦運算後產生的，一開始大概就是數字、字串之類資料，其他的類型，都是以此為基礎再組合出來的。
+資料是所有電腦運算的基礎，對於電腦來說，所有的資料都只是0與1的訊號，但對於人類來說，資料類型的區分就複雜得多了，需要因應各種不同的情況來使用。
 
 JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及null(空)與undefined(未定義)兩種特殊情況，ES6中加入了符號(symbol)。
 
@@ -87,14 +87,31 @@ console.log(Number.MIN_VALUE)
 
 ### 整數進位
 
-以整數來說，整數的進位是一個問題，一般的整數進位有2、8、16，以及最常使用的10進位。JavaScript中直接可以用`0x`開頭來定義16進位(Hexadecimal):
+以整數來說，一般的整數進位有2、8、16，以及最常使用的10進位。
+
+
+2進位(Binary)在ES6之後可以使用`0b`或`0B`開頭來定義:
+
+```js
+const FLT_SIGNBIT  = 0b10000000000000000000000000000000 // 2147483648
+const FLT_MANTISSA = 0B00000000011111111111111111111111 // 8388607
+```
+
+8進位(Octal)在ES6之後可以使用`0o`或`0O`開頭來定義:
+
+```js
+const n = 0O755 // 493
+const m = 0o644 // 420
+```
+
+16進位(Hexadecimal)中直接可以用`0x`開頭來定義:
 
 ```js
 const x = 0xFF
 const y = 0xAA33BC   
 ```
 
-2或8進位並沒有內建的直接可定義方式，需要透過一個字串的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
+在ES6之前，對於2或8進位並沒有內建的直接可定義方式，需要透過一個字串的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
 
 ```js
 //8進位
@@ -240,7 +257,7 @@ const aString = '你好'
 const bString = 'Hello'
 ```
 
-對於JavaScript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是一樣的。但推薦只使用**單引號標記('')**，原因是HTML碼中也會使用引號來作為標記屬性值的定義，而JavaScript經常需要與HTML碼搭配使用，所以這個也變成一個約定俗成的撰寫習慣。
+對於JavaScript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是一樣的。但推薦使用**單引號標記('')**。原因是JavaScript經常需要與HTML碼搭配使用，而HTML碼中也會使用引號來作為標記屬性值的定義，所以讓HTML屬性使用雙引號標記("")，而Javascript中的字串使用單引號標記('')，這個也變成一個約定俗成的撰寫習慣。
 
 ### 字串與字元
 
@@ -253,9 +270,11 @@ const b = 'cat'[1]   // 'a'
 console.log(typeof a)
 ```
 
+> 註: 陣列結構的內容，會在後面的章節再介紹。
+
 ### 跳脫字元(escape characters)
 
-當需要在雙引號符號("")中使用雙引號(")，或在單引號('')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。常見用於在英文縮寫，例如：
+當需要在雙引號符號("")中使用雙引號(")，或在單引號('')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。例如：
 
 ```js
 const aString = 'It\'s ok'
@@ -273,17 +292,18 @@ const aString = `hello!
  world!`
 ```
 
-```js
-const firstName = 'Eddy';
+在樣版字串中可以嵌入變數or常數，也可以作運算，嵌入的符號是使用錢號與花括號的組合(${}):
 
+```js
+const firstName = 'Eddy'
 console.log(`Hello ${firstName}!
 Do you want some
-rabbits tonight?`);
+rabbits tonight?`)
 
-// Output:
-// Hello Eddy!
-// Do you want some
-// rabbits tonight?
+
+const x = 5
+console.log(`5 + 3= ${x + 3}`)
+
 ```
 
 ### 字串運算
@@ -292,13 +312,26 @@ rabbits tonight?`);
 
 #### 字串串接
 
-使用加號(+)是最直覺的方式，效能也比`concat()`好，這兩種方式都是同樣的結果，範例如下：
+使用加號(+)或加法指定(+=)是最直覺的方式，效能也比`concat()`好，這兩種方式都是同樣的結果，範例如下：
 
+```js
+//使用concat()串接
+const aString = 'JavaScript'
+const bString = aString.concat(' is a', ' script language')
+console.log(bString)
+
+//使用(+=)串接
+let cString = 'JavaScript'
+cString += ' is a'
+cString += ' script language'
+console.log(cString)
 ```
 
-```
+> 註: 實際上還有一個join()方法可以串接字串，不過它是用於字串陣列的。也常被拿來比較上面的串接方式，效能也是很好。
 
-看到加號(+)時，你如果看到數字中也有運算用的加號(+)，可能會有個疑問，像下面這個程式碼，結果應該是什麼，到底會是101還是11？
+#### 與其他類型作加號(+)運算
+
+不過，當你看到加號(+)時，你如果看到數字中也有運算用的加號(+)，可能會有個疑問，像下面這個程式碼，結果應該是什麼，到底會是101還是11？
 
 ```js
 const a = '10' + 1
@@ -312,23 +345,43 @@ console.log(b)
 
 > 當運算式的左邊運算元**或**右邊運算元，是字串類型時，則使用字串連接(concatenating)的運算，非字串類型的運算元則使用ToString轉換
 
-所以上面的兩個輸出的結果會是101，沒問題吧
-
-那更複雜的運算像下面的程式碼又會是什麼結果呢？
+所以上面的兩個輸出的結果會是101，沒問題吧。那更複雜的運算像下面的程式碼又會是什麼結果呢？
 
 ```js
-console.log( 3 + 4 + '5' )
-console.log( 4 + 3 + '5' + 3 )
+console.log( 3 + 4 + '5' ) //75
+console.log( 4 + 3 + '5' + 3 ) //753
 ```
 
-所以，當你想要轉換某個類型為字串時，直接與一個空白字串作加號(+)運算，就會變成字串類型了。
+所以，當你想要轉換某個類型為字串時，直接與一個空白字串作加號(+)運算，就會變成字串類型了。這也是當用來把其他類型轉為字串的最簡便的語法。
 
 ```js
 const a = 6 + ''
 const b = true + ''
 ```
 
+#### 字串長度
+
+
+
 #### 子字串
+
+JavaScript中對於子字串的取出，有三種方法可以使用substr、substring、slice。它們是因應不同使用情況下的方法，先了解substr與substring的英文字詞，從字義上幾乎是一模一樣，差異只在於簡寫。而slice的字義是"切割"的意思，它是從Array(陣列)中的同名方法slice類似功能。這也代表在JavaScript中對於子字串提取，與Array(陣列)類似，在JavaScript中的字串類型，結構也像是由多個單字串組成的陣列。值得一提的是，slice方法的功能，與substring十分類似，但有一些參數值行為上的差異。
+
+> 語法: str.substr(start[, length])
+
+> 語法: str.substring(indexStart[, indexEnd])
+
+> 語法: str.slice(beginSlice[, endSlice])
+
+http://ariya.ofilabs.com/2014/02/javascript-string-substring-substr-slice.html
+http://javascript.info/tutorial/string
+http://stackoverflow.com/questions/2243824/what-is-the-difference-between-string-slice-and-string-substring
+
+Conclusion.
+
+The method of choice is slice(start, end).
+
+Or, alternatively, substr(start, length) with non-negative start (negative doesn’t work in IE).
 
 ### 風格指引
 

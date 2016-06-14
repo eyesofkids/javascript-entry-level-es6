@@ -19,6 +19,6 @@ JS Bin中的JSHint設定值
 
 ## 本機電腦端使用時
 
-- 程式碼撰寫軟體是Sublime Text3
-- 環境Node.js與npm
+- 程式碼撰寫軟體是Sublime Text3(待補) 
+- 環境Node.js與npm(待補) 
 - 樣版文件(待補) 
