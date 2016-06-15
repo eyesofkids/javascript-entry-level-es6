@@ -54,7 +54,7 @@ console.log(typeof true) //'boolean'
 console.log(typeof null) //'object'
 ```
 
-> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對typeof結果的規定，就是回傳'object'。目前有一些反對的聲音，認為null是原始資料類型，應當回傳自己本身的資料類型。不過，至ES6這一規定仍然沒有更動。
+> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對typeof結果的規定，就是回傳'object'。目前有一些反對的聲音，認為null是原始資料類型，應當回傳自己本身的資料類型。也有人認為現在修改這個太晚了，不過，截至ES6這一規定仍然沒有更動。
 
 ## 數字(Number)
 
@@ -88,7 +88,6 @@ console.log(Number.MIN_VALUE)
 ### 整數進位
 
 以整數來說，一般的整數進位有2、8、16，以及最常使用的10進位。
-
 
 2進位(Binary)在ES6之後可以使用`0b`或`0B`開頭來定義:
 
@@ -179,9 +178,9 @@ const numObjString = numObj.toFixed() //string, 123456
 
 ### 其他類型轉換為整數
 
-#### 兩條毛毛蟲(Double Bitwise NOT)(\~\~)
+#### 雙位元反相運算(Double Bitwise NOT)(\~\~)
 
-取代符號Tilde(~)，在JavaScript語言中的運算符名稱為Bitwise NOT，這是長得像毛毛蟲的樣子。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
+波浪符號(Tilde)(~)，在JavaScript語言中的運算符名稱為位元反相運算(Bitwise NOT)，這是長得像波浪或毛毛蟲樣子的符號。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
 
 ```js
 const a = ~10 //a is -11
@@ -193,7 +192,7 @@ const a = ~10 //a is -11
 const b = ~~10 //b is 10
 ```
 
-兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在"正"數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。重點是它的效能在某些瀏覽器非常快。所以有很多程式設計師會使用這樣的寫法。
+兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在"正"數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。但重點是它的效能在某些瀏覽器非常快。所以有很多程式設計師會使用這樣的寫法。
 
 ```js
 console.log(~~'-1')  // -1
@@ -250,7 +249,7 @@ const y = 0.3 - 0.1
 
 ## 字串(String)
 
-字串類型用於描述一般的字串值，是使用相當廣泛的值。例如：
+字串類型用於描述一般的字串值，是使用相當廣泛的值。在JavaScript語言中，字串是使用Unicode作為編碼。例如：
 
 ```js
 const aString = '你好'
@@ -272,14 +271,18 @@ console.log(typeof a)
 
 > 註: 陣列結構的內容，會在後面的章節再介紹。
 
+> 注意: 使用陣列的提取字元的方式為不安全(unsafe)的方式，在某些舊的瀏覽器品牌中不支援。
+
 ### 跳脫字元(escape characters)
 
-當需要在雙引號符號("")中使用雙引號(")，或在單引號('')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。例如：
+當需要在雙引號記號("")中使用雙引號(")，或在單引號記號('')中使用單引號(')時，或在字串中使用一些特殊用途的字元。使用反斜線符號`\`來進行跳脫，這稱為跳脫字元或跳脫記號。例如：
 
 ```js
 const aString = 'It\'s ok'
 const bString = 'This is a blackslash \\'
 ```
+
+> 註: 在JavaScript中，跳脫字元在雙引號記號("")與單引號記號('')中均可使用，這一點與其他程式語言有些不同。
 
 ### 樣版字串(Template strings)
 
@@ -327,7 +330,7 @@ cString += ' script language'
 console.log(cString)
 ```
 
-> 註: 實際上還有一個join()方法可以串接字串，不過它是用於字串陣列的。也常被拿來比較上面的串接方式，效能也是很好。
+> 註: 實際上還有一個join()方法可以串接字串，不過它是陣列的方法。
 
 #### 與其他類型作加號(+)運算
 
@@ -359,29 +362,85 @@ const a = 6 + ''
 const b = true + ''
 ```
 
+> 註: 除了加號(+)運算外，其他的數字運算符號(-/*)都會將運算元轉換為數字。
+
 #### 字串長度
 
+`length`是字串的屬性值，可以讀取出字串目前的長度:
 
+```js
+const aString = 'Hello World!'
+const bString = '你好'
+const aStringLength = aString.length //12
+const bStringLength = bString.length //2
+```
+
+#### 大寫與小寫
+
+`toUpperCase`與`toLowerCase`兩個方法，用於將英文字串轉變為大寫或小寫:
+
+```js
+const aString = 'Hello World!'       
+const bString = aString.toUpperCase()
+const cString = aString.toLowerCase()
+```
+
+#### 清除字串左右空白字元
+
+`trim`方法，可以清除字串左右空白字元:
+
+```js
+const aString = ' Hello World!    ' 
+const bString = aString.trim()
+```
+
+#### 子字串搜尋(索引值)
+
+`indexOf`可以回傳目前在字串中尋找的子字串的索引值，索引值的順序是從0開始，一直到字串的總長度減1。如果尋找不到該子字串，則會回傳`-1`。以下為範例:
+
+```js
+const aString = 'Apple Mongo Banana'
+
+console.log( aString.indexOf('Apple') ) // 0
+console.log( aString.indexOf('Mongo') ) // 6
+console.log( aString.indexOf('Banana') ) // 12
+console.log( aString.indexOf('Honey') ) // -1
+```
 
 #### 子字串
 
-JavaScript中對於子字串的取出，有三種方法可以使用substr、substring、slice。它們是因應不同使用情況下的方法，先了解substr與substring的英文字詞，從字義上幾乎是一模一樣，差異只在於簡寫。而slice的字義是"切割"的意思，它是從Array(陣列)中的同名方法slice類似功能。這也代表在JavaScript中對於子字串提取，與Array(陣列)類似，在JavaScript中的字串類型，結構也像是由多個單字串組成的陣列。值得一提的是，slice方法的功能，與substring十分類似，但有一些參數值行為上的差異。
+JavaScript中對於子字串的取出，有三種方法可以使用substr、substring、slice。它們是因應不同使用情況下的方法。substr與substring的英文字詞，從字義上幾乎是一模一樣，差異只在於簡寫。而slice的字義是"切割"的意思，在Array(陣列)中也有一個同名方法slice。這也代表在JavaScript中對於子字串提取，與Array(陣列)類似，字串類型，結構也像是由多個單字串組成的陣列。實際上slice方法，與substring十分類似，僅有一些行為上的差異。
 
 > 語法: str.substr(start[, length])
 
-> 語法: str.substring(indexStart[, indexEnd])
+> 語法: str.substring(start[, end])
 
-> 語法: str.slice(beginSlice[, endSlice])
+> 語法: str.slice(start[, end])
+
+> 註: 口訣"截長補短"，所以縮短字詞的方法"substr"用的是長度(length)。
 
 http://ariya.ofilabs.com/2014/02/javascript-string-substring-substr-slice.html
 http://javascript.info/tutorial/string
 http://stackoverflow.com/questions/2243824/what-is-the-difference-between-string-slice-and-string-substring
 
-Conclusion.
+在子字串的提取功能上，結論是優先使用slice方法。在知道長度的情況下，使用substr方法，但只能用於非負數的開頭參數。(IE瀏覽器不支援負數的開頭參數)
 
-The method of choice is slice(start, end).
+#### 字串轉換為陣列
 
-Or, alternatively, substr(start, length) with non-negative start (negative doesn’t work in IE).
+split()
+
+```
+var txt = "a,b,c,d,e";   // String
+txt.split(",");          // Split on commas
+txt.split(" ");          // Split on spaces
+txt.split("|");          // Split on pipe
+```
+
+
+```
+var txt = "Hello";       // String
+txt.split("");           // Split in characters
+```
 
 ### 風格指引
 
@@ -391,7 +450,7 @@ Or, alternatively, substr(start, length) with non-negative start (negative doesn
 
 ## 布林(Boolean)
 
-布林(Boolean/布林/)或簡稱為 Bool/布爾/，它是由發明的科學家George Boole命名。是一種兩分法(黑白/陽陰/真假)的值，在JavaScript以關鍵字`true`與`false`來作為布林值。布林值通常用於判斷式中，與比較運算符有關，也就是用於流程控制的結構中。 例如以下的範例:
+布林(Boolean/布林/)或簡寫為 Bool/布爾/，它是由發明的科學家George Boole命名。是一種採用兩分法(黑白/陽陰/真假)的值，在JavaScript中以關鍵字`true`與`false`來作為布林的兩種可用值。布林值通常用於判斷式中，與比較運算符有關，常用於流程控制的結構中。 例如以下的範例:
 
 ```js
 const a = true
@@ -419,7 +478,7 @@ console.log(bBool, typeof bBool) //false "boolean"
 
 驚嘆號(!)之前有說過是個邏輯運算符，名稱為"Logic NOT"，用在布林值上具有反轉(Inverted)的功能，雙驚嘆號(!!)就等於反轉再反轉，等於轉回原本的布林值:
 
-```
+```js
 const aBool = true
 const bBool = !aBool //false
 const cBool = !!aBool //true
@@ -430,13 +489,13 @@ const cBool = !!aBool //true
 - false: 0, -0, null, false, NaN, undefined, 空白字串('')
 - true: 不是false的其他情況
 
-```
+```js
 const aBool = !!0 //false
 const bBool = !!'false' //true
 const cBool = !!NaN //false
 ```
 
-> 註: 雖然你也可以用Boolean物件來作轉換的這件事，但很少這樣使用。
+> 註: 雖然你也可以用Boolean物件來作轉換的這件事，但很少會直接這樣使用。
 
 ## 空(null)與未定義(undefined)
 
@@ -444,7 +503,7 @@ const cBool = !!NaN //false
 
 未定義(undefined)即是尚未定義，沒有任何的定義。
 
-這兩個資料類型常會被拿來比較，何為"空"又何為"未定義"?目前看到最好的解說如下:
+這兩個資料類型常會被拿來比較，何為"空"又何為"未定義"?
 
 ```
 當name從來未被定義過時
