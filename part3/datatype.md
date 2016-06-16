@@ -269,9 +269,9 @@ const b = 'cat'[1]   // 'a'
 console.log(typeof a)
 ```
 
-> 註: 陣列結構的內容，會在後面的章節再介紹。
+> 註: 陣列資料類型的內容，會在後面的章節再介紹。
 
-> 注意: 使用陣列的提取字元的方式為不安全(unsafe)的方式，在某些舊的瀏覽器品牌中不支援。
+> 注意: 使用陣列的提取字串中的字元這種方式為不安全(unsafe)的方式，尤其在某些舊的瀏覽器品牌中不支援。
 
 ### 跳脫字元(escape characters)
 
@@ -411,42 +411,87 @@ console.log( aString.indexOf('Honey') ) // -1
 
 JavaScript中對於子字串的取出，有三種方法可以使用substr、substring、slice。它們是因應不同使用情況下的方法。substr與substring的英文字詞，從字義上幾乎是一模一樣，差異只在於簡寫。而slice的字義是"切割"的意思，在Array(陣列)中也有一個同名方法slice。這也代表在JavaScript中對於子字串提取，與Array(陣列)類似，字串類型，結構也像是由多個單字串組成的陣列。實際上slice方法，與substring十分類似，僅有一些行為上的差異。
 
-> 語法: str.substr(start[, length])
+##### substring
+
+substring是ECMAScript 5.1標準定義的方法，使用兩個參數，一個是要取出的子字串的開頭索引值，另一個是要取出的子字串的結束索引值。如同之前`indexOf`中說明的，字串的索引值從字串的開頭是以`0`開始計算。
 
 > 語法: str.substring(start[, end])
 
+範例:
+
+```js
+const aString = '0123456789'
+console.log(aString.substring(0, 3)) //012
+console.log(aString.substring(5, 8)) //567
+
+//以下為特殊情況
+console.log(aString.substring(4, 4)) //''
+console.log(aString.substring(5)) //56789
+console.log(aString.substring(5, 2)) //234
+console.log(aString.substring(5, 20)) //56789
+console.log(aString.substring(-5, 2)) //01
+console.log(aString.substring(2, -5)) //01
+console.log(aString.substring(-5, -5)) //''
+```
+
+substring方法有很多特殊的情況，例如超出索引值、開頭索引值大於結束索引值，以及索引值出現負數情況等等。其中最特別的是，當"**開頭索引值大於結束索引值**"時，它會自動對調兩者的參數位置，也就是開頭索引值會變結束索引值，這個作法經常會出現出乎意料的結果。
+
+另外，從上面的例子來看，substring會直接把負數的參數當作`0`看待，而超過索引值大小就當作最大索引值。
+
+##### slice
+
+slice扮演的是substring的替代方法，它的大部份正常的行為和substring類似，傳入參數值也是一樣的。看以下的範例和substring的範例比較一下，大概就知道在很多特殊情況下，slice是不會有值(只有空字串)回傳的。總個來說，它的使用結果比較容易被預測。
+
 > 語法: str.slice(start[, end])
+
+```js
+const aString = '0123456789'
+console.log(aString.slice(0, 3)) //012
+console.log(aString.slice(5, 8)) //567
+
+//以下為特殊情況
+console.log(aString.slice(4, 4)) //''
+console.log(aString.slice(5)) //56789
+console.log(aString.slice(5, 2)) //''
+console.log(aString.slice(5, 20)) //56789
+console.log(aString.slice(-5, 2)) //''
+console.log(aString.slice(2, -5)) //234
+console.log(aString.slice(-5, -5)) //''
+```
+
+如果真的認真比較slice與substring在特殊的情況下的不同:
+
+- 當開頭索引值大於結束索引值時，它不會互換兩者的位置
+- 當索引值有負值的情況下，它是從最後面倒過來計算位置的(最後一個索引值相當於`-1`)
+
+基本上slice必須遵守"開頭索引值"比"結束索引值"的位置更靠左，才會有回傳值，這就合理多了。所以它會比substring更推薦使用。
+
+#### substr
+
+`substr`基本上並不屬於在ECMAScript標準中所定義的方法，它是歸類在瀏覽器相容方法的附錄章節中。也就是說，它是因為原本有某些瀏覽器品牌自己作出來的一個方法，後來才放在附錄中，因此它有可能在不同的瀏覽器品牌中有不同的結果。例如在IE8以前的版本，它在特殊情況(開頭索引值為負數時)，結果就和IE9或其他瀏覽器不同。所以建議你可以儘量不要用這個方法，尤其是用在負數索引值的情況。除此之外，它的方法名稱實在和`substring`也太像了，很容易搞混兩個的傳入參數差異。
+
+> 語法: str.substr(start[, length])
+
+```js
+const aString = '0123456789'
+console.log(aString.substr(2,4)) //2345
+console.log(aString.substr(0,8)) //01234567
+```
 
 > 註: 口訣"截長補短"，所以縮短字詞的方法"substr"用的是長度(length)。
 
-http://ariya.ofilabs.com/2014/02/javascript-string-substring-substr-slice.html
-http://javascript.info/tutorial/string
-http://stackoverflow.com/questions/2243824/what-is-the-difference-between-string-slice-and-string-substring
+總之，在字串提取子字串的功能，優先使用`slice`方法。
 
-在子字串的提取功能上，結論是優先使用slice方法。在知道長度的情況下，使用substr方法，但只能用於非負數的開頭參數。(IE瀏覽器不支援負數的開頭參數)
-
-#### 字串轉換為陣列
-
-split()
-
-```
-var txt = "a,b,c,d,e";   // String
-txt.split(",");          // Split on commas
-txt.split(" ");          // Split on spaces
-txt.split("|");          // Split on pipe
-```
-
-
-```
-var txt = "Hello";       // String
-txt.split("");           // Split in characters
-```
+> 注意: 再強調一次，IE瀏覽器不能支援負數的開頭參數。其實我也建議你不要用substr方法，因為它也不是一個標準中的方法。
 
 ### 風格指引
 
-- (Airbnb 6.2) 雖然使用雙引號(")與單引號(')都是一樣的宣告方式，但建議使用單引號(')
-- (Airbnb 6.3) 字串中的長度超過100字元時，需分成多個字串，然後使用字串的連接符號(+)
+- (Airbnb 6.1) 雖然使用雙引號(")與單引號(')都是一樣的宣告方式，但建議使用單引號(')
+- (Airbnb 6.2/6.3) 字串中的長度超過100字元時，需分成多個字串，然後使用字串的串接符號(+)
+- (Airbnb 6.4) 當需要在程式中建立字串時，優先採用樣版字串的方式，可以提高可閱讀性與精確。
 - (Airbnb 6.6) 避免在字串中使用不必要的跳脫字元
+- (Google) 單引號(')優先使用於雙引號(")。這有助於建立包含HTML的字串。
+- (Google) 定義多行字串時，分成一行行的字串，再使用串接符號(+)進行串接。
 
 ## 布林(Boolean)
 
@@ -495,23 +540,29 @@ const bBool = !!'false' //true
 const cBool = !!NaN //false
 ```
 
-> 註: 雖然你也可以用Boolean物件來作轉換的這件事，但很少會直接這樣使用。
+> 註: 你也可以用Boolean物件來作轉換的這件事。
+
+### 風格指引
+
+- (Airbnb 23.3) If the property/method is a boolean, use isVal() or hasVal()
 
 ## 空(null)與未定義(undefined)
 
-空(null)就是空值，不是空白(space)。空代表的是沒有值(empty)，不存在值的意思。
+比較其它程式語言的設計，一般都只有一種類似Null或None的原始資料類型，而JavaScript多了一種未定義(undefined)類型，它有其歷史背景與原因，但這兩個值很容易被搞混與誤用。
 
-未定義(undefined)即是尚未定義，沒有任何的定義。
+> 空(null)就是空值，代表的是沒有值的意思。
 
-這兩個資料類型常會被拿來比較，何為"空"又何為"未定義"?
+> 未定義(undefined)即是尚未被定義類型，或也有可能是根本不存在，不知道是什麼。
 
-```
-當name從來未被定義過時
+以下是最簡單的一種解釋說法:
+
+```js
+let name //當name從來未被定義完成，不知道其類型
 ```
 
 你問JavaScript: name是什麼?
 
-JavaScript回答: name? 從來沒聽過? 我不知道你在說什麼?
+JavaScript回答: name? 從來沒聽過? 我不知道你在說什麼。
 
 ```js
 name = null 
@@ -532,12 +583,30 @@ null  == undefined // true
 null === undefined // false
 ```
 
-類型的部份，目前null的類型仍然是object，而不是null。這也呼應了上面的值與類型比較。
+而在`typeof`運算符回傳的類型時，目前null的類型仍然是`object`，而不是`null`。關於這一點要特別注意，有人或許它是個bug，但目前仍然沒有更動。
 
 ```js
 typeof null        // object (bug in ECMAScript, should be null)
 typeof undefined   // undefined
 ```
+
+
+
+未定義(undefined)與"真正的根本完全沒有定義"而會造成錯誤中斷的程式碼有區別，見以下的範例:
+
+```js
+let a
+console.log(a) //undefined
+console.log(typeof a) //undefined
+console.log(typeof b) //undefined
+
+//注意，此行會因錯誤中斷之後的程式碼
+console.log(b) //Error: b is not defined
+```
+
+### 結語
+
+經常的用途是，null會用來當作一種特殊情況的運算後的回傳值。而未定義(undefined)則常使用的是加上`typeof`運算符的判斷方式。判斷敘述的教學，我們會在後面的章節再說明，這邊大概能理解這兩個原始資料類型大致上的涵意。而雖然JavaScript並沒有明確規範這兩個資料類型的用途，但對JavaScript程式設計師而言，應儘量使用空值(null)來進行運算判斷，而未定義(undefined)就留給JavaScript系統用的。特別一提的是，把不再使用的變數(物件)設為空值(null)與記憶體管理中的垃圾回收(garbage collection)機制有關。(參考[Exploring the Eternal Abyss of Null and Undefined](http://ryanmorr.com/exploring-the-eternal-abyss-of-null-and-undefined/))
 
 ## 小結
 
