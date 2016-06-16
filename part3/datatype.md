@@ -2,7 +2,7 @@
 
 資料是所有電腦運算的基礎，對於電腦來說，所有的資料都只是0與1的訊號，但對於人類來說，資料類型的區分就複雜得多了，需要因應各種不同的情況來使用。
 
-JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及null(空)與undefined(未定義)兩種特殊情況，ES6中加入了符號(symbol)。
+JavaScript有6種原始的原始資料類型(Primitive)，分別是字串、數字與布林值，以及null(空)與undefined(未定義)兩種特殊值，ES6中加入了符號(symbol)。
 
 JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)。
 
@@ -29,11 +29,11 @@ JavaScript中還有另一個非常重要的第7種資料類型 - Object(物件)�
 
 > 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean的物件，用來對應原始資料類型，它們是一種包裝物件(wrapper object)，提供了原始資料類型使用的一些延申的屬性與方法，真正會用到這些物件只有在特殊情況下。
 
-> 註: 是的，JavaScript的確是一個物件導向的程式語言。不過，JavaScript的物件導向特性與其他語言例如Java、C++等有很大的不同。
+> 註: 是的，JavaScript的確是一個物件導向的程式語言。不過，JavaScript的物件導向特性與其他目前所流行的物件導向語言例如Java、C++等有很大的不同。
 
 ## 鬆散資料類型
 
-JavaScript語言是一個鬆散資料類型(loosely typed)或稱為動態的程式語言(dynamic language)。這代表你不需要為變數or常數在宣告時，就規定它的資料類型，而只是指定值。JavaScript會依照指定值決定變數or常數的資料類型。
+JavaScript語言是一個鬆散資料類型(loosely typed)或稱為動態的程式語言(dynamic language)。這代表你不需要為變數or常數在宣告時，就規定它的資料類型，取而代之的是只需要指定它的值。JavaScript會依照指定的值決定變數or常數的資料類型。
 
 ```
 let foo = 42    // foo現在是Number資料類型
@@ -43,7 +43,7 @@ let foo = true // foo現在是Boolean資料類型
 
 ## 判斷資料類型 - typeof
 
-對於要如何判斷目前變數or常數的資料類型，最簡便的方式就是使用這個運算符`typeof`，它是個運算符，類似正號(+)或負號(-)的行為，它是個一元的運算符，所以是加在運算元的前面。最後會回傳一個類型的字串，範例如下:
+對於要如何判斷目前變數or常數的資料類型，最簡便的方式就是使用這個運算符`typeof`，它是個類似正號(+)或負號(-)的運算符，是個一元的運算符，所以是加在運算元的前面。最後會回傳一個是屬於那一種資料類型的字串，範例如下:
 
 ```js
 console.log(typeof 37) //'number'
@@ -54,11 +54,11 @@ console.log(typeof true) //'boolean'
 console.log(typeof null) //'object'
 ```
 
-> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對typeof結果的規定，就是回傳'object'。目前有一些反對的聲音，認為null是原始資料類型，應當回傳自己本身的資料類型。也有人認為現在修改這個太晚了，不過，截至ES6這一規定仍然沒有更動。
+> 註: 為何null資料類型的的typeof結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對`typeof`結果的規定，就是回傳'object'。目前有一些反對的聲音，認為null是原始資料類型，理應當回傳自己本身的資料類型。也有人認為現在修改這個太晚了，一改動的話會造成很多舊的程式被影響。不過截至ES6標準這一規定仍然沒有更動。
 
 ## 數字(Number)
 
-JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/資料類型。而且沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在JavaScript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
+JavaScript的數字(Number/難波/)類型必定是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/ 資料類型。數字類型沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。在JavaScript中，`1`與`1.0`指的是相同的類型與值。此外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
 
 ```js
 const intValue = 123
@@ -70,11 +70,11 @@ const negValue= -5.5
 
 - +Infinity: 正無限值(相當於Infinity)
 - -Infinity: 負無限值
-- NaN: 不是數字
+- NaN: 代表不是數字
 
 ```js
-console.log(1/0)
-console.log(1/-0) //0有分+0與-0，這有點算陷阱
+console.log(1/0) //Infinity
+console.log(1/-0) //-Infinity，0有分+0與-0，這有點算陷阱
 console.log(Infinity - Infinity) //NaN
 ```
 
@@ -114,13 +114,21 @@ const y = 0xAA33BC
 
 ```js
 //8進位
-const octalNumber = parseInt('071',8);
+const octalNumber = parseInt('071',8)
 
 //2進位
-const binaryNumber = parseInt('0111',2);
+const binaryNumber = parseInt('0111',2)
 
 //16進位
-const hexNumber = parseInt('0xFF',16);
+const hexNumber = parseInt('0xFF',16)
+```
+
+如果是新式的2、8進位定義格式的字串，需要用Number()方法才能轉為10進位，範例如下:
+
+```js
+const binaryNumber = Number('0b11')    // 3
+const octalNumber = Number('0o11')    // 9
+const hexNumber = Number('0x11')    // 17
 ```
 
 > 註: 不論是2、8、16進位的數字，直接輸出到HTML碼中必定會自動轉成10進位輸出。
