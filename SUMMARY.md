@@ -20,7 +20,6 @@
    * [陣列](part3/array.md)
    * [物件](part3/object.md)
    * [日期與時間](part3/date_time.md)
-   * [動畫](part3/animate.md)
 * [Part IV 特性](part4/README.md)
    * [錯誤處理](part4/error.md)
    * [this](part4/this.md)
