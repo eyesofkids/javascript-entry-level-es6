@@ -129,3 +129,8 @@ function example() {
 example();
 console.log(x); //Prints 20... oh dear
 ```
+
+
+## 參考
+
+http://ryanmorr.com/understanding-scope-and-context-in-javascript/

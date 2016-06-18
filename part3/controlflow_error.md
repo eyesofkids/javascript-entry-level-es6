@@ -1,20 +1,61 @@
 # 控制流程
 
-表達式(expression)是各種值(運算元)與運算符的組合體，在之前的章節已經介紹過，在程式語言中有許多的資料類型與運算符，把它們組合起來進行運算，就稱為表達式。
+Expression(表達式)是各種值(運算元)與運算符的組合體，組合起來進行運算然後產生值。
 
-> An expression is any valid unit of code that resolves to a value.
+> Expression代表任何合法的可解出值的程式碼單位
 
-而敘述(statements)是我們在程式語言中，來代表一段程式功能性的語句。撰寫一支程式，就如同我們在寫一篇文章時，會包含了各種描述的語句。表達式(expression)也是一種敘述。
+簡單的表達式如下，這看起有點像某行程式碼的一部份:
+
+```
+x = 7
+3 + 5
+```
+
+Statements(語句、陳述)是在程式語言中，一小段功能性的程式碼，語句中包含了關鍵字與合法的語法(Syntax)。在JavaScript語言中，傳統是以半形分號(;)作為代表結束與分隔其他的語句，但同樣也可以以分行來區分。撰寫一支程式，就如同在寫一篇文章時，其中會包含了各種描述語句。
+
+```js
+//Comment is a statement
+
+//assign value is a statement
+const x = 10
+
+//block statement
+{
+  statement_1;
+  statement_2;
+  ...
+  statement_n;
+}
+
+//function statment
+function name() {
+   [statements]
+}
+```
+
+> Statements(語句)可以視為在JavaScript的最小獨立執行程式碼組合
+
+在JavaScript語言中，Expression(表達式)主要用來產生"值"，因為它的功用很特殊，通常會獨立出來說明。而一般的Statements(語句)主要功能是執行動作或定義某種行為，例如之前說過的註解(Comment)就是一種語句。
+
+另外為了組合多行的語句，採用了區塊的
 
 控制流程(flow control)敘述是一種特殊的敘述，它與程式的執行流程有關，會因為其中的判斷結果不同，導致不同的執行結果。
+
+### (Side Effect)副作用
+
 
 ## if / else敘述
 
 ### 邏輯運算符
 
-### else if
-
 ## switch敘述
+
+## 英文解說
+
+表達式(expression)
+
+context
+
 
 
 
