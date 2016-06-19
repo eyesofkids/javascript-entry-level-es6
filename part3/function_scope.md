@@ -55,7 +55,7 @@ JavaScript程式語言的作用範圍是使用"函式作用範圍(function scope
 
 與scope相關的還有一個字詞Namespace(命名空間)，Namespace是一種語法結構或組織方法，讓程式設計師可以把不同的識別符與程式碼敘述，放到不同的"空間"之中，以免造成衝突或混亂。因此，在不同的命名空間(Namespace)可以有獨自的作用範圍(scope)，這在程式開發時是很重要的一種結構組織方式。其他的程式語言會使用namespace關鍵字(或package)來宣告命名空間。不過，JavaScript語言中並沒有內建的命名空間(Namespace)的特性，這部份就需要使用一些命名空間的解決方式。
 
-而在ES6中採用了新的作法，加入"區塊作用範圍(block statement scope)"概念。其中之一，就是以`let`取代`var`的宣告變數的方式。
+而在ES6中採用了新的作法，加入"區塊作用範圍(block statement scope)"概念。其中之一，就是以`let`與`const`取代`var`的宣告變數的方式。
 
 以下的範例參考自[JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)，為了簡單起見，我把一些運算簡化。
 
