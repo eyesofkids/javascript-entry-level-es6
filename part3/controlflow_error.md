@@ -1,17 +1,21 @@
 # 控制流程
 
-## Expression(表達式)與Statements(語句)
+## Expression(表達式)
 
-Expression(表達式)是各種值(運算元)與運算符的組合體，組合起來進行運算然後產生值。
+Expression(表達式)是以字面文字(Literals)、變數/常數名稱、值(運算元)、 運算符，或其他Expression(表達式)的組合體，最終能運算而產生(evaluates)一個值。
 
-> Expression即任何合法的可計算產出值的程式碼單位
+> Expression(表達式)代表任何合法的可計算產出值的程式碼單位
 
-簡單的表達式如下，這看起有點像某行程式碼的一部份:
+簡單的表達式範例如下，這看起有點像某行程式碼的一部份，或只是單純的字面文字(例如數字或字串):
 
-```
+```js
+'Hello'
+3.1415
 x = 7
 3 + 5
 ```
+
+## Statements(語句)
 
 Statements(語句、陳述)是在程式語言中，一小段功能性的程式碼，語句中包含了關鍵字與合法的語法(Syntax)。在JavaScript語言中，傳統是以半形分號(;)作為代表結束與分隔其他的語句，但同樣也可以以分行來區分。撰寫一支程式，就如同在寫一篇文章時，其中會包含了各種描述語句。
 
@@ -37,14 +41,14 @@ function name() {
 
 > Statements(語句)可以視為在JavaScript的最小獨立執行程式碼組合
 
-在JavaScript語言中，Expression(表達式)主要用來產生"值"，因為它的功用很特殊，通常會獨立出來說明。而一般的Statements(語句)主要功能是執行動作或定義某種行為，例如之前說過的註解(Comment)就是一種語句。
+在JavaScript語言中，Expression(表達式)主要用來產生"值"，因為它的功用很特殊，通常會獨立出來說明稱之為Expression Statements(表達式語句)。而一般的Statements(語句)主要功能是執行動作或定義某種行為，例如之前說過的註解(Comment)就是一種語句。
 
 Statements(語句)可以以不同情況的使用進行分類，以下列出:
 
 - 控制流程(Control flow)
 - 定義(Declarations)
 - 函式與類別(Functions and classes)
-- 迭代、迴圈(Iterations)
+- 迭代/迴圈(Iterations)
 - 其他(Others)
 
 > 註: 此分類參考[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements)的分類方式，正式的ECMAScript分類並不是這樣。
@@ -228,7 +232,7 @@ if(b) console.log(b, 'true')
 
 - 邏輯與Logical AND(&&)
 - 邏輯或Logical OR(||)
-- 邏輯反相Logical NOT (!)
+- 邏輯反相Logical NOT(!)
 
 邏輯與Logical AND(&&) 與 邏輯或Logical OR(||) 兩個符號可以組合多個不同的比較運算，然後以邏輯運算的"與"與"或"來作最後的布林值的運算。不過要注意的是，它們的運算回傳值，在JavaScript中並非布林值，而是**最終的值**，轉換為布林值是判斷情況運算的作用。
 
@@ -392,7 +396,7 @@ switch (fruit)
 #### 風格指引
 
 - (Airbnb 15.5) Use braces to create blocks in case and default clauses that contain lexical declarations (e.g. let, const, function, and class).
-- `switch`語句的`default`語句的`break`功能上並不需要，只是讓程式碼的撰寫風格延續統一而已。`defalt`語句通常也是放在`switch`語句的最後一組。
+- `switch`語句的`default`語句的`break`在功能上並非必要，會這樣撰寫只是讓程式碼的撰寫風格具有一致性。`defalt`語句通常也是放在`switch`語句的最後一組。
 
 ## 英文解說
 
@@ -403,7 +407,7 @@ Statements
 context
 
 literal
-
+A literal is a fixed value, e.g., 5566, 3.14, "Hello", true, that can be assigned to a variable, or form part of an expression.
 
 ## 暫存
 
