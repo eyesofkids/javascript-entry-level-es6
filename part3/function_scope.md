@@ -23,11 +23,11 @@ function foo() {}
 ```js
 
 //使用有名稱的函式
-function addTwo(num){
-    return num+2
+function sum(a, b){
+    return a+b
 }
 
-//用一個常數指定匿名函式
+//常數指定為匿名函式
 const sum = function(a, b){
     return a+b
 }
@@ -36,7 +36,7 @@ const sum = function(a, b){
 函式的呼叫是使用函式名稱加上括號(())，以及在括號中傳入對應的參數，即可呼叫這個函式執行。例如:
 
 ```js
-const newValue = addTwo(100)
+const newValue = sum(100,0)
 console.log(sum(99, 1))
 ```
 
@@ -44,9 +44,14 @@ console.log(sum(99, 1))
 
 ### 傳入參數
 
+函式的"傳入參數"通常會看到兩個英文字詞，一個是parameter(或簡寫為param)，另一個是argument，它們的差異在於:
+
+- 函式parameters指的是在函式定義時的那些列出來的名稱
+- 函式arguments指的是當函式被呼叫時，傳入函式真正的那些值
+
 #### 預設值
 
-函式的傳入參數(parameters)預設值是`undefined`，有幾種方式可以用來在函式中進行預設值的設定，例如用`undefined`判斷，或是用邏輯或(||)運算符的預設值設定方式。在ES6中加入了函式傳入參數的預設值指定語法，所以對照以前的用來指定預設值的範例:
+函式的傳入參數預設值，在沒有指定的情況下一定是`undefined`，有幾種方式可以用來在函式內的語句中，進行預設值的設定，例如用`undefined`判斷，或是用邏輯或(||)運算符的預設值設定方式。在ES6中加入了函式傳入參數的預設值指定語法，所以對照以前的用來指定預設值的範例:
 
 ```js
 const link = function (point, color, url) {
@@ -65,11 +70,58 @@ const link = function (point = 10, color = 'red', url = 'http://google.com') {
 }
 ```
 
-#### 無名傳入參數(unnamed arguments)
+#### 以函式作為傳入參數
 
-#### 不定傳入參數
+前面有說明函式可以作為變數/常數的指定值，不只如此，在JavaScript中函式也可以作為傳入參數，傳入另一個函式中。這種函式稱之為 高階函式(Higher-order function)，是一種程式語言的特性，並不是每種程式語言中的函式都可以這樣。因為傳入參數並沒辦法規定只能傳入哪一種資料類型，所以當要定義傳入參數將會是函式時，習慣上通常會用fn, func作為傳入參數名稱，以此較為容易辦別。以下為一個範例的範例:
 
-#### 其餘參數(rest )
+```js
+const addOne = function(value){
+    return value + 1
+}
+
+const addOneAndTwo = function(value, fn){
+    return fn(value) + 2
+}
+
+console.log(addOneAndTwo(10, addOne)) //13
+```
+
+#### 無名的傳入參數(unnamed arguments)
+
+函式隱藏的機制之一，對於傳入的參數實際上是有一個隱藏的物件 - arguments，它會先對傳入的值進行保存，之後可以直接在函式內的語句中直接使用。arguments雖是一個物件資料類型，我們稱它為"pseudo-array"(偽陣列)，因為它雖然有陣列一些基本特性，但缺少很多陣列的可使用的方法。以下為一個簡單的範例:
+
+```js
+function sum() {
+  return arguments[0]+arguments[1]
+}
+  
+console.log(sum(1, 100))
+```
+
+不過，如果你把函式的傳入參數定義中，使用了arguments這個參數名稱，或是在函式中的語句裡，定義了一個arguments變數/常數名稱，這個隱藏的物件就會被覆蓋失效。
+
+> 註: 關於arguments的詳細介紹可以參考[The JavaScript arguments object…and beyond](https://javascriptweblog.wordpress.com/2011/01/18/javascripts-arguments-object-and-beyond/)
+
+#### 不固定傳入參數
+
+像下面這個範例中，原先sum函式中，定義了要有三個傳入參數，但如果真正在呼叫函式時傳入的參數值(arguments)並沒有的情況下，會發生什麼情況？前面有說到，沒有預設值的時候會視為`undefined`值。
+
+```js
+function sum(x, y, z) {
+  return x+y+z
+}
+
+console.log(sum(1, 2, 3))
+console.log(sum(1, 2))
+console.log(sum(1))
+console.log(sum('1', '2', '3'))
+console.log(sum('1', '2'))
+```
+
+所以有的時候需要一種能夠"不固定傳入參數"的機制，在各種函式應用時，才能比較方便
+
+
+#### 其餘參數(rest)
 
 ### 內部(巢狀)函式
 
