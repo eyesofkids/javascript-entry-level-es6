@@ -37,7 +37,7 @@ for(let count = 0 ; count < 10 ; count++){
 
 ```js
 //錯誤示範
-for(;;){
+for (;;){
     console.log('bahbahbah')
 }
 ```
@@ -46,10 +46,10 @@ for(;;){
 
 > 注意: 迴圈是一個破壞性相當高的語句，如果不小心很容易造成程式錯誤或當掉。
 
-第一個表達式是用作初始值的定義，它是可以設定多個定義值的，每個定義值之間使用逗號(,)作為分隔，定義值可使用的範圍只在迴圈內部的語句中:
+第一個表達式是用作初始值的定義。它是可以設定多個定義值的，每個定義值之間使用逗號(,)作為分隔，定義值可使用的範圍只在迴圈內部的語句中:
 
 ```js
-for(let count = 0, total = 10 ; count < 10 ; count++){
+for (let count = 0, total = 10 ; count < 10 ; count++){
     console.log(count, total)
 }
 ```
@@ -61,7 +61,7 @@ for(let count = 0, total = 10 ; count < 10 ; count++){
 由於它是一個標準的判斷情況(condition)表達式，如果有多個判斷情況的時候，要使用邏輯與(&&)和邏輯或(||)來連接，邏輯或(||)因為結果會是`true`的情況較為容易，所以要更佳小心:
 
 ```js
-for(let count = 0, total = 10 ; count < 10 && total < 20 ; count++){
+for (let count = 0, total = 10 ; count < 10 && total < 20 ; count++){
     console.log(count, total)
 }
 ```
@@ -69,7 +69,7 @@ for(let count = 0, total = 10 ; count < 10 && total < 20 ; count++){
 第三個表達式是用於更新的，它也不能說只用在遞增(increment)，應該說用在更新(update)會比較恰當。每次一執行完成迴圈就會執行一次的表達式。它的作用相當於在迴圈內的區塊中的最後面加上這個語句，例如下面這個for迴圈和最上面一開始的範例的結果是一樣的:
 
 ```js
-for(let count = 0 ; count < 10 ;){
+for (let count = 0 ; count < 10 ;){
     console.log(count)
     count++
 }
@@ -78,7 +78,7 @@ for(let count = 0 ; count < 10 ;){
 多個表達式也是沒問題的，同樣也是用逗點分隔(,)不同的表達式:
 
 ```js
-for(let count = 0, total = 30 ; count < 10 && total > 20 ; count++, total--){
+for (let count = 0, total = 30 ; count < 10 && total > 20 ; count++, total--){
     console.log(count, total)
 }
 ```
@@ -100,15 +100,19 @@ console.log(y) //2
 
 > 口訣: 遞增減運算符(++/--) "錢仙"=(放)前(面)先(變動)
 
-總結一下，實際上這三個表達式並沒有限定只能用哪些表達式，只要是合法的表達式都可以，不過只是第二個表達式會作判斷情況，也就是布林值的轉換，這一點要注意的。
+#### 總結
+
+實際上這三個表達式並沒有限定只能用哪些表達式，只要是合法的表達式都可以，只不過第二個表達式會作判斷情況，也就是轉換為布林值，這一點要注意的。
+
+至於每個表達式執行的情況，第一個表達式(初始化值)只會在讀取到for語句時執行一次，之後不會再執行。第二個表達式(判斷情況)會在讀取到for語句時執行一次，之後每次重覆開始時都會執行一次。第三個表達式會在有滿足條條下，執行到for語句區塊內部的語句的最後才執行。
 
 ### 多重迴圈
 
 所謂的多重迴圈是巢狀的迴圈語句結構，也就是在迴圈的區塊語句中，再加上另一個內部的迴圈語句。典型的範例就是九九乘法表:
 
 ```js
-for(let i = 1 ; i < 10 ; i++){
-  for(let j = 1 ; j < 10 ; j++){
+for (let i = 1 ; i < 10 ; i++){
+  for (let j = 1 ; j < 10 ; j++){
     console.log(i + ' x ' + j + ' = ', i * j )
   }
 }
@@ -116,7 +120,49 @@ for(let i = 1 ; i < 10 ; i++){
 
 ## while語句
 
+while迴圈語句可以說它是for迴圈語句的簡單版本，這兩者可以應用不同的使用情況。它只需要一個判斷情況(condition)的表達式即可，它的基本語法結構如下:
+
+```js
+while (condition)
+  statement
+```
+
+一個簡單的範例如下，這個範例與之前的for迴圈的範例功用是相等的:
+
+```js
+let count = 0
+
+while (count < 10) {
+    console.log(count)
+    count++
+}
+```
+
+while語句沒什麼特別要說明的，它把更新的表達式的彈性部份交給程式設計師，在while語句中的區塊語句中自行處理，使用時要避免出現無窮迴圈或重覆次數不正確的情況。
+
 ## do...while語句
+
+do...while語句是while語句的另一種變形的版本，差異只在於"它至少會保証執行一次do...while語句區塊中的語句"，它的基本語法結構如下:
+
+```js
+do
+  statement
+while (condition)
+```
+
+正常的使用情況與while語句沒什麼差異，只是位置上下顛倒再加個`do`而已:
+
+```js
+let count = 0
+
+do {
+  console.log(count)
+  count++
+}
+while (count < 10)
+```
+
+因為do...while語句保証會執行一次的特性，它會用在
 
 ## for...in語句
 
@@ -130,5 +176,6 @@ break(中斷)與continue(繼續)是用於迴圈區塊中語句的控制，在swi
 
 `continue`是"繼續下一次迴圈語句"的意思，則是忽略在`continue`之下的語句，直接跳到下一次的重覆執行語句的開頭
 
+## 風格指引
 
-
+- 18.3 

@@ -126,7 +126,7 @@ const x = 10
 
 if (x > 100) {
     console.log('x > 100')
-} else if( x < 50){
+} else if ( x < 50){
     console.log('x < 100 but x > 50')
 } else {   
     console.log('x < 50')
@@ -138,13 +138,13 @@ if (x > 100) {
 ```js
 const x = 10
 
-if(x > 100) {
-    if(x > 500){
+if (x > 100) {
+    if (x > 500){
         console.log('x > 500')
     }else{
         console.log('x > 100 but x < 500')
     }
-} else if( x < 50){
+} else if ( x < 50){
     console.log('x < 100 but x > 50')
 } else {   
     console.log('x < 50')
@@ -157,13 +157,13 @@ if(x > 100) {
 const x = 10
 
 //去除block statement
-if(x > 100) 
+if (x > 100) 
     console.log('x > 100')
 else 
     console.log('x < 50')
 
 //寫成一行
-if(x === 10) console.log('x is 10')
+if (x === 10) console.log('x is 10')
 ```
 
 而在使用`if`加上`else`時，為了簡化語句，使用三元運算符(Conditional (ternary) Operator)(?:)，來讓程式碼更簡潔，這也只能用於簡單的判斷情況與執行語句時:
@@ -215,22 +215,22 @@ const foo = a || b
 
 ```js
 
-if(undefined) console.log('true') //false
+if (undefined) console.log('true') //false
 
-if(null) console.log('true') //false
+if (null) console.log('true') //false
 
-if(+0) console.log('true') //false
+if (+0) console.log('true') //false
 
-if(!'') console.log('!\'\' true') //true
+if (!'') console.log('!\'\' true') //true
 
-if(123) console.log('123 true') //true
+if (123) console.log('123 true') //true
 
 //下面的還沒教到，是空物件與空陣列
 const a = {}
 const b = []
 
-if(a) console.log(a, 'true')
-if(b) console.log(b, 'true')
+if (a) console.log(a, 'true')
+if (b) console.log(b, 'true')
 ```
 
 #### 邏輯運算符
@@ -253,8 +253,8 @@ const x = 50
 const y = 60
 const z = 100
 
-if((x > 10) && (x < 100)) console.log(true)
-if(( ((x + y) > 10) || (x === 50) ) && (z == 100)) console.log(true)
+if ((x > 10) && (x < 100)) console.log(true)
+if (( ((x + y) > 10) || (x === 50) ) && (z == 100)) console.log(true)
 ```
 
 > 註:(&)符號英文為And或Amphersand。(|)符號的英文在電腦上通常稱為Pipe，管道的意思。(!)在英文中稱為Exclamation mark，驚嘆號的意思。
@@ -388,11 +388,11 @@ switch (expression) {
 ```js
 const x = 10
 
-if(x > 100){
+if (x > 100){
   console.log('x > 100')
-} else if(x < 100 && x >50) {
+} else if (x < 100 && x >50) {
   console.log('x < 100 && x >50')
-}else{
+} else {
   console.log('x < 50')
 } 
 ```
@@ -402,7 +402,7 @@ if(x > 100){
 ```js
 const x = 10
 
-switch(true){
+switch (true) {
     case (x >100):
         console.log('x > 100')
         break
@@ -420,11 +420,11 @@ switch(true){
 ```js
 const x = 10
 
-if((x > 100) === true){
+if ((x > 100) === true) {
     console.log('x > 100')
-}else if((x < 100 && x >50) === true){
+}else if ((x < 100 && x >50) === true) {
     console.log('x < 100 && x >50')
-} else{
+} else {
     console.log('x < 50')
 }
 ```
@@ -434,7 +434,7 @@ if((x > 100) === true){
 ```js
 const x = 10
 
-switch(x){
+switch (x) {
     case 100 :
         console.log('x is 100')
         break
@@ -457,7 +457,7 @@ switch(x){
 ```js
 const x = 50
 
-switch(x){
+switch (x) {
     case 100 :
         console.log('x is 100')
         break
@@ -545,6 +545,7 @@ switch (fruit)
   }
 ```
 
+- (Airbnb 18.3) Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations.
 - `defalt`語句習慣固定是放在`switch`語句中的最後一段的位置，雖然它也不是一定要放在那裡。
 - `switch`語句的`case/default`語句，假使是位於最後一段(通常是`default`語句)，它的`break`在功能上並非必要，習慣加上只是為了讓程式碼更具一致性。
 
