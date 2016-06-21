@@ -18,7 +18,7 @@ function() {}
 function foo() {}
 ```
 
-函式的名稱也是一個識別符，命名方式如同變數/常數的命名規則。而匿名函式可以當作一個指定值，指定給一個變數/常數。以下兩種方式對於函式都是可以使用的宣告(定義)方式:
+函式的名稱也是一個識別符，命名方式如同變數/常數的命名規則。而匿名函式可以當作一個指定值，指定給一個變數/常數。函式使用`return`作為最後的回傳值輸出，函式通常會有回傳值，但並非每種函式都需要回傳值，也有可能利用輸出的方式來輸出結果。以下兩種方式對於函式都是可以使用的宣告(定義)方式:
 
 ```js
 
@@ -40,39 +40,61 @@ const newValue = sum(100,0)
 console.log(sum(99, 1))
 ```
 
-函式使用`return`作為最後的回傳值輸出，函式通常會帶有回傳值，但並非每種函式都需要回傳值。
+ES6中有一種新式的函式語法，稱為"箭頭函式(Arrow Function)"，使用肥箭頭符號(Flat Arrow)(=>)，它是一種匿名函式的縮短寫法，只用於有回傳值的情況，下面這個寫法相當於上面的`sum`函式定義:
+
+```js
+const sum = (a, b) => { a + b }
+```
+
+箭頭函式(Arrow Function)因為語法簡單，而且可以綁定this變數，所以受到JavaScript界很大的歡迎，現在在很多程式碼中被大量使用。我們在特性篇中裡會專門有一章的內容來說明箭頭函式(Arrow Function)。
+
+> 註: this變數與物件有關，在物件的章節會說明。
 
 ### 傳入參數
 
-函式的"傳入參數"通常會看到兩個英文字詞，一個是parameter(或簡寫為param)，另一個是argument，它們的差異在於:
+函式的傳入參數是需要討論的，它算是函式與外部環境溝通的管理，也就是輸入部份。不過，你可能會在函式的"傳入參數"通常會看到兩個不同的英文字詞，一個是parameter(或簡寫為param)，另一個是argument，這常常會造成混淆，它們的差異在於:
 
-- 函式parameters指的是在函式定義時的那些列出來的名稱
-- 函式arguments指的是當函式被呼叫時，傳入函式真正的那些值
+- parameters: 指的是在函式的那些傳入參數名稱的定義。我們在文章中會以"傳入參數定義名稱"來說明。
+- arguments: 指的是當函式被呼叫時，傳入到函式中真正的那些值。我們在文章中會以"實際傳入參數值"來說明。
 
-#### 預設值
+#### 傳入參數預設值
 
-函式的傳入參數預設值，在沒有指定的情況下一定是`undefined`，有幾種方式可以用來在函式內的語句中，進行預設值的設定，例如用`undefined`判斷，或是用邏輯或(||)運算符的預設值設定方式。在ES6中加入了函式傳入參數的預設值指定語法，所以對照以前的用來指定預設值的範例:
+關於函式的傳入參數預設值，在未指定實際的傳入值時，一定是`undefined`
+，這行為與變數宣告後但沒有指定值很類似。在函式定義時，我們並沒有辦法直接限定傳入參數的資料類型，因此在函式內的語句，一開始都會進行實際傳入參數值的資料類型檢查。
+
+通常有幾種方式可以用來在函式內的語句中，進行預設值的設定，例如用`undefined`判斷，或是用邏輯或(||)運算符的預設值設定方式。用來指定預設值的範例:
 
 ```js
-const link = function (point, color, url) {
+//用邏輯或(||)
+const link = function (point, url) {
     let point = point || 10
-    let color = color || 'red'
     let url = url || 'http://google.com'
+    ...
+}
+
+//另一種設定的方式，typeof是回傳類型的字串值
+const link = function (point, url) {
+    let point = typeof point !== 'undefined' ? point : 10  
+    let url = typeof url !== 'undefined' ? url : 'http://google.com' 
     ...
 }
 ```
 
-現在可以直接在傳入參數時就定義這些參數的預設值:
+> 注意: 邏輯或(||)運算符設定預設值，雖然語法簡單，但有可能不精準。它會在實際傳入參數值只要是"falsy"，就直接指定為預設值。
+
+在ES6中加入了函式傳入參數的預設值指定語法，現在可以直接在傳入參數時就定義這些參數的預設值，這個作法是建議的用法:
 
 ```js
-const link = function (point = 10, color = 'red', url = 'http://google.com') {
+const link = function (point = 10, url = 'http://google.com') {
     ...
 }
 ```
 
 #### 以函式作為傳入參數
 
-前面有說明函式可以作為變數/常數的指定值，不只如此，在JavaScript中函式也可以作為傳入參數，傳入另一個函式中。這種函式稱之為 高階函式(Higher-order function)，是一種程式語言的特性，並不是每種程式語言中的函式都可以這樣。因為傳入參數並沒辦法規定只能傳入哪一種資料類型，所以當要定義傳入參數將會是函式時，習慣上通常會用fn, func作為傳入參數名稱，以此較為容易辦別。以下為一個範例的範例:
+前面有說明函式可以作為變數/常數的指定值。不僅如此，在JavaScript中函式也可以作為實際傳入參數的值，將一個函式傳入到另一個函式中作為參數值，而且在函式的最後也可以回傳函式。這種函式的結構稱之為"高階函式(Higher-order function)"，是一種JavaScript程式語言的獨特特性，高階函式可以讓在函式的定義與使用上能有更多的彈性，它也延申出很多不同的應用結構。你可能常聽到JavaScript的callback(回呼、回調)結構，它就是高階函式的應用。
+
+習慣上，因為函式的傳入參數並沒辦法先限定資料類型，所以當要定義傳入參數將會是個函式時，通常會用fn或func作為傳入參數名稱，以此作為辦別，當然最好是要加上傳入值的註解說明。以下為一個簡單的範例:
 
 ```js
 const addOne = function(value){
@@ -88,7 +110,7 @@ console.log(addOneAndTwo(10, addOne)) //13
 
 #### 無名的傳入參數(unnamed arguments)
 
-函式隱藏的機制之一，對於傳入的參數實際上是有一個隱藏的物件 - arguments，它會先對傳入的值進行保存，之後可以直接在函式內的語句中直接使用。arguments雖是一個物件資料類型，我們稱它為"pseudo-array"(偽陣列)，因為它雖然有陣列一些基本特性，但缺少很多陣列的可使用的方法。以下為一個簡單的範例:
+這是函式隱藏的機制，實際上對於傳入的參數是有一個隱藏在背後的物件，名稱為`arguments`，它會先對傳入參數實際值進行保存，可以直接在函式內的語句中直接取用。arguments雖是一個物件資料類型，但它有"陣列"的一些基本特性，不過缺少很大一部份陣列中可使用的方法，所以被稱作"pseudo-array"(偽陣列)。以下為一個簡單的範例:
 
 ```js
 function sum() {
@@ -98,9 +120,9 @@ function sum() {
 console.log(sum(1, 100))
 ```
 
-不過，如果你把函式的傳入參數定義中，使用了arguments這個參數名稱，或是在函式中的語句裡，定義了一個arguments變數/常數名稱，這個隱藏的物件就會被覆蓋失效。
+不過，如果你把函式的傳入參數定義中，使用了arguments這個參數名稱，或是在函式中的語句裡，有定義了一個名稱為arguments的自訂變數/常數名稱，這個隱藏的物件就會被覆蓋掉失效。
 
-> 註: 關於arguments的詳細介紹可以參考[The JavaScript arguments object…and beyond](https://javascriptweblog.wordpress.com/2011/01/18/javascripts-arguments-object-and-beyond/)
+> 註: 關於arguments的詳細介紹，可以參考[The JavaScript arguments object…and beyond](https://javascriptweblog.wordpress.com/2011/01/18/javascripts-arguments-object-and-beyond/)
 
 #### 不固定傳入參數
 
@@ -193,11 +215,6 @@ Context名詞，在程式語言中指的是程式碼的上下文內容，在Java
 http://ryanmorr.com/understanding-scope-and-context-in-javascript/
 
 Namespace(命名空間)與作用範圍(scope)相關的還有一個Namespace(命名空間)，這是一種語法結構或組織方法，讓程式設計師可以把不同的識別符與程式碼敘述，放到不同的"空間"之中，以免造成衝突或混亂。因此，在不同的命名空間(Namespace)可以有獨自的作用範圍(scope)。不過，JavaScript語言中並沒有內建的命名空間(Namespace)的特性，為了解決作用範圍(scope)的問題，這部份就需要使用一些命名空間的解決方式。
-
-Function parameters are the names listed in the function definition.
-
-Function arguments are the real values received by the function when it is invoked.
-
 
 
 #### 全域作用範圍污染(global scope pollution)
