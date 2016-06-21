@@ -68,7 +68,9 @@ function name() {
 }
 ```
 
-在JavaScript語言中，Expression(表達式)主要用來產生"值"，因為它的功用很特殊，通常會獨立出來說明稱之為Expression Statements(表達式語句)。而一般的Statements(語句)主要功能是執行動作或定義某種行為，例如之前說過的註解(Comment)就是一種語句。
+在JavaScript語言中，Expression(表達式)主要用來產生"值"，因為它的功用很特殊，通常會獨立出來說明稱之為Expression Statements(表達式語句)。
+
+一般的Statements(語句)主要功能是執行動作或定義某種行為，例如之前說過的註解(Comment)就是一種語句。
 
 Statements(語句)還可以依不同情況的使用進行分類，以下列出:
 
@@ -101,7 +103,7 @@ Statements(語句)還可以依不同情況的使用進行分類，以下列出:
 
 ### if...else語句
 
-`if...else`是常見的控制流程的語句，在中文的意思就是"如果...要不然"。所以整體的結構就像是中文的意思"如果aaa命題為真情況下，就xxx，要不然就ooo"。這個aaa就是一個判斷情況(condition)，判斷情況使用的都是比較運算符(Comparison operators)與邏輯運算符(Logical Operators)，而結果則是會用布林的`true`與`false`值來判斷，但要特別注意之前說明的"falsy"情況，這些在判斷情況中會自動轉成布林的`false`。
+`if...else`是常見的控制流程的語句，在中文的意思就是"如果...要不然"。所以整體的結構就像是中文的意思"如果aaa命題為真情況下，就xxx，要不然就ooo"。這個aaa就是一個判斷情況(condition)，判斷情況使用的都是比較運算符(Comparison operators)與邏輯運算符(Logical Operators)，而判斷情況結果則是會用布林的`true`與`false`值來判斷，但要特別注意之前說明的"falsy"情況，這些在判斷情況中會自動轉成布林的`false`。
 
 一個簡單的`if...else`語句的範例如下:
 
@@ -164,7 +166,7 @@ else
 if(x === 10) console.log('x is 10')
 ```
 
-而在使用`if`加上`else`時，為了簡化語句，使用三元運算符(Conditional (ternary) Operator)(?:)，來讓程式碼更簡潔，注意這也只能用於簡單的判斷情況與執行語句時:
+而在使用`if`加上`else`時，為了簡化語句，使用三元運算符(Conditional (ternary) Operator)(?:)，來讓程式碼更簡潔，這也只能用於簡單的判斷情況與執行語句時:
 
 ```js
 const x = 10
@@ -180,7 +182,7 @@ const x = 10
 const foo = value1 > value2 ? 'baz' : null
 ```
 
-這個有點像我們之前說過的，用邏輯或運算符(||)來指定變數/常數預設值的語句。不過如果是單純的判斷某個值是否存在，然後設定它為預設值，用邏輯或運算符(||)是比較好的作法，例如:
+這個像我們之前說過的，用邏輯或運算符(||)來指定變數/常數預設值的語句。不過如果是單純的判斷某個值是否存在，然後設定它為預設值，用邏輯或運算符(||)是比較好的作法，例如:
 
 ```js
 //相當於 const foo = a ? a : b
@@ -203,7 +205,7 @@ const foo = a || b
 - 其中有布林值時，true轉為1，false轉為+0
 - 當物件與數字或字串比較時，物件會先轉為預設值以及轉成原始資料類型的值，再作比較
 
-至於嚴格相等比較演算法(也就是(===)與(!==)符號的比較)，由於一定要比較原始資料類型的類型，只要類型不同就一定是回傳為false。除了類型相同，值也要相等，才會有回傳`true`的情況。
+至於嚴格相等比較演算法(也就是(===)與(!==)符號的比較)，由於一定要比較原始資料類型的類型，只要類型不同就一定是回傳為false。除了類型相同，值也要相等，才會有回傳`true`的情況，什麼值轉換成什麼值再比較就根本不需要。
 
 > 註: 物件的情況會比較特別，我們會在說明物件類型的章節再詳細說明。
 
@@ -386,12 +388,13 @@ switch (expression) {
 ```js
 const x = 10
 
-if(x > 100) 
-    console.log('x > 100')
-else if(x < 100 && x >50) 
-    console.log('x < 100 && x >50')
-else 
-    console.log('x < 50')
+if(x > 100){
+  console.log('x > 100')
+} else if(x < 100 && x >50) {
+  console.log('x < 100 && x >50')
+}else{
+  console.log('x < 50')
+} 
 ```
 
 轉換為switch語句會變成像下面這樣。`switch(true)`代表當`case`中的比較運算需要為布林值的`true`時，才能滿足而執行其中包含的語句:
@@ -409,6 +412,20 @@ switch(true){
     default:
         console.log('x < 50')
         break
+}
+```
+
+這相當於下面這個if...else的語句:
+
+```js
+const x = 10
+
+if((x > 100) === true){
+    console.log('x > 100')
+}else if((x < 100 && x >50) === true){
+    console.log('x < 100 && x >50')
+} else{
+    console.log('x < 50')
 }
 ```
 
