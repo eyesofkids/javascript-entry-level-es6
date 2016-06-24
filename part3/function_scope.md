@@ -2,11 +2,9 @@
 
 ## 函式(function)
 
-函式(Function)是JavaScript的非常重要的特性。因為JavaScript使用了頭等函數(First-class function)的設計，函式即是一種物件，而且是頭等物件(First-class Object)。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用。
+函式(Function)是JavaScript的非常重要的特性。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用。
 
-> 關於頭等函數(First-class function)可以參考[First-class function](https://en.wikipedia.org/wiki/First-class_function)
-
-> 註: 依據ECMAScript標準的定義，function的typeof傳回值是'function'，而不是'object'。
+> 註: 依據ECMAScript標準的定義，function的`typeof`傳回值是'function'，而不是'object'。
 
 ### 函式定義
 
@@ -22,9 +20,7 @@ function foo() {}
 
 函式的名稱也是一個識別符，命名方式如同變數/常數的命名規則。
 
-而匿名函式並沒有函式的名稱，通常用來當作一個指定值，指定給一個變數/常數，被指定後這個變數/常數名稱，就成了這個函式的名稱。
-
-實際上，匿名函式也有其他的功用，例如拿來當作其他函式的傳入參數值，或是進行一次性的執行。
+而匿名函式並沒有函式的名稱，通常用來當作一個指定值，指定給一個變數/常數，被指定後這個變數/常數名稱，就成了這個函式的名稱。實際上，匿名函式也有其他的功用，例如拿來當作其他函式的傳入參數值，或是進行一次性的執行。
 
 函式使用`return`作為最後的回傳值輸出，函式通常會有回傳值，但並非每種函式都需要回傳值，也有可能利用輸出的方式來輸出結果。以下兩種方式對於函式都是可以使用的宣告(定義)方式:
 

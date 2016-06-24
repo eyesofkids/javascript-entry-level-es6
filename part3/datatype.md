@@ -1,8 +1,8 @@
-# 資料類型(值) Data Type
+# 資料類型(值)
 
 資料是所有電腦運算的基礎，對於電腦來說，所有的資料都只是0與1的訊號。但對於人類來說，資料類型的區分就複雜得多了，需要因應各種不同的情況來使用。
 
-JavaScript中有6種原始的原始資料類型(Primitive)，分別是數字(Number)、字串(String)與布林(Boolean)，以及空(null)與未定義(undefined)兩種特殊值，ES6後加入了符號(symbol)。
+JavaScript中有6種原始的原始資料類型(Primitive Data Type)，分別是數字(Number)、字串(String)與布林(Boolean)，以及空(null)與未定義(undefined)兩種特殊值，ES6後加入了符號(symbol)。
 
 另外還有另一個非常重要的第7種資料類型 - Object(物件)。
 
