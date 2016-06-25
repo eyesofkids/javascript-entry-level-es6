@@ -270,7 +270,60 @@ console.log(y) //y is not defined
 
 ### 匿名函式與IIFE
 
-### Hoisting
+### 提升(Variable Hoisting)
+
+簡單的來說，變數提升是JavaScript語言中的一種執行時的特性，也是一種隱性機制，它會出現主要是"壞的程式習慣+壞的程式特性"所造成的結果。
+
+沒先定義與指定值就使用，這絕對是個壞習慣是吧？變數/常數沒指定好就使用，結果一定是不是你要的。
+
+`var`、`let`和`const`會被提升其定義，但指定值不會一併提升上去，像下面這樣的程式碼:
+
+```js
+console.log(x) //undefined
+var x = 5
+
+console.log(y) //undefined
+let y = 5
+```
+
+最後的結果出乎意料，竟然只是沒指定值的`undefined`，而不是程式錯誤。實際上這程式碼裡的變數被提升(Hoisting)了，相當於:
+
+```js
+var x
+console.log(x)
+x = 5
+
+let y
+console.log(y)
+y = 5
+```
+
+函式也會被提升，而且情況更不樂觀，它變成可以先執行再定義，也就是整個函式定義內容都會被提升到程式碼最前面:
+
+```js
+foo() //可執行
+
+function foo(){
+  console.log('Hello')
+}
+```
+
+不過使用匿名函式的指定方式，就不會有提升的情況，所以使用匿名函式的指定值反而是建議的習慣作法:
+
+```js
+foo() //錯誤: foo is not a function
+
+let foo = function(){
+  console.log('Hello')
+}
+```
+
+結論是
+
+- 所有的定義(var, let, const, function, function*, class)，都會被提升的情況，
+- 而在函式中的這些定義也會被提升
+- 當函式與變數/常數提升時，函式的優先程度高於變數/常數。更多資訊參考範例出自[這裡](http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html)，解答在[這裡](http://stackoverflow.com/questions/7506844/javascript-function-scoping-and-hoisting)
+- 遵守好的風格習慣可以避免掉提升的諸多問題
 
 ### 全域作用範圍污染(global scope pollution)
 
