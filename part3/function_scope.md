@@ -6,7 +6,7 @@
 
 > 注意: 依據ECMAScript標準的定義，函式的`typeof`回傳值是'function'，而不是'object'。由此可見在標準中定義的'object'類型，只是針對"單純"的物件定義而言，具有函式實作的物件，將會歸類為`function`，例如Date、String、Object這些內建的物件，它們的`typeof`回傳值都是'function'。
 
-> 註: 那麼要如何準確的檢查一個變數/常數是否函式類型？請參考這篇[How can I check if a javascript variable is function type?](http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type)的問答。
+> 註: 那麼要如何精確又有效的檢查一個變數/常數是否函式類型？請參考這篇[How can I check if a javascript variable is function type?](http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type)的問答。
 
 ### 函式定義
 
@@ -56,6 +56,8 @@ const sum = (a, b) =>  a + b
 
 > 註: this變數與物件有關，在物件的章節會說明。
 
+> 註: 箭頭函式無法使用下面章節內容裡的arguments物件
+
 ### 傳入參數
 
 函式的傳入參數是需要討論的，它是函式與外部環境溝通的管道，也就是輸入資料的部份。
@@ -97,6 +99,8 @@ const link = function (point = 10, url = 'http://google.com') {
     ...
 }
 ```
+
+> 註: 只有`undefined`的情況下才會觸發預設值的指定
 
 #### 以函式作為傳入參數
 
@@ -228,25 +232,23 @@ function addInner(a, b) {
 addOuter(1, 2) //3
 ```
 
-內部函式會具有外部函式所包含的環境值，例如外部函式的傳入參數、宣告變數等等。而內部函式又可以成為一種外部函式的回傳值，所以當內部函式接收到外部函式的環境值，又被回傳出去，內部函式間接變成一種可以讓函式對外曝露函式內部環境值的溝通管道。
+內部函式可以獲取到外部函式所包含的環境值，例如外部函式的傳入參數、宣告變數等等。而內部函式又可以成為外部函式的回傳值，所以當內部函式接收到外部函式的環境值，又被回傳出去，內部函式間接變成一種可以讓函式對外曝露函式內部環境值的溝通管道，這種結構稱之為"閉包(closure)"。
 
-內部函式在JavaScript中被廣泛的使用，因為它可以形成所謂"閉包"(closure)的結構。不過對於初學者來說，是不容易理解的一種特性，因為除了它的語法結構之外，還涉及到很多語言內部的設計部份。"閉包"(closure)在特性篇中有一個獨立的章節來說明。
-
-此外，內部函式在JavaScript的物件導向中，也扮演了重要的角色，這個可能會讓初學者覺得很訝異，之後在其他章節的內容再說明了。
+內部函式在JavaScript中被廣泛的使用，因為它可以形成所謂"閉包"(closure)的結構。"閉包"(closure)在特性篇中有一個獨立的章節來說明。此外，內部函式因為可以形成閉包，這種結構在在JavaScript的物件導向中，也扮演了重要的角色，我們在物件的內容中會再見到它。
 
 ## 作用範圍(scope)
 
-"作用範圍(scope)"或稱之為"作用域"，指的是"變數/常數定義與語句的可被使用的範圍"，作用範圍可分為本地端的(local)與全域的(global)。
+"作用範圍(scope)"或稱之為"作用域"，指的是"變數或常數的定義與語句的可見(被存取)的範圍"，作用範圍可簡單劃分為本地端的(local)與全域的(global)。
 
-JavaScript的作用域是使用"函式作用範圍(function scope)"的，或稱之以函式為基礎(function-based)，所以是它是以函式的來區分語句與值定義。
+JavaScript程式語言的作用範圍，基本上是使用"函式作用範圍(function scope)"的，或稱之以函式為基礎(function-based)的作用範圍。也就是說只有使用函式才能劃出一個本地端的作用範圍，其他的區塊像if、for、switch、while等等，雖然有使用區塊語句({...})，但卻是無法界定出作用範圍。
 
-因此，當你在所有函式的外面宣告變數/常數，這個變數/常數即會成為"全域作用範圍"的一員，稱為"全域變數/常數"，也就是說在程式碼裡的任何函式中都可以存取得到。
+因此，當你在所有函式的外面宣告變數或常數，這個變數或常數就會變成"全域的"作用範圍的一員，稱為"全域變數或常數"，也就是說在程式碼裡的任何地方都可以被存取得到。
 
 > 註: 在JavaScript語言中，你應該要把"函式"也當作一種"值"來看待，它可以被指定到一個變數/常數，也可以作為函式回傳值。而在作用範圍中的行為也和"值"類似。
 
-而在ES6中採用了新的作法，加入"區塊作用範圍(block scope)"概念。其中之一就是以`let`與`const`取代`var`的宣告變數的方式。
+在ES6後的新作法，加入"區塊作用範圍(block scope)"概念，也就是使用具有區塊的語句，例如上述的if、for、switch、while等等，都可以劃分出作用範圍，這是一個很棒的改進。那要怎麼作呢？就是以`let`與`const`取代原本`var`的宣告變數的方式，`var`可以完全捨棄不使用。
 
-如果是使用`var`來定義變數，程式碼中的x它不是在函式中定義的，所以會變為"全域變數"：
+如果是使用`var`來定義變數，程式碼中的變數x並不是在函式中定義的，所以會變為"全域變數"：
 
 ```js
 if (true) {
@@ -256,7 +258,7 @@ if (true) {
 console.log(x) //5
 ```
 
-對比使用`let`來宣告變數，程式碼中的y位於區塊中，無法由外部獲取得到：
+對比使用`let`來宣告變數，程式碼中的y位於區塊中，無法在外部環境獲取得到：
 
 ```js
 if (true) {
@@ -266,11 +268,47 @@ if (true) {
 console.log(y) //y is not defined
 ```
 
-### callback
+## 其他函式特性
 
-### 匿名函式與IIFE
+### 回調(callback)
 
-### 提升(Variable Hoisting)
+回調(callback)是一種特別的函式結構，也因為JavaScript具有"高階函式(Higher-order function)"的特性，在函式中可以使用另一個函式作為傳入參數，也可以回傳函式。
+
+一般而言，函式使用回傳值(return)作為最後的執行語句。但回調並不是，回調結構首先會定義一個函式類型的傳入參數，在此函式的最後執行語句，即是呼叫這個函式傳入參數，這個函式傳入參數，通常我們稱它為回調(callback)函式。回調函式經常使用匿名函式的語法，直接寫在函式的傳入參數中。
+
+```js
+function showMessage(greeting, name, callback) {
+    console.log('you call showMessage')
+    callback(greeting, name)
+}
+
+showMessage('Hello!', 'Eddy', function(param1, param2) {
+    console.log(param1 + ' ' + param2)
+})
+```
+
+由於回調函式是一個函式類型，通常會在使用它的函式中，作一個基本檢查，以免造成程式錯誤，本章節的最前面有說明過了，函式的`typeof`回傳值是'function'，以下為改寫過的程式碼，改寫過後不論是不是有傳入回調函式，都可以正常運作，也就是回調函式變成是一個選項:
+
+```js
+function showMessage(greeting, name, callback) {
+     console.log('you call showMessage')
+    
+    if (callback && typeof(callback) === 'function') {
+        callback(greeting, name)
+    }
+}
+```
+
+回調(callback)提供了使用此函式的開發者一種彈性的機制，讓程式開發者可以自行定義在此函式的最後完成時，要如何進行下一步，這通常是在具有執行流程的數個函式的組合情況。實際上，回調函式實現了JavaScript中非同步(asynchronously)的執行流程，這使得原本只能從頭到底(top-to-bottom)的程式碼，可以在同時間執行多次與多種不同的程式碼。在實際應用情況時，回調結構在JavaScript程式中大量的被使用，它也變成一種很明顯的特色，例如以下的應用中很常見:
+
+- HTML中的DOM事件
+- AJAX
+- 動畫
+- Node.js
+
+
+
+### 提升(Hoisting)
 
 簡單的來說，變數提升是JavaScript語言中的一種執行時的特性，也是一種隱性機制，它會出現主要是"壞的程式習慣+壞的程式特性"所造成的結果。
 
@@ -318,53 +356,54 @@ let foo = function(){
 }
 ```
 
-結論是
+結論如下:
 
 - 所有的定義(var, let, const, function, function*, class)，都會被提升的情況，
-- 而在函式中的這些定義也會被提升
+- 而在函式區塊中的這些定義也會被提升
 - 當函式與變數/常數提升時，函式的優先程度高於變數/常數。更多資訊參考範例出自[這裡](http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html)，解答在[這裡](http://stackoverflow.com/questions/7506844/javascript-function-scoping-and-hoisting)
 - 遵守好的風格習慣可以避免掉提升的諸多問題
 
-### 全域作用範圍污染(global scope pollution)
+### 全域作用範圍污染
 
-全域作用範圍污染，一種是沒有經過`var`宣告的變數，會自動變為全域作用範圍，另一種是在把變數宣告在全域作用範圍中，過多的變數或常數，常常會造成記憶體無法回收，或是因為JavaScript是"函式作用範圍"的關係，造成全域變數與函式中的變數衝突的情況。這對程式的除錯也很困難。
+全域作用範圍污染(global scope pollution)，整體來說，也是壞的程式特性+壞的程式寫作習慣，所造成的不良後果。例如沒有經過`var`宣告的變數，會自動變為全域作用範圍，或是是在把變數宣告在全域作用範圍中。過多的變數常常會造成記憶體無法回收，或是全域變數與函式中的變數常常互相衝突。
 
-我們在撰寫程式時，應遵守基本的一些好習慣原則，而且儘量不要在全域作用域宣告變數或常數。當然除了在學習階段測試一些簡單的程式之外。這樣就可以避免有這種污染情況發生。
+全域作用範圍污染在JavaScript中，一直是一個長久以來經常會發生的問題，尤其是在程式愈來愈龐大，整體的組織與結構沒有一開始就預作規劃時。ES6中針對作用範圍作了很多的標準上的改進，但不論程式特性如何進步，維護一個良好的寫作習慣，可能比程式本身的功能還重要幾百倍。
 
-以下的範例來自[這裡的問答](http://stackoverflow.com/questions/8862665/what-does-it-mean-global-namespace-would-be-polluted/13352212)：
+所以，好的程式設計師，在撰寫程式時應遵守一些建議的風格習慣，好好地理解作用範圍的概念，這樣就可以避免全域作用範圍污染情況發生。
 
+### 匿名函式與IIFE
+
+匿名函式還有另一個會被使用的情況，就是實現只執行一次的函式，也就是IIFE結構。IIFE是Immediately-invoked function expressions的縮寫，中文稱之為"立即呼叫的函式表達式"，IIFE可以說是JavaScript中獨特的一種設計模式，它是被某些聰明的程式設計師研究出來的一種結構，它與表達式的強制執行有關，它有很多種語法，常見的是以下這種:
+
+```js
+(function () { … })()
 ```
-var x = 10;
-function example() {
-    var x = 20;
-    console.log(x); //Prints 20
+
+IIFE在執行環境一讀取到定義時，就會立即執行，而不像一般的函式需要呼叫才會執行，這也是它的名稱的由來 - 立即呼叫，唯一的例外當然是它如果在一個函式的內部中，那只有呼叫到那個函式才會執行。之後它也不能再被呼叫。
+
+```js
+(function(){
+    console.log('IIFE test1')
+})()
+
+function test2(){
+    (function(){
+        console.log('IIFE test2')
+    })()
 }
-example();
-console.log(x); //Prints 10
+
+test2()
 ```
 
-```
-var x = 10;
-function example() {
-    x = 20; //Oops, no var statement
-    console.log(x); //Prints 20
-}
-example();
-console.log(x); //Prints 20... oh dear
-```
+IIFE可以作為很重要的用途，例如分隔作用範圍，避免全域作用範圍的污染，避免在區塊中的變數提升(Hoisting)。IIFE也可以再進而形成一種Module Pattern(模組模式)，用來封裝物件的公用與私有成員。許多知名的函式庫例如jQuery、Underscore、Backbone一開始發展時，都使用模組模式來作為擴充結構。
 
+模組模式的結構存在於JavaScript已有很久一段時間，算是前一代主要的設計模式與程式碼組織方式，現在網路上看到的教學文，大概都是很有歷史的了。而現今的JavaScript已經都改為另一種更具彈性的、更全面化的稱為Module System(模組系統)的作法，例如AMD、CommonJS與Harmony(ES6標準的代號)，這在特性篇會有一個獨立的章節再作介紹。
 
-### 英文解說
+## 英文解說
 
-scope/史溝波/ 在英文裡有"視野"、"導彈範圍"的意思。也就是相當於程式語言中，看不看得到(能不能存取得到)的意思。翻譯成"作用域"或"作用範圍"是有點文言，但它的意思就是這樣。
+Scope/史溝波/ 中文有"視野"、"導彈範圍"的意思。也就是相當於程式語言中，看不看得到(能不能存取得到)的意思。一般中文會翻譯成"作用域"或"作用範圍"，有點難懂的文言文。與作用範圍(scope)相關的還有一個Namespace(命名空間)，這是一種語法結構或組織方法，讓程式設計師可以把不同的識別符與程式碼敘述，放到不同的"空間"之中，以免造成衝突或混亂。不過，JavaScript語言中並沒有內建的命名空間(Namespace)的特性。
 
-Context名詞，在程式語言中指的是程式碼的上下文內容，在JavaScript語言中Scope是屬於以Function為基礎的(function-based)，那麼Context則是以Object為基礎的(object-based)
+Context名詞，中文有"上下文"、"環境"的意思。在程式語言中指的是程式碼的上下文內容，它與作用範圍相關，但不相等於作用範圍。這個名詞有時會和Scope一起拿出來比較，在JavaScript語言中它也是很重要的一個概念。我們在物件中將會再說明它的意思。以下是基本的比較:
 
-http://ryanmorr.com/understanding-scope-and-context-in-javascript/
-
-Namespace(命名空間)與作用範圍(scope)相關的還有一個Namespace(命名空間)，這是一種語法結構或組織方法，讓程式設計師可以把不同的識別符與程式碼敘述，放到不同的"空間"之中，以免造成衝突或混亂。因此，在不同的命名空間(Namespace)可以有獨自的作用範圍(scope)。不過，JavaScript語言中並沒有內建的命名空間(Namespace)的特性，為了解決作用範圍(scope)的問題，這部份就需要使用一些命名空間的解決方式。
-
-
-## 參考
-
-http://ryanmorr.com/understanding-scope-and-context-in-javascript/
+- Scope是屬於以Function為基礎的(function-based)。那麼Context則是以Object為基礎的(object-based)。
+- Scope指的是在程式碼函式中的變數的可使用範圍。而Context指的是`this`，也就是指向擁有(或執行)目前執行的程式碼的物件。
