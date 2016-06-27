@@ -31,4 +31,6 @@
    * [展開運算子與其餘參數](part4/rest_spread.md)
    * [解構賦值](part4/promise.md)
    * [模組系統](part4/module_system.md)
-
+* [Part V 附錄](part5/README.md)
+   * [程式語言符號](part5/comp_symbol.md)
+   * [關鍵字與保留字](part5/keyword.md)
