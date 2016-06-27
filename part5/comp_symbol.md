@@ -4,12 +4,12 @@
 
 | 符號 | 中文 | 英文 | 用途  | 備註  |
 |---|---|---|---|---|
-| ( ) | 圓括號、括號  | Parentheses/波潤捨西斯/  | 函式呼叫、表達式運算、群組運算符 | |
-| [ ] | 方括號、中括號 | Brackets/布累克特斯/、square/史魁兒/ brackets  | 陣列成員 | |
-| { } | 花括號、大括號 | Braces/布累謝斯/、Curly/顆粒/brackets/布累克特斯/ | 區塊語句、物件字面文字 |   |
-| , | 逗號 | comma /康馬/ | 物件字面文字中分隔多個定義值、多個表達式求值時回值最後表達式、定義多個參數值 |   |
-| ; |  分號 | semicolon /些米叩龍/ | 語句結尾、分隔表達式 |   |
-| . | 句點 | dot/搭/ | 物件成員 |   |
+| `( )` | 圓括號、括號  | Parentheses/波潤捨西斯/  | 函式呼叫、表達式運算、群組運算符 | |
+| `[ ]` | 方括號、中括號 | Brackets/布累克特斯/、square/史魁兒/ brackets  | 陣列成員 | |
+| `{ }` | 花括號、大括號 | Braces/布累謝斯/、Curly/顆粒/brackets/布累克特斯/ | 區塊語句、物件字面文字 |   |
+| `,` | 逗號 | comma /康馬/ | 物件字面文字中分隔多個定義值、多個表達式求值時回值最後表達式、定義多個參數值 |   |
+| `;` |  分號 | semicolon /些米叩龍/ | 語句結尾、分隔表達式 |   |
+| `.` | 句點 | dot/搭/ | 物件成員 |   |
 
 ## 運算符
 
@@ -17,15 +17,15 @@
 
 | 符號 | 中文 | 英文 | 用途  | 備註  |
 |---|---|---|---|---|
-| + | 加  | addition/額弟遜/  | 兩個數字相加 |   |
-| - | 減  | subtraction /捨吹遜/  | 兩個數字相減  |   |
-| * | 乘  | multiplication /摸特佛K遜/  | 兩個數字相乘  |   |
-| / | 除  | division /第V俊/ | 兩個數字相除  |   |
-| % | 餘  | Remainder/瑞妹的兒/、Modulus | 兩個數字相除後得餘數 |   |
-| ++ | 遞增  | Increment/盈虧門/  | 數字遞增1  |  一元運算符 |
-| -- | 遞減  | Decrement/第虧門/  | 數字遞減1  | 一元運算符  |
-| +  | 正號 | Unary plus  | 數字轉為正數、字串轉為數字 | 一元運算符  |
-| -  | 負號 | Unary negation  | 數字反轉正負 | 一元運算符  |
+| `+` | 加  | addition/額弟遜/  | 兩個數字相加 |   |
+| `-` | 減  | subtraction /捨吹遜/  | 兩個數字相減  |   |
+| `*` | 乘  | multiplication /摸特佛K遜/  | 兩個數字相乘  |   |
+| `/` | 除  | division /第V俊/ | 兩個數字相除  |   |
+| `%` | 餘  | Remainder/瑞妹的兒/、Modulus | 兩個數字相除後得餘數 |   |
+| `++` | 遞增  | Increment/盈虧門/  | 數字遞增1  |  一元運算符 |
+| `--` | 遞減  | Decrement/第虧門/  | 數字遞減1  | 一元運算符  |
+| `+`  | 正號 | Unary plus  | 數字轉為正數、字串轉為數字 | 一元運算符  |
+| `å`  | 負號 | Unary negation  | 數字反轉正負 | 一元運算符  |
 
 ### 指定運算符
 
@@ -42,13 +42,17 @@
 
 | 符號 | 中文 | 英文 | 用途  | 備註  |
 |---|---|---|---|---|
-| `+` | 連接  | concatenation  |   |   |
-| `+=` | 連接指定  | concatenation and assign |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 ### 比較運算符
 
 | 符號 | 中文 | 英文 | 用途  | 備註  |
 |---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 
 ### 邏輯運算符
@@ -78,6 +82,5 @@
 ## 參考資料
 
 - https://en.wikipedia.org/wiki/JavaScript_syntax#Operators
-- https://msdn.microsoft.com/en-us/library/ce57k8d5(v=vs.94).aspx
 - http://web.eecs.umich.edu/~bartlett/jsops.html
 - http://www.w3schools.com/jsref/jsref_operators.asp

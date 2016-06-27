@@ -20,7 +20,7 @@ for ([initialExpression]; [condition]; [incrementExpression])
 一個簡單的範例如下:
 
 ```js
-for(let count = 0 ; count < 10 ; count++){
+for (let count = 0 ; count < 10 ; count++){
     console.log(count)
 }
 ```
@@ -168,7 +168,7 @@ while (count < 10)
 
 ```js
 do_statment
-while(condition)
+while (condition)
   do_statment
 ```
 

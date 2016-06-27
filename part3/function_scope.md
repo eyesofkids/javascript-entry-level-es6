@@ -24,16 +24,16 @@ function foo() {}
 
 而匿名函式並沒有函式的名稱，通常用來當作一個指定值，指定給一個變數/常數，被指定後這個變數/常數名稱，就成了這個函式的名稱。實際上，匿名函式也有其他的用法，例如拿來當作其他函式的傳入參數值，或是進行一次性執行。
 
-函式使用`return`作為最後的回傳值輸出，函式通常會有回傳值，但並非每種函式都需要回傳值，也有可能利用輸出的方式來輸出結果。以下兩種方式對於函式都是可以使用的宣告(定義)方式:
+函式使用`return`作為最後的回傳值輸出，函式通常會有回傳值，但並非每種函式都需要回傳值，也有可能利用輸出的方式來輸出結果。以下兩種方式對於函式都是可以使用的宣告(定義)方式，使用帶有名稱的函式稱為"函式定義"的方式，而另一種用變數/常數指定匿名函式的稱為"函式表達式"的方式:
 
 ```js
 
-//使用有名稱的函式
+//函式定義 - 使用有名稱的函式
 function sum(a, b){
     return a+b
 }
 
-//常數指定為匿名函式
+//函式表達式 - 常數指定為匿名函式
 const sum = function(a, b){
     return a+b
 }
@@ -308,7 +308,7 @@ function showMessage(greeting, name, callback) {
 
 ### 提升(Hoisting)
 
-簡單的來說，變數提升是JavaScript語言中的一種執行時的特性，也是一種隱性機制，它會出現主要是"壞的程式習慣+壞的程式特性"所造成的結果。沒先定義與指定值就使用，這絕對是個壞習慣是吧？變數/常數沒指定好就使用，結果一定是不是你要的。
+簡單的來說，提升是JavaScript語言中的一種執行階段時的特性，也是一種隱性機制。不過，沒先定義與指定值就使用，這絕對是個壞習慣是吧？變數/常數沒指定好就使用，結果一定是不是你要的。
 
 `var`、`let`和`const`會被提升其定義，但指定值不會一併提升上去，像下面這樣的程式碼:
 
@@ -332,7 +332,7 @@ console.log(y)
 y = 5
 ```
 
-函式也會被提升，而且情況更不樂觀，它變成可以先執行再定義，也就是整個函式定義內容都會被提升到程式碼最前面:
+函式定義也會被提升，而且它變成可以先呼叫再定義，也就是整個函式定義內容都會被提升到程式碼最前面。不過這對程式設計師來說是合理的，很多程式語言中都可以這樣作:
 
 ```js
 foo() //可執行
@@ -342,7 +342,7 @@ function foo(){
 }
 ```
 
-不過使用匿名函式的指定方式，就不會有提升的情況，所以使用匿名函式的指定值反而是建議的習慣作法:
+不過使用匿名函式的指定方式(這稱為"函式表達式")，就不會有整個函式定義都被提升的情況，只有變數名稱被提升:
 
 ```js
 foo() //錯誤: foo is not a function
@@ -354,10 +354,10 @@ let foo = function(){
 
 結論如下:
 
-- 所有的定義(var, let, const, function, function*, class)，都會被提升的情況，
-- 而在函式區塊中的這些定義也會被提升
-- 當函式與變數/常數提升時，函式的優先程度高於變數/常數。更多資訊參考範例出自[這裡](http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html)，解答在[這裡](http://stackoverflow.com/questions/7506844/javascript-function-scoping-and-hoisting)
-- 遵守好的風格習慣可以避免掉提升的諸多問題
+- 所有的定義(var, let, const, function, function*, class)都會被提升
+- 而在函式區塊中的這些定義也會被提升到該區塊的最前面
+- 當函式與變數/常數提升時，函式的優先程度高於變數/常數。
+- 遵守好的風格習慣可以避免掉變數提升的諸多問題
 
 ### 全域作用範圍污染
 
@@ -369,10 +369,11 @@ let foo = function(){
 
 ### 匿名函式與IIFE
 
-匿名函式還有另一個會被使用的情況，就是實現只執行一次的函式，也就是IIFE結構。IIFE是Immediately-invoked function expressions的縮寫，中文稱之為"立即呼叫的函式表達式"，IIFE可以說是JavaScript中獨特的一種設計模式，它是被某些聰明的程式設計師研究出來的一種結構，它與表達式的強制執行有關，它有很多種語法，常見的是以下這種:
+匿名函式還有另一個會被使用的情況，就是實現只執行一次的函式，也就是IIFE結構。IIFE是Immediately-invoked function expressions的縮寫，中文稱之為"立即呼叫的函式表達式"，IIFE可以說是JavaScript中獨特的一種設計模式，它是被某些聰明的程式設計師研究出來的一種結構，它與表達式的強制執行有關，它有兩種語法，長得很像功能一樣:
 
 ```js
 (function () { … })()
+(function () { … }())
 ```
 
 IIFE在執行環境一讀取到定義時，就會立即執行，而不像一般的函式需要呼叫才會執行，這也是它的名稱的由來 - 立即呼叫，唯一的例外當然是它如果在一個函式的內部中，那只有呼叫到那個函式才會執行。之後它也不能再被呼叫。
@@ -380,12 +381,12 @@ IIFE在執行環境一讀取到定義時，就會立即執行，而不像一般�
 ```js
 (function(){
     console.log('IIFE test1')
-})()
+}())
 
 function test2(){
     (function(){
         console.log('IIFE test2')
-    })()
+    }())
 }
 
 test2()
@@ -457,3 +458,44 @@ Context/康鐵斯/ ，中文有"上下文"、"環境"的意思。在程式語言
 
 - Scope是屬於以函式為基礎的(function-based)。而Context則是以物件為基礎的(object-based)。
 - Scope指的是在程式碼函式中的變數的可使用範圍。而Context指的是`this`，也就是指向擁有(或執行)目前執行的程式碼的物件。
+
+## 風格指引
+
+- 18.3 18.3 Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations. eslint: keyword-spacing jscs: requireSpaceAfterKeywords
+- 7.3 Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears. eslint: no-loop-func
+
+## 常見問答
+
+### 函式定義哪一種比較好
+
+由上面的內容來說，有三種定義函式的方式，一種是傳統的函式定義，另一種是用常數或變數指定匿名函式的方式(函式表達式)，最後一種是新式的箭頭函式，這三種的範例如下:
+
+```
+```
+
+那麼，到底那一種是比較建議的方式？
+
+首先，由於第二種方式(函式表達式)完全可以被箭頭函式取代，所以它可以不用了。
+
+而第一種方式(函式定義)有一些特點，所以它會被用以下的情況:
+
+- 全域作用範圍
+- 模組作用範圍
+- Object.prototype的屬性值
+
+函式定義的特點:
+
+- 函式定義名稱可以加入到執行期間的呼叫堆疊(call stack)中
+- 函式定義可以被提升，也就是可以在定義前呼叫(請參考上面的說明內容)
+
+除此之外，都使用第三種方式，也就是箭頭函式。
+
+參考解答: http://stackoverflow.com/questions/22939130/when-should-i-use-arrow-functions-in-ecmascript-6
+
+### arguments物件還要用嗎？
+
+當然是不要用。這東西是有設計缺陷的，除非你對它很了解，不然用了也可能會出問題，不過話說回來，如果你對它很了解的話，就不會想用它了。
+
+### IIFE語法結構還要用嗎？
+
+看情況而定。如果是有一些函式庫例如jQuery中的擴充方式會用到，這當然避免不了。如果是其他的已經採用新式的模組系統，當然是根本不需要，也儘量不要再使用。也許你會看到很多教學文件都會說到它的優點或好用的地方，不過請看一下發文日期，有可能是舊文章了。
