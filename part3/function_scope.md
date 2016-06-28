@@ -34,7 +34,7 @@ function sum(a, b){
 }
 
 //函式表達式 - 常數指定為匿名函式
-const sum = function(a, b){
+const sum = function(a, b) {
     return a+b
 }
 ```
@@ -101,6 +101,8 @@ const link = function (point = 10, url = 'http://google.com') {
 ```
 
 > 註: 只有`undefined`的情況下才會觸發預設值的指定
+
+> 註: 有預設值的參數在習慣上都是擺在傳入參數列表的"後面"
 
 #### 以函式作為傳入參數
 
@@ -310,7 +312,7 @@ function showMessage(greeting, name, callback) {
 
 簡單的來說，提升是JavaScript語言中的一種執行階段時的特性，也是一種隱性機制。不過，沒先定義與指定值就使用，這絕對是個壞習慣是吧？變數/常數沒指定好就使用，結果一定是不是你要的。
 
-`var`、`let`和`const`會被提升其定義，但指定值不會一併提升上去，像下面這樣的程式碼:
+`var`、`let`和`const`會被提升其定義，但指定的值不會一併提升上去，像下面這樣的程式碼:
 
 ```js
 console.log(x) //undefined
@@ -342,7 +344,7 @@ function foo(){
 }
 ```
 
-不過使用匿名函式的指定方式(這稱為"函式表達式")，就不會有整個函式定義都被提升的情況，只有變數名稱被提升:
+不過使用匿名函式的指定方式(函式表達式)，就不會有整個函式定義都被提升的情況，只有變數名稱被提升:
 
 ```js
 foo() //錯誤: foo is not a function
@@ -355,9 +357,9 @@ let foo = function(){
 結論如下:
 
 - 所有的定義(var, let, const, function, function*, class)都會被提升
-- 而在函式區塊中的這些定義也會被提升到該區塊的最前面
-- 當函式與變數/常數提升時，函式的優先程度高於變數/常數。
-- 遵守好的風格習慣可以避免掉變數提升的諸多問題
+- 使用函式定義時，在函式區塊中的這些定義也會被提升到該區塊的最前面
+- 當函式與變數/常數同名稱而提升時，函式的優先程度高於變數/常數。
+- 遵守好的風格習慣可以避免掉變數提升的問題
 
 ### 全域作用範圍污染
 
@@ -452,21 +454,59 @@ let increaseAge = function(value) {
 
 ## 風格指引
 
-- 18.3 18.3 Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations. eslint: keyword-spacing jscs: requireSpaceAfterKeywords
-- 7.3 Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears. eslint: no-loop-func
+- (Airbnb 7.3、Google) 永遠不要在非函式區塊(if, while等等)裡面，定義一個函式。而是把函式指定給一個變數(註: 函式表達式)
+
+- (Airbnb 18.3) 在控制語句(if, while等等)的圓括號(()開頭加上一個空白字元。函式在呼叫或定義時，函式名稱與傳入參數列則不需要空白。
+
+- (idiomatic.js 7.B) 提前回傳可以增加程式碼可閱讀性，對於效率沒有明顯差異
+```js
+// 不好的寫法:
+function returnLate( foo ) {
+  var ret;
+
+  if ( foo ) {
+    ret = "foo";
+  } else {
+    ret = "quux";
+  }
+  return ret;
+}
+
+// 好的寫法:
+
+function returnEarly( foo ) {
+
+  if ( foo ) {
+    return "foo";
+  }
+  return "quux";
+}
+```
 
 ## 常見問答
 
-### 函式定義哪一種比較好
+### 函式要用那種定義方式比較好？
 
 由上面的內容來說，有三種定義函式的方式，一種是傳統的函式定義，另一種是用常數或變數指定匿名函式的方式(函式表達式)，最後一種是新式的箭頭函式，這三種的範例如下:
 
-```
+```js
+//函式定義
+function sum(a, b){
+  return a+b
+}
+
+//函式表達式
+const sum = function(a, b) {
+  return a+b
+}
+
+//箭頭函式
+const sum = (a, b) => a+b 
 ```
 
 那麼，到底那一種是比較建議的方式？
 
-首先，由於第二種方式(函式表達式)完全可以被箭頭函式取代，所以它可以不用了。
+首先，由於第二種方式(函式表達式)完全可以被箭頭函式取代，箭頭函式又有另外的好處(綁定`this`), 所以它幾乎可以不用了。
 
 而第一種方式(函式定義)有一些特點，所以它會被用以下的情況:
 
@@ -476,20 +516,20 @@ let increaseAge = function(value) {
 
 函式定義的特點:
 
-- 函式定義名稱可以加入到執行期間的呼叫堆疊(call stack)中
+- 函式定義名稱可以加入到執行期間的呼叫堆疊(call stack)中，除錯方便
 - 函式定義可以被提升，也就是可以在定義前呼叫(請參考上面的說明內容)
 
 除此之外，都使用第三種方式，也就是箭頭函式。
 
-參考解答: http://stackoverflow.com/questions/22939130/when-should-i-use-arrow-functions-in-ecmascript-6
+> 請參考[When should I use Arrow functions in ECMAScript 6?](http://stackoverflow.com/questions/22939130/when-should-i-use-arrow-functions-in-ecmascript-6)
 
 ### arguments物件還要用嗎？
 
-當然是不要用。這東西是有設計缺陷的，除非你對它很了解，不然用了也可能會出問題，不過話說回來，如果你對它很了解的話，就不會想用它了。
+當然是不要用。這東西是有設計缺陷的，除非你對它很了解，不然用了也可能會出問題，不過話說回來，如果你對它很了解的話，就不會想用它了。改用"其餘參數"就可以了。
 
 ### IIFE語法結構還要用嗎？
 
-看情況而定。如果是有一些函式庫例如jQuery中的擴充方式會用到，這當然避免不了。如果是其他的已經採用新式的模組系統，當然是根本不需要，也儘量不要再使用。也許你會看到很多教學文件都會說到它的優點或好用的地方，不過請看一下發文日期，有可能是舊文章了。
+看情況而定。如果是有一些函式庫例如jQuery中的擴充方式會用到，這當然避免不了。如果是其他的已經採用新式的模組系統，當然是根本不需要，也儘量不要再使用。
 
 ## 英文解說
 
@@ -499,3 +539,6 @@ Context/康鐵斯/ ，中文有"上下文"、"環境"的意思。在程式語言
 
 - Scope是屬於以函式為基礎的(function-based)。而Context則是以物件為基礎的(object-based)。
 - Scope指的是在程式碼函式中的變數的可使用範圍。而Context指的是`this`，也就是指向擁有(或執行)目前執行的程式碼的物件。
+
+## 家庭作業
+
