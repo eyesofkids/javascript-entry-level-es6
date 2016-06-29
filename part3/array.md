@@ -122,9 +122,9 @@ const bArray = [1, , 3]
 
 或是陣列大部份的值都是不用的，有點像之前用`new Array(100)`先定義出一個很大的陣列，但實際上裡面的值很少，這叫作稀疏陣列(Sparse Arrays)，其實多洞的陣列(Holey Arrays)或稀疏陣列(Sparse Arrays)都差不多指的是這一類的陣列，稀疏陣列可以再重新設計讓它在程式上的效率更高。這種陣列在處理效能上都會有很大的影響，在大的陣列中要避免使用到這樣的情況。
 
-### 複製(clone)陣列
+### 拷貝(copy)陣列
 
-指定一個變數(or常數)並不會讓它成為一個全新的陣列，這也是因為陣列的指定是指定到同一個參照中的值，看下面的範例:
+把原有的陣列指定另一個變數(or常數)並不會讓它成為一個全新的陣列，這也是因為當指定值是陣列的情況，是指定到同一個參照，也就是同一個陣列，看下面的範例:
 
 ```js
 const aArray = [1, 2, 3]
@@ -133,36 +133,74 @@ const bArray = aArray
 aArray[0] = 100
 
 console.log(bArray) //[100, 2, 3]
-
-bArray[1] = 200
-
-console.log(aArray) //[100, 200, 3]
 ```
 
-由範例可以看到，bArray與aArray是共享同樣這些值的，不論你在aArray或bArray中修改其中的值，增加或減少，都是會更動到彼此。
+由範例可以看到，bArray與aArray是共享同樣這些值的，只是叫作不同名字的連體嬰，不論你在aArray或bArray中修改其中的值，增加或減少其中的值，都是對同一值作這件事。這種不叫拷貝陣列，可能應該是錯誤的寫法。
 
-複製陣列(clone)並不是這樣作的，但一樣也有很多種方式可以作同樣這件事:
+拷貝陣列並不是這樣作的，而且它是件複雜的事情，複雜的原因是陣列中包含的值，可以是各種不同的值，包含數字、字串、布林這些基本原始資料，也可以是其他陣列，物件、函式、其他特殊物件。而這件複雜的事情，同樣會出現在拷貝物件的時候。
 
-#### 展開(spreads)運算符
+拷貝陣列的情況可以區分為淺拷貝(shallow copy)與深拷貝(deep copy)兩種。淺拷貝只能拷貝到，只包含像數字或字串之類的基本原始資料類型值，而且是一維的平坦陣列，如果其中包含巢狀(多維)陣列、物件、函式、其他物件，要用深拷貝的方式才能真正複製出另一個完全獨立的陣列。
 
-ES6後的新運算符，有點像之前在函式章節講到的其餘參數，使用的也是三個點的省略符號(ellipsis)(...)，語法簡單效用佳，現在很大量的常被使用:
+深拷貝一般就不用JavaScript內建的語法來達成，而是要用外部的函式庫例如jQuery、understore或lodash來作，它們會考慮效率，也要考慮各種情況。而且這些函式庫中的深拷貝不是只有支援陣列結構，同樣也支援物件結構。當然，如果你的陣列結構較為簡單，你也可以用for或while迴圈自己作這件事。
+
+以下的方式主要是針對淺拷貝部份，一樣也有很多種方式可以作同樣這件事，以下列出四種:
+
+#### 展開(spread)運算符
+
+> 推薦使用
+
+ES6後的新運算符，長得像之前在函式章節講到的其餘參數，使用的也是三個點的省略符號(ellipsis)(...)，語法相當簡單，現在很常被使用:
 
 ```js
 const aArray = [1, 2, 3]
 const copyArray = [...aArray]
 ```
 
+它也可以用來組合陣列
+
+```js
+const aArray = [1, 2, 3]
+const bArray = [5, 6, ...aArray, 8, 9]
+```
+
+> 註: 展開(spreads)運算符目前用babel轉換為ES5相容時是用concat方法
+
 #### slice
 
-```
-var newArray = oldArray.slice(0)
-var newArray = oldArray.slice()
+slice(分割)原本是用在分割陣列為子陣列用的，當用0當參數或不加參數，相當於拷貝，這個方式是目前是效率較好的方式，語法也很簡單:
+
+```js
+const newArray = oldArray.slice(0)
+const newArray = oldArray.slice()
 ```
 
 #### concat
 
+concat(合併)是用於合併多個陣列用的，把一個空的陣列和原先陣列合併，相當於拷貝的概念，這比較少人在用。在這裡寫出來是為了比較一下展開運算符:
+
+```js
+const newArray = [].concat(oldArray)
 ```
-var array2 = [].concat(array1)
+
+#### for/while迴圈語句
+
+迴圈語句也可以作為淺拷貝，語句寫起來不難也很直覺，只是相較於其他方式，要打很多字，通常不會單純只用來作淺拷貝。以下為範例程式:
+
+```js
+const newArray = []
+
+for (let i = 0, len = oldArray.length ; i < len ; i++){
+    newArray[i]= oldArray[i]
+}
+```
+
+```js
+const newArray = []
+let i = oldArray.length
+
+while (i--){
+    newArray[i]= oldArray[i]
+}
 ```
 
 ### 判別是否為陣列
@@ -173,7 +211,9 @@ var array2 = [].concat(array1)
 
 #### isArray
 
-最簡單的判斷語法應該是這個，用的是內建Array物件中的`isArray`，它是個ES5標準中方法，不過效能慢而且對於舊的瀏覽器版本(例如IE7或8)並不支援。
+> 推薦使用
+
+最簡單的判斷語法應該是這個，用的是內建Array物件中的`isArray`，它是個ES5標準方法:
 
 ```js
 Array.isArray(variable)
@@ -181,7 +221,7 @@ Array.isArray(variable)
 
 #### constructor
 
-下面這個是在Chrome瀏覽器中效能最佳效能的判斷方法，它是直接用物件的建構式來判斷:
+下面這個是在Chrome瀏覽器中效能最佳的判斷方法，它是直接用物件的建構式來判斷:
 
 ```js
 variable.constructor === Array
@@ -207,29 +247,27 @@ variable instanceof Array
 
 #### toString.call
 
-這也是用物件中的toString方法來判斷，這是幾乎所有情況都可以正確判斷的一種。它也是萬用方式，可以判斷陣列以外的其他特別物件，缺點是效率最慢:
+> 推薦使用
+
+這也是用物件中的toString方法來判斷，這是幾乎所有情況都可以正確判斷的一種。它也是萬用方式，可以判斷陣列以外的其他特別物件，缺點是效率慢:
 
 ```js
 Object.prototype.toString.call(variable) === '[object Array]'
 ```
 
-> 註: jQuery、underscore函式庫中的isArray類似API是這種判斷方法
+> 註: jQuery、underscore函式庫中的判斷陣列的API是這種判斷方法
 
 > 註: 在[http://shop.oreilly.com/product/9780596805531.do](http://shop.oreilly.com/product/9780596805531.do)這本書中有說到，`Array.isArray`其實就是這個方法的實作。
 
 #### 方式選擇結論
 
-這幾個方式的選擇，我的建議其實是只要學最後一種就行了，正確的可應用在各種情況，有時候比再快的效能更重要。雖然它的語法對初學者來說，可能在此時完全理解，不過就先知道要這樣用就行了。
-
-除非你的程式能力已經到了一定程度，而且程式中有很多需要對這種判斷語法作最佳化，再考慮用其他方式也不遲。
-
-這些都是由經驗研究出來的幾個方式，雖然可能和一些其他書或教學文章上說的不同，但實際應用情況就是如此。物件的判斷在物件章節中會再說明。
+這幾個方式的選擇，我的建議其實是只要學最後一種就行了，可以正確判斷並應用在各種情況，有時候比再快的效能更重要，更何況它其實是萬用的，除了陣列之外也可以用於其它的判斷情況。雖然它的語法對初學者來說，可能無法在此時完全理解，不過就先知道要這樣用就行了。
 
 參考資料: [How do you check if a variable is an array in JavaScript?](http://stackoverflow.com/questions/767486/how-do-you-check-if-a-variable-is-an-array-in-javascript)
 
 ## 陣列屬性與方法
 
-陣列方法多如牛毛，以下儘可以列出常用到的方法與屬性。為了明顯標示出這個方法是否有副作用，在每個方法前都會有一個明確的標示，以方便學習。
+陣列方法多如牛毛，以下儘可以列出常用到的方法與屬性。
 
 ### 屬性
 
@@ -305,7 +343,7 @@ aArray.splice(0, aArray.length)
 
 #### pop與push、shift與unshift
 
-> 副作用
+> 副作用方法
 
 陣列的傳統處理方法，pop是"砰出"最後面一個值，然後把這個值從陣列移除掉。push是"塞入"一個值到陣列最後面。shift與pop類似，不過它是砰出最前面的值。unshift則與push類似，它是塞到陣列列前面。
 
@@ -335,11 +373,91 @@ console.log(pushValue) //5
 
 > 註: 簡單記法 - 有"p"的pop與push是針對陣列的"屁股"(最後面)。`pop-corn`是爆米花，所以pop用來爆出值的。有u的push與unshift是同一掛的。
 
+#### concat
+
+
+
+#### join與split，陣列與字串
+
+
+#### 迭代
+
+#### 排序
+
+#### 搜尋與過濾
+
+#### 其他
+
+
+
 ## 處理大量資料時
 
 
-## 陣列處理純粹函式(無副作用)
+## 陣列處理純粹函式
 
+push
+
+```
+function immutablePush(arr, newEntry){
+  return [ ...arr, newEntry ]      
+}
+```
+
+pop
+
+```
+function immutablePop(arr){
+  return arr.slice(0, -1)     
+}
+```
+
+shift
+
+```
+function immutableShift(arr){
+  return arr.slice(1)     
+}
+```
+
+unshift
+
+```
+function immutableUnshift(arr, newEntry){
+  return [ newEntry, ...arr ]
+}
+```
+
+splice
+
+```
+function immutableSplice(arr, start, deleteCount, ...items) {
+  return [ ...arr.slice(0, start), ...items, ...arr.slice(start + deleteCount) ]
+}
+```
+
+sort
+
+```
+function immutableSort(arr, compareFunction) {
+  return [ ...arr ].sort(compareFunction)
+}
+```
+
+reverse
+
+```
+function immutableReverse(arr) {
+  return [ ...arr ].reverse()
+}
+```
+
+刪除其中一個成員:
+
+```js
+function immutableDelete (arr, index) {
+   return arr.slice(0,index).concat(arr.slice(index+1))
+}
+```
 
 ## 英文解說
 
@@ -347,6 +465,9 @@ console.log(pushValue) //5
 
 ### 為什麼要那麼強調副作用？
 
+副作用的概念已經存在於程式語言中很久了，但在最近幾年才在JavaScript界受到很大的重視。在過去，我們在寫這種腳本直譯式程式語言，最重視的其實是程式效率與相容性，同樣的功能，不同的寫法有時候效率會相差很多，也有可能會有不同瀏覽器品牌與版本上的差異。但現在的電腦硬體進步太多，執行環境的資源都很多，所謂的執行效率早就與10年前不同，效率已經不是單一的重點，而是要考量到更多其他的因素，例如程式碼的閱讀性與語法簡潔、易於維護與除錯、易於規模化等等。
+
+純粹函式是一個新的想法，因為它有很多優點，雖然它大部份時候可能不是效率最佳的那種語法，而且為了要讓這些功能無副作用，還需要改寫它們。不過，純粹函式的確是未來的主流想法，當一個應用程式慢慢變大、變複雜時，純粹函式可以提供的好處會變成非常明顯，所以一開始學習這個概念是必要的。
 
 ## 參考
 
@@ -356,4 +477,5 @@ console.log(pushValue) //5
 - http://vincent.billey.me/pure-javascript-immutable-array
 - https://gist.github.com/bendc/9b05735dfa6966859025
 - https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/
+- https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch3.html#oh-to-be-pure-again
 - http://stackoverflow.com/questions/8423493/what-is-the-performance-of-objects-arrays-in-javascript-specifically-for-googl
