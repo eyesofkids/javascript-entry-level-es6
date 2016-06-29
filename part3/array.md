@@ -122,6 +122,49 @@ const bArray = [1, , 3]
 
 或是陣列大部份的值都是不用的，有點像之前用`new Array(100)`先定義出一個很大的陣列，但實際上裡面的值很少，這叫作稀疏陣列(Sparse Arrays)，其實多洞的陣列(Holey Arrays)或稀疏陣列(Sparse Arrays)都差不多指的是這一類的陣列，稀疏陣列可以再重新設計讓它在程式上的效率更高。這種陣列在處理效能上都會有很大的影響，在大的陣列中要避免使用到這樣的情況。
 
+### 複製(clone)陣列
+
+指定一個變數(or常數)並不會讓它成為一個全新的陣列，這也是因為陣列的指定是指定到同一個參照中的值，看下面的範例:
+
+```js
+const aArray = [1, 2, 3]
+const bArray = aArray
+
+aArray[0] = 100
+
+console.log(bArray) //[100, 2, 3]
+
+bArray[1] = 200
+
+console.log(aArray) //[100, 200, 3]
+```
+
+由範例可以看到，bArray與aArray是共享同樣這些值的，不論你在aArray或bArray中修改其中的值，增加或減少，都是會更動到彼此。
+
+複製陣列(clone)並不是這樣作的，但一樣也有很多種方式可以作同樣這件事:
+
+#### 展開(spreads)運算符
+
+ES6後的新運算符，有點像之前在函式章節講到的其餘參數，使用的也是三個點的省略符號(ellipsis)(...)，語法簡單效用佳，現在很大量的常被使用:
+
+```js
+const aArray = [1, 2, 3]
+const copyArray = [...aArray]
+```
+
+#### slice
+
+```
+var newArray = oldArray.slice(0)
+var newArray = oldArray.slice()
+```
+
+#### concat
+
+```
+var array2 = [].concat(array1)
+```
+
 ### 判別是否為陣列
 
 最常見的情況是，如果有個函式要求它的傳入參數之一需要為陣列，而確定並不能是物件。你要如何先判斷傳進來的值是真的一個陣列？因為直接使用`typeof`是沒辦法作這件事的，它只會直接回傳'object'。
@@ -211,7 +254,7 @@ const magicMatrix = [
 console.log(magicMatrix.length) //3
 ```
 
-這個`length`的整數值"竟然"是可以更動的，不過除非你腦子進水了，沒事千萬不要作這件事，用來搭配for迴圈語句肯定會出錯:
+`length`的整數值"竟然"是可以更動的，用來搭配for迴圈語句肯定會出錯:
 
 ```js
 const bArray = [1, 2, 3]
@@ -219,9 +262,45 @@ console.log(bArray.length)
 
 bArray.length = 4
 console.log(bArray.length)
+console.log(bArray)
 
-bArray.length++
+bArray.length = 2
 console.log(bArray.length)
+console.log(bArray)
+```
+
+更動`length`其實是高效率的從陣列最後面"截短(truncate)"的密技語法，，它的效能是所有類似功能語法中最高的，而且比較其他類似語法是高到嚇人:
+
+```js
+const sArray = ['apple', 'banana', 'orange', 'mongo']
+
+sArray.length = 3
+console.log(sArray)
+
+sArray.length = 2
+console.log(sArray)
+```
+
+`length`指定為0也可以用於清空陣列，以下為各種清空陣列的範例程式碼，注意第一種不能使用`const`宣告，就意義上它不是真的把原來的陣列清空:
+
+```js
+let aArray = ['apple', 'banana', 'orange', 'mongo']
+aArray = []
+console.log(aArray)
+
+const bArray = ['apple', 'banana', 'orange', 'mongo']
+bArray.length = 0
+console.log(bArray)
+
+const cArray = ['apple', 'banana', 'orange', 'mongo']
+while(cArray.length > 0) {
+    cArray.pop();
+}
+console.log(cArray)
+
+const dArray = ['apple', 'banana', 'orange', 'mongo']
+dArray.splice(0, dArray.length)
+console.log(dArray)
 ```
 
 ### 方法
