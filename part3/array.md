@@ -281,26 +281,24 @@ sArray.length = 2
 console.log(sArray)
 ```
 
-`length`指定為0也可以用於清空陣列，以下為各種清空陣列的範例程式碼，注意第一種不能使用`const`宣告，就意義上它不是真的把原來的陣列清空:
+`length`指定為0也可以用於清空陣列，以下為各種清空陣列的範例程式碼，注意第一種不能使用`const`宣告，就意義上它不是真的把原來的陣列清空。第一種效率最好，第四種最差:
 
 ```js
 let aArray = ['apple', 'banana', 'orange', 'mongo']
+
+//第一種
 aArray = []
-console.log(aArray)
 
-const bArray = ['apple', 'banana', 'orange', 'mongo']
-bArray.length = 0
-console.log(bArray)
+//第二種
+aArray.length = 0
 
-const cArray = ['apple', 'banana', 'orange', 'mongo']
-while(cArray.length > 0) {
-    cArray.pop();
+//第三種
+while(aArray.length > 0) {
+    aArray.pop();
 }
-console.log(cArray)
 
-const dArray = ['apple', 'banana', 'orange', 'mongo']
-dArray.splice(0, dArray.length)
-console.log(dArray)
+//第四種
+aArray.splice(0, aArray.length)
 ```
 
 ### 方法
