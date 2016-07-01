@@ -633,14 +633,119 @@ console.log(total2) // 20
 - 計算所有成員(值)，總合或相乘
 - 其它需要兩兩處理的情況(組合巢狀陣列等等)
 
-#### 排序 sort與reverse
+#### 排序與反轉 sort與reverse
+
+##### sort
+
+> 副作用方法
+
+sort是一個簡單的排序方法，以Unicode字串碼順序來排序，對於英文與數字有用，但中文可能就不是你要的。以下為簡單的範例:
+
+```js
+const fruitArray = ['apple', 'mongo', 'cherry', 'banana' ]
+fruitArray.sort()
+console.log(fruitArray) //["apple", "banana", "cherry", "mongo"]
+```
+
+```js
+const fruitArray = ['蘋果', '芒果', '櫻桃', '香蕉' ]
+fruitArray.sort()
+console.log(fruitArray) //["櫻桃", "芒果", "蘋果", "香蕉"]
+```
+
+中文的排序一般來說只會有兩種情況，一種是要依big5編碼來排序，另一種是要依筆劃來排序，這時候需要在sort方法傳入參數中，另外加入比較的回調(callback)函式，這個回調函式中將使用[localeCompare](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare)這個可以比較本地字串的方法，以下為範例程式，其中本地(locale)的參數請參考[locales argument](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation):
+
+```js
+const fruitArray = ['蘋果', '芒果', '櫻桃', '香蕉', '大香蕉', '小香蕉' ]
+
+//使用原本的排序
+fruitArray.sort()
+
+console.log(fruitArray)
+//["大香蕉", "小香蕉", "櫻桃", "芒果", "蘋果", "香蕉"]
 
 
+fruitArray.sort(function(a, b){
+  //zh-Hans-TW、zh-Hans-TW-u-co-big5han、pinyin等等參數同樣結果
+  return a.localeCompare(b, 'zh-Hans-TW')
+})
 
-#### 搜尋與過濾 filter與find/findIndex
+console.log(fruitArray)
+//["大香蕉", "芒果", "蘋果", "香蕉", "小香蕉", "櫻桃"]
 
+fruitArray.sort(function(a, b){
+  //按筆劃從小到大排序
+  return a.localeCompare(b, 'zh-Hans-TW-u-co-stroke')
+})
 
+console.log(fruitArray)
+//["大香蕉", "小香蕉", "芒果", "香蕉", "蘋果", "櫻桃"]
 
+fruitArray.sort(function(a, b){
+  //按筆劃從大到小排序
+  return b.localeCompare(a, 'zh-Hans-TW-u-co-stroke')
+})
+
+console.log(fruitArray)
+//["櫻桃", "蘋果", "香蕉", "芒果", "小香蕉", "大香蕉"]
+```
+
+> 註: 這個字串比較方法應該可以再最佳化其效率，有需要可以進一步參考其文件的選項設定
+
+##### reverse
+
+> 副作用方法
+
+reverse(反轉)這語法用於把整個陣列中的成員順序整個反轉，就這麼簡單。以下為範例:
+
+```js
+const fruitArray = ['蘋果', '芒果', '櫻桃', '香蕉' ]
+fruitArray.reverse()
+
+console.log(fruitArray)
+//["香蕉", "櫻桃", "芒果", "蘋果"]
+```
+
+另一個情況是字串中的字元，如果要進行反轉的話，並沒有字串中的`reverse`方法，要用這個陣列的`reverse`方法加上字串與陣列的互相轉換的split與join方法，可以使用以下的函式:
+
+```js
+function reverseString(str) {
+    return str.split('').reverse().join('');
+}
+```
+
+#### 過濾與搜尋 filter與find/findIndex
+
+filter(過濾)是使用一個回調(callback)函式作為傳入參數，將的陣列成員(值)進行過濾，最後回傳符合條件(通過測試函式)的陣列成員(值)的新陣列。它的傳入參數與用法與上面說的迭代方法類似，實際上也是另一種特殊用途的迭代方法:
+
+```js
+const aArray = [1, 3, 5, 7, 10, 22]
+
+const bArray = aArray.filter(function (value, index, array){
+        return value > 6
+    })
+
+console.log(aArray) //[1, 3, 5, 7, 10, 22]
+console.log(bArray) //[7, 10, 22]
+```
+
+find與findIndex方法都是在搜尋陣列成員(值)用的，一個在有尋找到時會回傳值，一個則是回傳索引值，當沒找到值會回傳undefined。它們一樣是使用一個回調(callback)函式作為傳入參數，來進行尋找的工作，回調函式的參數與上面說的迭代方法類似。
+
+findIndex與最上面說的indexOf不同的地方也是在於，findIndex因為使用了回調(callback)函式，可以提供更多的在上開上的彈性應用。以下為範例:
+
+```js
+const aArray = [1, 3, 5, 7, 10, 22]
+const bValue = aArray.find(function (value, index, array){
+        return value > 6
+    })
+const cIndex = aArray.findIndex(function (value, index, array){
+        return value > 6
+    })
+
+console.log(aArray) //[1, 3, 5, 7, 10, 22]
+console.log(bValue) //7
+console.log(cIndex) //3
+```
 
 ## 陣列處理純粹函式
 
@@ -653,6 +758,7 @@ console.log(total2) // 20
 ### push
 
 ```js
+//注意它並非回傳長度，而是回傳最終的陣列結果
 function purePush(aArray, newEntry){
   return [ ...aArray, newEntry ]      
 }
@@ -663,6 +769,7 @@ const purePush = (aArray, newEntry) => [ ...aArray, newEntry ]
 ### pop
 
 ```js
+//注意它並非回傳pop的成員(值)，而是回傳最終的陣列結果
 function purePop(aArray){
   return aArray.slice(0, -1)     
 }
@@ -673,6 +780,7 @@ const purePush = aArray => aArray.slice(0, -1)
 ### shift
 
 ```js
+//注意它並非回傳shift的成員(值)，而是回傳最終的陣列結果
 function pureShift(aArray){
   return aArray.slice(1)     
 }
@@ -683,6 +791,7 @@ const pureShift = aArray => aArray.slice(1)
 ### unshift
 
 ```js
+//注意它並非回傳長度，而是回傳最終的陣列結果
 function pureUnshift(aArray, newEntry){
   return [ newEntry, ...aArray ]
 }
@@ -704,6 +813,7 @@ const pureSplice = (aArray, start, deleteCount, ...items) =>
 ### sort
 
 ```js
+//無替代語法，只能拷貝出新陣列作sort
 function pureSort(aArray, compareFunction) {
   return [ ...aArray ].sort(compareFunction)
 }
@@ -714,6 +824,7 @@ const pureSort = (aArray, compareFunction) => [ ...aArray ].sort(compareFunction
 ### reverse
 
 ```js
+//無替代語法，只能拷貝出新陣列作reverse
 function pureReverse(aArray) {
   return [ ...aArray ].reverse()
 }
@@ -723,7 +834,7 @@ const pureReverse = aArray => [ ...aArray ].reverse()
 
 ### delete
 
-刪除(delete)其中一個成員:
+刪除(delete)其中一個成員，再組合所有子字串:
 
 ```js
 function pureDelete (aArray, index) {
@@ -741,9 +852,7 @@ const pureDelete = (aArray, index) => aArray.slice(0,index).concat(aArray.slice(
 
 副作用的概念早已經存在於程式語言中很久了，但在最近幾年才受到很大的重視。在過去，我們在撰寫這種腳本直譯式程式語言，最重視的其實是程式效率與相容性，因為同樣的功能，不同的寫法有時候效率會相差很多，也有可能這是不同瀏覽器品牌與版本造成的差異。
 
-但現在的電腦硬體已經進步太多，所謂的執行資源的限制早就與10年前不同。效率在今天的程式開發早就已經不是唯一的重點，更多其他的因素都需要加入來一併考量，以前的應用程式也可能只是小小的特效或某個小功能，現在的應用程式將會是很龐大而且結構複雜的。所以，程式碼的閱讀性與語法簡潔、易於測試、維護與除錯、易於規模化等等，都會變成要考量的其他重點。
-
-純粹函式在JavaScript界中仍然是一個新概念，在這幾年開始很流行。因為它有很多優點，雖然它大部份時候不是效率最佳的那種語法，而且為了要讓這些功能無副作用，我們還需要花一些時間來改寫原有的語句與方法。不過，純粹函式的確是未來的主流想法，當一個應用程式慢慢變大、變複雜，純粹函式可以提供的好處會變成非常明顯，所以一開始學習這個概念是必要的。
+但現在的電腦硬體已經進步太多，所謂的執行資源的限制早就與10年前不同。效率在今天的程式開發早就已經不是唯一的重點，更多其他的因素都需要加入來一併考量，以前的應用程式也可能只是小小的特效或某個小功能，現在的應用程式將會是很龐大而且結構複雜的。所以，程式碼的閱讀性與語法簡潔、易於測試、維護與除錯、易於規模化等等，都會變成要考量的其他重點。純粹函式的確是未來的主流想法，當一個應用程式慢慢變大、變複雜，純粹函式可以提供的好處會變成非常明顯，所以一開始學習這個概念是必要的。
 
 ## 參考
 
