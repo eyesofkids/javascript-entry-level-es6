@@ -801,6 +801,8 @@ const pureUnshift = (aArray, newEntry) => [ newEntry, ...aArray ]
 
 ### splice
 
+這方法完全要使用slice與展開運算符(...)來取代，是所有的純粹函式最難的一個。
+
 ```js
 function pureSplice(aArray, start, deleteCount, ...items) {
   return [ ...aArray.slice(0, start), ...items, ...aArray.slice(start + deleteCount) ]
