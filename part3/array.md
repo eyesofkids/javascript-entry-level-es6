@@ -681,13 +681,6 @@ fruitArray.sort(function(a, b){
 console.log(fruitArray)
 //["大香蕉", "小香蕉", "芒果", "香蕉", "蘋果", "櫻桃"]
 
-fruitArray.sort(function(a, b){
-  //按筆劃從大到小排序
-  return b.localeCompare(a, 'zh-Hans-TW-u-co-stroke')
-})
-
-console.log(fruitArray)
-//["櫻桃", "蘋果", "香蕉", "芒果", "小香蕉", "大香蕉"]
 ```
 
 > 註: 這個字串比較方法應該可以再最佳化其效率，有需要可以進一步參考其文件的選項設定
