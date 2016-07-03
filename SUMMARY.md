@@ -23,6 +23,7 @@
    * [日期與時間](part3/date_time.md)
    * [錯誤與例外處理](part3/error.md)
 * [Part IV 特性](part4/README.md)
+   * [JSON](part4/json.md)
    * [this](part4/this.md)
    * [Callback](part4/callback.md)
    * [Closure](part4/closure.md)

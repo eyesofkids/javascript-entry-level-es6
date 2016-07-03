@@ -1,10 +1,10 @@
 # 物件
 
-物件(Object)類型，電腦程式的一種資料類型，比喻為是將人類現實世界物體的抽象化概念，它是高階程式語言的特性之一。
+物件(Object)類型是電腦程式的一種資料類型，用抽象化概念比喻為人類現實世界中的物體，它是高階程式語言的特性之一。
 
-對於JavaScript語言來說，除了原始的資料類型例如數字、字串、布林等等之外，所有的資料類型都是物件。JavaScript中的物件與其他目前流行的物件導向程式語言的設計不同，它一開始是使用原型基礎(Prototype-based)的設計，而目前流行的其他物件導向程式語言，大部份都是使用類別基礎(class-based)的設計。ES6之後加入了類似於類別為基礎的替代語法(是Prototype-based的語法糖)，可以用於建立物件與作繼承之用，雖然它仍然是很基礎的類別設計，但也讓開發者多了另一種選擇。
+對於JavaScript語言來說，除了原始的資料類型例如數字、字串、布林等等之外，所有的資料類型都是物件。JavaScript中的物件與其他目前流行的物件導向程式語言的設計不同，它一開始是使用原型基礎(prototype-based)的設計，而其他的物件導向程式語言，大部份都是使用類別基礎(class-based)的設計。不過，ES6之後加入了類似於類別為基礎的替代語法(是Prototype-based的語法糖)，可以用於建立物件與作繼承之用，雖然它仍然只是很基礎類別語法，但也讓開發者多了另一種選擇。
 
-物件在JavaScript語言中可分為兩種層面來看:
+物件在JavaScript語言中可分為兩種應用層面來看:
 
 - 主要用於資料的描述，它扮演類似關連陣列的資料結構，儲存"鍵-值"的成對資料。
 - 則是用於物件導向的程式設計，可以設計出各種的物件，其中包含各種方法，就像已經介紹過的各種包裝物件，例如字串、陣列等等的包裝物件。
@@ -34,7 +34,7 @@ const student = {
 }
 ```
 
-以如果你已經對陣列有一些理解的基礎下，物件的情況相當類似，首先在定義上與獲取值上:
+以如果你已經對陣列有一些理解的基礎下，物件的情況相當類似，首先在定義與獲取值上:
 
 ```js
 const aArray = []
@@ -52,6 +52,8 @@ bObject.thirdKey = 'yes'
 console.log(bArray[2]) //yes
 console.log(bObject.thirdKey) //yes
 ```
+
+> 註: 存取物件中的屬性或方法，使用的是句點(.)符號，這已經在書中的很多內建方法的使用時都有用到，相信你應該不陌生。
 
 > 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，不過也不需要使用它。
 
@@ -74,11 +76,15 @@ console.log(bObject)
 
 這種定義物件的方式，稱之為單例(singleton)的物件，也就是在程式碼中只能有唯一一個物件實例，就是你定義的這個物件。當你需要產生同樣的多個物件時，那又該怎麼作？那就是要另一種定義方式了。
 
-> 注意: 不要任意擴充物件內的屬性，這是不好的習慣
+物件字面定義方式，通常單純只用於物件類型的資料描述，也就是只用於定義單純的"鍵-值"對應的資料，在裡面不會定義函式(方法)。而基於物件字面定義，發展出JSON(JavaScript Object Notation)的資料定義格式，這是現今在網路上作為資料交換使用的一種常見的格式，在特性篇會再對JSON格式作更多的說明。
+
+> 注意: 不要任意擴充物件內的屬性，這是不好的習慣。
 
 ### 類別(Class)
 
 類別(Class)是先裡面定義好物件的整體結構藍圖(blue-print)，然後再用這個類別來產生相同結構的多個的物件實例。例如以下的簡單範例:
+
+> 註: 至少到ES6標準時，現在的JavaScript中的物件導向特性並不是真的是以類別為基礎(class-based)的，這是包裹著以原型為基礎(prototype-based)的語法糖。
 
 ```js
 class Student {
@@ -95,11 +101,13 @@ class Student {
 
 const aStudent = new Student(111, 'Eddy', 'Chang')
 console.log(aStudent.toString())
+console.log(aStudent.firstName)
+
 const bStudent = new Student(222, 'Inori', 'Egoist')
 console.log(bStudent.toString())
 ```
 
-有了這個例子，我們在下面分別說明一些這其中用到的語法，以及關鍵字的重要概念。
+我們在下面分別說明一些這個例子中用到的語法與關鍵字的重要概念。
 
 #### this
 
@@ -107,13 +115,118 @@ console.log(bStudent.toString())
 
 `this`變數是JavaScript不容易理解的一個特性，它也是隱藏的內部變數之一，當函式呼叫或物件實體化時，這個`this`變數都會存在於它的影響。
 
-還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。另外也有一種執行上下文(Context)的概念，就是對於`this`的影響範圍所稱的，它是以物件為基礎的的檢視角度。
+還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。另外也有一種執行上下文(Execution context)的概念，就是對於`this`的影響範圍所稱的，它是以物件為基礎的的檢視角度。
 
-http://www.digital-web.com/articles/scope_in_javascript/
-http://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work
-http://unschooled.org/2012/03/understanding-javascript-this/
-https://www.sitepoint.com/mastering-javascripts-this-keyword/
+`this`也就是執行上下文可以簡單用三個情況來區分:
 
+1. 函式呼叫: 在一般情況下的函式呼叫，`this`通常都指向global物件。這也是預設情況。
+2. 建構式(constructor)呼叫: 透過`new`運算符建立物件實體，等於呼叫類型的建構式，`this`會指向新建立的物件實例
+3. 物件中的方法呼叫: `this`指向呼叫這個方法的物件實體
+
+所以當建構式呼叫時，也就是使用`new`運算符建立物件時，`this`會指向新建立的物件，也就是下面這段程式碼:
+
+```js
+const aStudent = new Student(111, 'Eddy', 'Chang')
+```
+
+因此在建構式中的指定值的語句，裡面的`this`值就會指向是這個新建立的物件，也就是`aStudent`:
+
+```js
+constructor(id, firstName, lastName) {
+        this.id = id
+        this.firstName = firstName
+        this.lastName = lastName
+    }
+```
+
+也就是說在建立物件後，經建構式的執行語句，這個`aStudent`的三個屬性值就會被指定完成，所以可以用像下面的語法來存取屬性:
+
+```js
+aStudent.id
+aStudent.firstName
+aStudent.lastName
+```
+
+第3種情況是呼叫物件中的方法，也就是像下面的程式碼中，`this`會指向這個呼叫toString方法的物件，也就是`aStudent`:
+
+```
+aStudent.toString()
+```
+
+好的，對於`this`的說明就是這樣而已，到這邊應該不會很難理解，而且都是很直覺的說明。實際上，`this`也不只是這麼簡單，在特性篇中有獨立的一個章節來說明`this`的一些特性與應用情況。
+
+#### 建構式(constructor)
+
+建構式是特別的物件方法，它必會在物件建立時被呼叫一次，通常用於建構新物件中的屬性，以及呼叫上層父母類別(如果有繼承的話)之用。
+
+用類別(class)的定義時，物件的屬性都只能在建構式中定義，這和用物件字面的定義方式不同，這一點是要特別注意的。
+
+#### 私有成員
+
+JavaScript截至ES6標準為止，在類別中並沒有像其他程式語言中的私有(private)、保護(protected)、公開(public)這種成員存取控制的修飾關鍵字詞，基本上所有的類別中的成員都是公開的。
+
+目前比較簡單常見的區分方式，就是在私有成員(或方法)的名稱前面，加上下底線符號(\_)前綴字，用於區分這是私有的(private)成員，這只是由程式開發者自己作撰寫上的區分差別，與語言本身特性無關，對JavaScript語言來說，前面有下底線符號(\_)的變數，與沒下底線的變數，都是一樣的變數。當然也有其他模擬出私有成員的方式，不過它們都是複雜的語法，這裡就不說明了。以下為簡單範例:
+
+```js
+class Student {
+    constructor(id, firstName, lastName) {
+        this._id = id
+        this._firstName = firstName
+        this._lastName = lastName
+    }
+
+    toString() {
+        return 'id is '+this._id+' his/her name is '+this.firstName+' '+this.lastName
+    }
+}
+```
+
+> 註: 基本的原則是，如果是私有成員，就不能直接存取，要用getter與setter來實作取得與修改值的方法。私有方法不能在外部呼叫，只能在類別內部使用。
+
+#### getter與setter
+
+#### 靜態成員
+
+
+
+```
+class MyClass {
+        get prop() {
+            return 'getter';
+        }
+        set prop(value) {
+            console.log('setter: '+value);
+        }
+    }
+```
+
+
+
+#### 繼承
+
+繼承的範例如下，在建構式中會多呼叫一個`super`方法，用於
+
+```
+class Point {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        toString() {
+            return '(' + this.x + ', ' + this.y + ')';
+        }
+    }
+    
+    class ColorPoint extends Point {
+        constructor(x, y, color) {
+            super(x, y); // (A)
+            this.color = color;
+        }
+        toString() {
+            return super.toString() + ' in ' + this.color; // (B)
+        }
+    }
+```
 
 ### 物件的判斷
 
