@@ -14,6 +14,8 @@
 - 屬性: 物件的基本可被描述的量化資料。例如水果這個物件，有顏色、產地、大小、重量、甜度等等屬性。
 - 方法: 物件的可被反應的動作或行為。例如車子這個物件，它的行為有加速、煞車、轉彎、打方向燈等等的行為或可作的動作。
 
+在JavaScript語言中，用於物件定義的語法有好幾種，也有一些語法樣式(pattern)是專門用來產生物件的，目前在應用上來說，除非你是要開發函式庫或框架，不然很少會用這些語法樣式。
+
 ## 物件定義方式
 
 ### 物件字面(Object Literals)
@@ -53,9 +55,25 @@ console.log(bArray[2]) //yes
 console.log(bObject.thirdKey) //yes
 ```
 
-> 註: 存取物件中的屬性或方法，使用的是句點(.)符號，這已經在書中的很多內建方法的使用時都有用到，相信你應該不陌生。
+> 註: 存取物件中的成員(屬性或方法)，使用的是句點(.)符號，這已經在書中的很多內建方法的使用時都有用到，相信你應該不陌生。
 
 > 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，不過也不需要使用它。
+
+> 註: 物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，不過這大概只會在成員(方法與屬性)不確定的函式定義裡面才使用，其它情況不要使用，以免與陣列的成員存取語法混淆。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
+
+```js
+const luke = {
+  jedi: true,
+  age: 28,
+};
+
+function getProp(prop) {
+  return luke[prop];
+}
+
+const isJedi = getProp('jedi');
+```
+
 
 不過，對於陣列的有順序索引值，而且只有索引值的情況，我們會更加關心"鍵"的存在，上面的程式碼雖然在`thirdKey`不存在時，會自動進行擴充，這通常不是經常的用途，物件的定義是在使用前就會定義好的，而物件的擴充是在於對現有的JavaScript語言內建物件，或是函式庫的擴充之用。
 
@@ -82,9 +100,9 @@ console.log(bObject)
 
 ### 類別(Class)
 
-類別(Class)是先裡面定義好物件的整體結構藍圖(blue-print)，然後再用這個類別來產生相同結構的多個的物件實例。例如以下的簡單範例:
+類別(Class)是先裡面定義好物件的整體結構藍圖(blue print)，然後再用這個類別定義，來產生相同結構的多個的物件實例，類別在定義時並不會直接產生出物件，要經過實體化的過程(`new`運算符)，才會產生真正的物件實體。另外，目前因為類別定義方式還是個很新的語法，在實作時除了比較新的函式庫或框架，才會開始用它來撰寫。以下的為一個簡單範例:
 
-> 註: 至少到ES6標準時，現在的JavaScript中的物件導向特性並不是真的是以類別為基礎(class-based)的，這是包裹著以原型為基礎(prototype-based)的語法糖。
+> 註: 在ES6標準時，現在的JavaScript中的物件導向特性，並不是真的是以類別為基礎(class-based)的，這是骨子裡還是以原型為基礎(prototype-based)的物件導向特性語法糖。
 
 ```js
 class Student {
@@ -159,13 +177,29 @@ aStudent.toString()
 
 #### 建構式(constructor)
 
-建構式是特別的物件方法，它必會在物件建立時被呼叫一次，通常用於建構新物件中的屬性，以及呼叫上層父母類別(如果有繼承的話)之用。用類別(class)的定義時，物件的屬性都只能在建構式中定義，這與用物件字面的定義方式不同，這一點是要特別注意的。
+建構式是特別的物件方法，它必會在物件建立時被呼叫一次，通常用於建構新物件中的屬性，以及呼叫上層父母類別(如果有繼承的話)之用。用類別(class)的定義時，物件的屬性都只能在建構式中定義，這與用物件字面的定義方式不同，這一點是要特別注意的。如果物件在初始化時不需要任何語句，那麼就不要寫出這個建構式，實際上類別有預設的建構式，它會自動作建構的工作。
+
+關於建構式或物件方法的多形(polymorphism)或覆蓋(Overriding)，在JavaScript中**沒有**這種特性。建構式是會被限制只能有一個，而在物件中的方法(函式)也沒這個特性，定義同名稱的方法(函式)只會有一個定義被使用。所以如果你需要定義不同的建構式在物件中，因應不同的物件實體的情況，只能用函式的不定傳入參數方式，或是加上傳入參數的預設值來想辦法改寫，請參考函式內容中的說明。以下為一個範例:
+
+```js
+class Option {
+    constructor(key, value, autoLoad = false) {
+        if (typeof key != 'undefined') {
+            this[key] = value
+        }
+        this.autoLoad = autoLoad
+    }
+}
+
+const op1 = new Option('color', 'red')
+const op2 = new Option('color', 'blue', true)
+```
 
 #### 私有成員
 
-JavaScript截至ES6標準為止，在類別中並沒有像其他程式語言中的私有(private)、保護(protected)、公開(public)這種成員存取控制的修飾關鍵字詞，基本上所有的類別中的成員都是公開的。
+JavaScript截至ES6標準為止，在類別中並沒有像其他程式語言中的私有(private)、保護(protected)、公開(public)這種成員存取控制的修飾關鍵字詞，基本上所有的類別中的成員都是公開的。雖然也有其他"模擬"出私有成員的方式，不過它們都是複雜而且少用的語法，這裡就不說明了。
 
-目前比較簡單常見的區分方式，就是在私有成員(或方法)的名稱前面，加上下底線符號(\_)前綴字，用於區分這是私有的(private)成員，這只是由程式開發者自己作撰寫上的區分差別，與語言本身特性無關，對JavaScript語言來說，名稱前有沒有有下底線符號(\_)的，都是一樣的變數。雖然也有其他"模擬"出私有成員的方式，不過它們都是複雜的語法，這裡就不說明了。以下為簡單範例:
+目前比較簡單常見的區分方式，就是在私有成員(或方法)的名稱前面，加上下底線符號(\_)前綴字，用於區分這是私有的(private)成員，這只是由程式開發者自己作撰寫上的區分差別，與語言本身特性無關，對JavaScript語言來說，成員名稱前有沒有有下底線符號(\_)的，都是一樣的變數。以下為簡單範例:
 
 ```js
 class Student {
@@ -181,34 +215,118 @@ class Student {
 }
 ```
 
-> 註: 基本的原則是，如果是私有成員，就不能直接在外部存取，要用getter與setter來實作取得與修改值的方法。私有方法也不能在外部呼叫，只能在類別內部使用。
+> 註: 如果是私有成員，就不能直接在外部存取，要用getter與setter來實作取得與修改值的方法。私有方法也不能在外部呼叫，只能在類別內部使用。
 
 #### getter與setter
 
-在類別定義中可以使用`get`與`set`關鍵字，作為類別方法的修飾字，可以代表getter與setter。
+在類別定義中可以使用`get`與`set`關鍵字，作為類別方法的修飾字，可以代表getter(取得方法)與setter(設定方法)。一般的公開的原始資料類型的屬性值(字串、數字等等)，不需要這兩種方法，原本就可以直接取得或設定。只有私有屬性或特殊值，才需要用這兩種方法來作取得或設定。getter(取得方法)與setter(設定方法)的呼叫語法，長得像一般的存取物件成員的語法，都是用句號(.)呼叫，而且setter(設定方法)是用指定值的語法，不是傳入參數的那種語法。以下為範例:
 
 ```js
-class MyClass {
-        get prop() {
-            return 'getter';
+class Option {
+    constructor(key, value, autoLoad = false) {
+        if (typeof key != 'undefined') {
+            this['_' + key] = value;
         }
-        set prop(value) {
-            console.log('setter: '+value);
-        }
+        this.autoLoad = autoLoad;
     }
+
+    get color() {
+      if (this._color !== undefined) {
+        return this._color
+      } else {
+        return 'no color prop'
+      }
+    }
+
+    set color(value) {
+      this._color = value
+    }
+}
+
+const op1 = new Option('color', 'red')
+op1.color = 'yellow'
+
+const op2 = new Option('action', 'run')
+op2.color = 'yellow'
 ```
+
+> 註: 所以getter不會有傳入參數，setter只會有一個傳入參數。
 
 #### 靜態成員
 
+靜態(Static)成員指的是屬於類別的屬性或方法，也就是不論是哪一個被實體化的物件，都共享這個方法或屬性。而且，實際上靜態(Static)成員根本不需要實體化的物件來呼叫或存取，直接用類別就可以呼叫或存取。JavaScript中只有靜態方法，沒有靜態屬性，使用的是`static`作為方法的修飾字詞。以下為一個範例:
+
+```js
+class Student {
+    constructor(id, firstName, lastName) {
+        this.id = id
+        this.firstName = firstName
+        this.lastName = lastName
+
+        //這裡呼叫靜態方法，每次建構出一個學生實體就執行一次
+        Student._countStudent()
+    }
+
+    //靜態方法的定義
+    static _countStudent(){
+      if(this._numOfStudents === undefined) {
+          this._numOfStudents = 1
+      } else {
+          this._numOfStudents++
+      }
+    }
+    
+    //用getter+靜態方法取出目前的學生數量
+    static get numOfStudents(){
+      return this._numOfStudents
+    }
+
+}
+
+const aStudent = new Student(11, 'Eddy', 'Chang')
+console.log(Student.numOfStudents)
+
+const bStudent = new Student(22, 'Ed', 'Lu')
+console.log(Student.numOfStudents)
+
+const cStudent = new Student(33, 'Horward', 'Liu')
+console.log(Student.numOfStudents)
+```
+
+靜態屬性目前來說有兩種解決方案，一種是使用ES7的Class Properties標準，可以使用`static`關鍵字來定義靜態屬性，另一種是定義到類別原本的定義外面:
+
+```js
+// ES7語法方式
+class Video extends React.Component {
+  static defaultProps = {
+    autoPlay: false,
+    maxLoops: 10,
+  }
+  render() { ... }
+}
+```
+
+```js
+// ES6語法方式
+class Video extends React.Component {
+  constructor(props) { ... }
+  render() { ... }
+}
+
+Video.defaultProps = { ... }
+```
+
+> 註: ES7的靜態(或類別)屬性的轉換，要使用bebal的stage-0 perset。
+
 #### 繼承
 
-繼承的範例如下，在建構式中會多呼叫一個`super`方法，用於
+繼承的範例如下，在建構式中會多呼叫一個`super`方法，用於執行上層父母類別的建構式之用。`super`也可以用於指向上層父母類別，呼叫其中的方法或存取屬性。
 
 ```js
 class Point {
         constructor(x, y) {
-            this.x = x;
-            this.y = y;
+            this.x = x
+            this.y = y
         }
         toString() {
             return '(' + this.x + ', ' + this.y + ')';
@@ -217,11 +335,11 @@ class Point {
     
 class ColorPoint extends Point {
         constructor(x, y, color) {
-            super(x, y); // (A)
-            this.color = color;
+            super(x, y) 
+            this.color = color
         }
         toString() {
-            return super.toString() + ' in ' + this.color; // (B)
+            return super.toString() + ' in ' + this.color 
         }
     }
 ```
