@@ -458,7 +458,8 @@ let increaseAge = function(value) {
 
 - (Airbnb 18.3) 在控制語句(if, while等等)的圓括號(()開頭加上一個空白字元。函式在呼叫或定義時，函式名稱與傳入參數列則不需要空白。
 
-- (idiomatic.js 7.B) 提前回傳可以增加程式碼可閱讀性，對於效率沒有明顯差異
+- (idiomatic.js 7.B) 提前回傳可以增加程式碼可閱讀性，對於效率沒有明顯差異。
+
 ```js
 // 不好的寫法:
 function returnLate( foo ) {
