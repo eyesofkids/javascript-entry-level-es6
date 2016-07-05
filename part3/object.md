@@ -318,28 +318,33 @@ Video.defaultProps = { ... }
 
 #### 繼承
 
-用extends關鍵字可以作類別的繼承，而在建構式中會多呼叫一個`super`方法，用於執行上層父母類別的建構式之用。`super`也可以用於指向上層父母類別，呼叫其中的方法或存取屬性。
+用extends關鍵字可以作類別的繼承，而在建構式中會多呼叫一個`super()`方法，用於執行上層父母類別的建構式之用。`super`也可以用於指向上層父母類別，呼叫其中的方法或存取屬性。
+
+繼承時還有有幾個注意的事項:
+
+- 繼承的子類別中的建構式，`super()`需要放在第一行，這是標準的呼叫方式。
+- 繼承的子類別中的屬性與方法，都會覆蓋掉原有的在父母類別中的同名稱屬性或方法，要區為不同的屬性或方法要用`super`來存取父母類別中的屬性或方法
 
 ```js
 class Point {
-        constructor(x, y) {
-            this.x = x
-            this.y = y
-        }
-        toString() {
-            return '(' + this.x + ', ' + this.y + ')';
-        }
+    constructor(x, y) {
+        this.x = x
+        this.y = y
     }
+    toString() {
+        return '(' + this.x + ', ' + this.y + ')';
+    }
+}
     
 class ColorPoint extends Point {
-        constructor(x, y, color) {
-            super(x, y) 
-            this.color = color
-        }
-        toString() {
-            return super.toString() + ' in ' + this.color 
-        }
+    constructor(x, y, color) {
+        super(x, y) 
+        this.color = color
     }
+    toString() {
+        return super.toString() + ' in ' + this.color 
+    }
+}
 ```
 
 ## 物件相關方法
@@ -396,7 +401,7 @@ console.log(bCopyObj)
 
 #### undefined判斷方式
 
-直接存取物件中不存在的屬性，會直接回傳`undefined`時，這是最直接的判斷一個物件屬性是否存在的方式，也是最快的方式。不過它有一個缺點，就是當這個屬性本身就是`undefined`時，這個判斷方法就失效了。
+直接存取物件中不存在的屬性，會直接回傳`undefined`時，這是最直接的判斷物件屬性是否存在的方式，也是最快的方式。不過它有一個缺點，就是當這個屬性本身就是`undefined`時，這個判斷方法就失效了，如果你本來要的值本來就絕對不是`undefined`，所以可以這樣用。
 
 ```js
 //判斷鍵是否存在
@@ -407,7 +412,11 @@ obj.key !== undefined
 obj['key'] !== undefined
 ```
 
+> 註: 這個語法也可以判斷某個方法是否存在於物件中。
+
 #### in運算符 與 hasOwnProperty方法
+
+> 推薦使用 hasOwnProperty方法
 
 這兩個語法在正常情況下，都是可以正確回傳物件屬性的"鍵"是否存在的判斷:
 
@@ -416,61 +425,116 @@ obj.hasOwnProperty('key')
 'key' in obj
 ```
 
-它們還是有明顯的差異，hasOwnProperty方法不能判斷物件中的方法:
+它們還是有明顯的差異，hasOwnProperty方法不會檢查物件的原型鏈(prototype chain，或稱之為原型繼承)，hasOwnProperty方法只會檢查這個物件中有的屬性鍵，用類別定義的時的方法是沒辦法檢測到，由原型繼承的方法也沒辦法檢查，以下為範例:
+
+```js
+const obj ={}
+obj.prop = 'exists'
+
+console.log(obj.hasOwnProperty('prop') )           
+console.log(obj.hasOwnProperty('toString'))       // false
+console.log(obj.hasOwnProperty('hasOwnProperty'))   // false
+
+console.log('prop' in obj)   
+console.log('toString' in obj)  
+console.log('hasOwnProperty' in obj) 
+```
+
+搭配物件類別定義使用時，`hasOwnProperty`的行為是無法檢測出在類別中定義的方法，只能檢測該物件擁有的屬性，以及在建構式(constructor)中定義的物件擁有方法(算是一種具有函式值的屬性)。
 
 ```js
 class Base {
   constructor(a){
     this.a = a
+    this.fnBase = function(){
+      console.log('fnBase')
+    }
   }
 
   baseMethod(){
     console.log('base')
   }
+
 }
 
 class Child extends Base{
   constructor(a, b){
     super(a)
     this.b = b
+    this.fnChild = function(){
+      console.log('fnChild')
+    }
   }
 
   childMethod(){
     console.log('child')
   }
+
 }
 
 const aObj = new Child(1, 2)
 
 console.log(aObj.hasOwnProperty('a'))
 console.log(aObj.hasOwnProperty('b'))
+console.log(aObj.hasOwnProperty('fnBase'))
+console.log(aObj.hasOwnProperty('fnChild'))
 console.log(aObj.hasOwnProperty('baseMethod')) //false
 console.log(aObj.hasOwnProperty('childMethod')) //false
 
 console.log('a' in aObj)
 console.log('b' in aObj)
+console.log('fnBase' in aObj)
+console.log('fnChild' in aObj)
 console.log('baseMethod' in aObj)
 console.log('childMethod' in aObj)
 ```
 
+`hasOwnProperty`由於有只判斷物件本身屬性的限制，它會比較常被使用，`in`運算符反而很少被用到。但這兩種判斷的效率都比直接用`undefined`判斷屬性值慢得多，所以要不就用`undefined`判斷就好，雖然這並不完全精準，要不然就用`hasOwnProperty`。
 
-https://toddmotto.com/methods-to-determine-if-an-object-has-a-given-property/
-https://www.reinteractive.net/posts/235-es6-classes-and-javascript-prototypes
-http://stackoverflow.com/questions/1098040/checking-if-a-key-exists-in-a-javascript-object
-http://adripofjavascript.com/blog/drips/the-uses-of-in-vs-hasownproperty.html
-https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/in
-https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
+### 物件的遍歷(traverse)
 
-### 物件的判斷
+在JavaScript中的定義，一般物件不是內建為可迭代的(Iterable)，只有像陣列、字串與TypedArray、Map、Set這三種特殊物件，才是可迭代的。所以這種稱之為對物件屬性遍歷(traverse，整個走過一遍)的語句，而且一般物件的遍歷的效率與陣列的迭代相比極差無比。
 
-最常見的情況是，如果有個函式要求它的傳入參數之一需要為物件，而確定並不能是陣列。你要如何先判斷傳進來的值是真的一個物件？
+> 註: `for..of`只能用在可迭代的(Iterable)的物件上。
+
+#### for...in語句
+
+`for...in`語句是用來在物件中以鍵(key)值進行迭代，因為是無序的，所以有可能每次運算的結果會不同。它通常會用來配合`hasOwnProperty`作判斷，主要原因是`in`運算符和前面在判斷時一樣，它會對所有原型鏈(prototype chain)都整個掃過一遍，`hasOwnProperty`可以限定在物件本身的屬性。
+
+```js
+for(let key in obj){
+    if (obj.hasOwnProperty(key)) {
+        console.log(obj[key]); 
+    }
+}
+```
+
+> 註: `for...in`語句不要用在陣列上，它不適合用於陣列迭代。
+
+#### Object.keys轉為陣列，然後加上使用forEach方法
+
+`Object.keys`方法會把給定物件中可列舉(enumerable)的鍵，組合成一個陣列回傳，它的結果情況和`for...in`語句類似，差異就是在對原型鏈並不會整個掃過，只會對物件擁有的屬性的鍵。
+
+```js
+Object.keys(obj).forEach(function(key){
+    console.log(obj[key])
+});
+```
+
+## 風格指引
+
+- (Airbnb 22.3) Use PascalCase only when naming constructors or classes.
+- (Airbnb 9.4) It's okay to write a custom toString() method, just make sure it works successfully and causes no side effects.
+- 23.1 Accessor functions for properties are not required.
+- 23.3 If the property/method is a boolean, use isVal() or hasVal().
+- 23.2 Do not use JavaScript getters/setters as they cause unexpected side effects and are harder to test, maintain, and reason about. Instead, if you do make accessor functions, use getVal() and setVal('hello').
+
 
 ## 英文解說
 
 function 
 method
 
-variable/constant
 properties
 
 ### 結語
@@ -479,9 +543,3 @@ JavaScript是個物件導向的程式語言，但它的物件導向特性，與�
 
 ## 參考
 
-- http://exploringjs.com/es6/ch_oop-besides-classes.html
-- https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/
-- https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes
-- https://strongloop.com/strongblog/an-introduction-to-javascript-es6-classes/
-- http://book.mixu.net/node/ch6.html
-- http://www.phpied.com/3-ways-to-define-a-javascript-class/
