@@ -2,7 +2,7 @@
 
 物件(Object)類型是電腦程式的一種資料類型，用抽象化概念比喻為人類現實世界中的物體，它是高階程式語言的特性之一。
 
-對於JavaScript語言來說，除了原始的資料類型例如數字、字串、布林等等之外，所有的資料類型都是物件。JavaScript中的物件與其他目前流行的物件導向程式語言的設計不同，它一開始是使用原型基礎(prototype-based)的設計，而其他的物件導向程式語言，大部份都是使用類別基礎(class-based)的設計。不過，ES6之後加入了類似於類別為基礎的替代語法(是Prototype-based的語法糖)，可以用於建立物件與作繼承之用，雖然它仍然是很基本的類別語法，但也讓開發者多了另一種選擇。
+在JavaScript中，除了原始的資料類型例如數字、字串、布林等等之外，所有的資料類型都是物件。不過，JavaScript的物件與其他目前流行的物件導向程式語言的設計有明顯的不同，它一開始是使用原型基礎(prototype-based)的設計，而其他的物件導向程式語言，大部份都是使用類別基礎(class-based)的設計。在ES6之後加入了類似於類別為基礎的替代語法(是Prototype-based的語法糖)，可以用於建立物件與作繼承之用，雖然它仍然是很基本的類別語法，但也讓開發者多了另一種選擇。
 
 物件在JavaScript語言中可分為兩種應用層面來看:
 
@@ -318,7 +318,7 @@ Video.defaultProps = { ... }
 
 #### 繼承
 
-繼承的範例如下，在建構式中會多呼叫一個`super`方法，用於執行上層父母類別的建構式之用。`super`也可以用於指向上層父母類別，呼叫其中的方法或存取屬性。
+用extends關鍵字可以作類別的繼承，而在建構式中會多呼叫一個`super`方法，用於執行上層父母類別的建構式之用。`super`也可以用於指向上層父母類別，呼叫其中的方法或存取屬性。
 
 ```js
 class Point {
@@ -341,6 +341,125 @@ class ColorPoint extends Point {
         }
     }
 ```
+
+## 物件相關方法
+
+### 物件的拷貝
+
+在陣列的章節中，有談到淺拷貝(shallow copy)與深拷貝(deep copy)的概念，同樣在物件資料結構中，在拷貝時也同樣會有這個問題。陣列基本上也是一種特殊的物件資料結構，其實這個概念應該是由物件為主的發展出來的。詳細的內容就不多說，以下只針對淺拷貝的部份說明:
+
+#### Object.assign()
+
+> 推薦方式
+
+`Object.assign()`是ES6中的新方法，在ES6前都是用迴圈語句，或其他的方式來進行物件拷貝的工作。`Object.assign()`的用法很直覺，它除了拷貝之外，也可以作物件的合併，合併時成員有重覆名稱以愈後面的物件中的成員為主進行覆蓋:
+
+```js
+//物件拷貝
+const aObj = { a: 1, b: 'Test' }
+const copy = Object.assign({}, aObj)
+console.log(copy) // {a: 1, b: "Test"}
+
+//物件合併
+const bObj = { a: 2, c: 'boo' }
+const newObj = Object.assign(aObj, bObj)
+console.log(newObj) //{a: 2, b: "Test", c: "boo"}
+```
+
+> 註: `null`或`undefined`在拷貝過程中會被無視。
+
+> 註: 如果需要額外的擴充(Polyfill)可以參考[Object.assign(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)，或是[ES2015 Object.assign() ponyfill](https://github.com/sindresorhus/object-assign)
+
+#### JSON.parse加上JSON.stringify
+
+> 不建議的方式
+
+JSON是使用物件字面文字的定義方式，延伸用來專門定義資料格式的一種語法。它經常用來搭配AJAX技術，作為資料交換使用，也有很多NoSQL的資料庫更進一步用它改良後，當作資料庫裡的資料定義格式。
+
+這個方式是把物件定義的字面文字字串化，然後又分析回去的一種語法，它對於物件中的方法(函式)直接無視，所以只能用於只有數字、字串、陣列與一般物件的物件定義字面:
+
+```js
+const aObj = { a: 1, b: 'b', c: { p : 1 }, d: function() {console.log('d')} }
+
+const aCopyObj = JSON.parse(JSON.stringify(aObj))
+console.log(aCopyObj) 
+
+const bCopyObj = Object.assign({}, aObj)
+console.log(bCopyObj)
+```
+
+這方式其實不推薦使用，為什麼會寫出來的原因，是你可能會看到有人在使用這個語法，會使用這個語法的主要原因以前沒有像`Object.assign`這麼簡單的語法。除此之外，你可能還可以找到各種物件拷貝的各種函式或教學文件。
+
+物件的拷貝的使用原則與陣列拷貝的說明類似，要不就使用`Object.assign`，要不然就使用外部函式庫例如jQuery、underscore或lodash中拷貝的API。
+
+### 物件屬性的"鍵"或"值"判斷
+
+#### undefined判斷方式
+
+直接存取物件中不存在的屬性，會直接回傳`undefined`時，這是最直接的判斷一個物件屬性是否存在的方式，也是最快的方式。不過它有一個缺點，就是當這個屬性本身就是`undefined`時，這個判斷方法就失效了。
+
+```js
+//判斷鍵是否存在
+typeof obj.key !== 'undefined'
+
+//判斷值是否存在
+obj.key !== undefined
+obj['key'] !== undefined
+```
+
+#### in運算符 與 hasOwnProperty方法
+
+這兩個語法在正常情況下，都是可以正確回傳物件屬性的"鍵"是否存在的判斷:
+
+```js
+obj.hasOwnProperty('key')
+'key' in obj
+```
+
+它們還是有明顯的差異，hasOwnProperty方法不能判斷物件中的方法:
+
+```js
+class Base {
+  constructor(a){
+    this.a = a
+  }
+
+  baseMethod(){
+    console.log('base')
+  }
+}
+
+class Child extends Base{
+  constructor(a, b){
+    super(a)
+    this.b = b
+  }
+
+  childMethod(){
+    console.log('child')
+  }
+}
+
+const aObj = new Child(1, 2)
+
+console.log(aObj.hasOwnProperty('a'))
+console.log(aObj.hasOwnProperty('b'))
+console.log(aObj.hasOwnProperty('baseMethod')) //false
+console.log(aObj.hasOwnProperty('childMethod')) //false
+
+console.log('a' in aObj)
+console.log('b' in aObj)
+console.log('baseMethod' in aObj)
+console.log('childMethod' in aObj)
+```
+
+
+https://toddmotto.com/methods-to-determine-if-an-object-has-a-given-property/
+https://www.reinteractive.net/posts/235-es6-classes-and-javascript-prototypes
+http://stackoverflow.com/questions/1098040/checking-if-a-key-exists-in-a-javascript-object
+http://adripofjavascript.com/blog/drips/the-uses-of-in-vs-hasownproperty.html
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/in
+https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
 
 ### 物件的判斷
 
