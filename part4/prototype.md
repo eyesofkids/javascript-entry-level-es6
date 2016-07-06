@@ -56,8 +56,11 @@ const newPlayer = new Player('Inori')
 此時在newPlayer物件中的`prototype`與`__proto__`又是如何？
 
 ```js
+//不是函式，不會有prototype
 console.log(newPlayer.prototype)  // undefined
-console.log(newPlayer.__proto__)  // 
+
+console.log(newPlayer.__proto__)
+console.log(newPlayer.__proto__ === Player.prototype) //true
 ```
 
 
