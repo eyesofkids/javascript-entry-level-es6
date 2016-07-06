@@ -20,19 +20,21 @@
 
 ### 物件字面(Object Literals)
 
-用於資料描述的物件定義，使用花括號(curly braces)`{}`作為區塊宣告，其中加入無順序的"鍵-值"成對值，屬性的值可以是任何合法的值，包含函式或其他物件。
+用於資料描述的物件定義，使用花括號(curly braces)`{}`作為區塊宣告，其中加入無順序的"鍵-值"成對值，屬性的值可以是任何合法的值，可以包含陣列、函式或其他物件。
 
-而在物件定義中的"鍵-值"，如果是一般的值的情況，稱為"屬性(property, prpo)"，如果是一個函式，稱之為"方法(method)"。
+而在物件定義中的"鍵-值"，如果是一般的值的情況，稱為"屬性(property, prpo)"，如果是一個函式，稱之為"方法(method)"。屬性與方法我們通常稱為一個物件中的成員(member)。
 
-> 註：屬性名稱(鍵)中也不能使用保留字 
+> 註：屬性名稱(鍵)中也不要使用保留字，請使用合法的變數名稱 
 
 ```javascript
 
 const emptyObject = {}
 
-const student = {
-    firstName: 'Jerome',
-    lastName: 'Howard'
+const player = {
+    fullName: 'Inori',
+    age: 16,
+    gender: 'girl',
+    hairColor: 'pink'
 }
 ```
 
@@ -55,9 +57,11 @@ console.log(bArray[2]) //yes
 console.log(bObject.thirdKey) //yes
 ```
 
+不過，對於陣列的有順序索引值，而且只有索引值的情況，我們會更加關心"鍵"的存在，上面的程式碼雖然在`thirdKey`不存在時，會自動進行擴充，這通常不是經常的用途，物件的定義是在使用前就會定義好的，而物件的擴充是在於對現有的JavaScript語言內建物件，或是函式庫的擴充之用。
+
 > 註: 存取物件中的成員(屬性或方法)，使用的是句點(.)符號，這已經在書中的很多內建方法的使用時都有用到，相信你應該不陌生。
 
-> 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，不過也不需要使用它。
+> 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，也是不需要使用它。
 
 > 註: 物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，不過這大概只會在成員(方法與屬性)不確定的函式定義裡面才使用，其它情況不要使用，以免與陣列的成員存取語法混淆。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
 
@@ -74,24 +78,6 @@ function getProp(prop) {
 const isJedi = getProp('jedi');
 ```
 
-
-不過，對於陣列的有順序索引值，而且只有索引值的情況，我們會更加關心"鍵"的存在，上面的程式碼雖然在`thirdKey`不存在時，會自動進行擴充，這通常不是經常的用途，物件的定義是在使用前就會定義好的，而物件的擴充是在於對現有的JavaScript語言內建物件，或是函式庫的擴充之用。
-
-`in`這個運算符可以讓你判斷這個屬性名稱(鍵)是否存在於物件之中，然後決定是否改變其中的值:
-
-```js
-const bObject = {
-    firstKey: 'foo',
-    secondKey: 'bar'
-}
-
-if ('thirdKey' in bObject){
-    bObject.thirdKey = 'yes'
-}
-
-console.log(bObject)
-```
-
 這種定義物件的方式，稱之為單例(singleton)的物件，也就是在程式碼中只能有唯一一個物件實例，就是你定義的這個物件。當你需要產生同樣的多個物件時，那又該怎麼作？那就是要另一種定義方式了。
 
 物件字面定義方式，通常單純只用於物件類型的資料描述，也就是只用於定義單純的"鍵-值"對應的資料，在裡面不會定義函式(方法)。而基於物件字面定義，發展出JSON(JavaScript Object Notation)的資料定義格式，這是現今在網路上作為資料交換使用的一種常見的格式，在特性篇會再對JSON格式作更多的說明。
@@ -105,37 +91,38 @@ console.log(bObject)
 > 註: 在ES6標準時，現在的JavaScript中的物件導向特性，並不是真的是以類別為基礎(class-based)的，這是骨子裡還是以原型為基礎(prototype-based)的物件導向特性語法糖。
 
 ```js
-class Student {
-    constructor(id, firstName, lastName) {
-        this.id = id
-        this.firstName = firstName
-        this.lastName = lastName
+class Player {
+    constructor(fullName, age, gender, hairColor) {
+        this.fullName = fullName
+        this.age = age
+        this.gender = gender
+        this.hairColor = hairColor
     }
 
     toString() {
-        return 'id is '+this.id+' his/her name is '+this.firstName+' '+this.lastName
+        return 'Name: '+this.fullName+', Age:'+this.age
     }
 }
 
-const aStudent = new Student(111, 'Eddy', 'Chang')
-console.log(aStudent.toString())
-console.log(aStudent.firstName)
+const inori = new Player('Inori', 16, 'girl', 'pink')
+console.log(inori.toString())
+console.log(inori.fullName)
 
-const bStudent = new Student(222, 'Inori', 'Egoist')
-console.log(bStudent.toString())
+const tsugumi = new Player('Tsugumi', 14, 'girl', 'purple')
+console.log(tsugumi.toString())
 ```
 
 > 註: 注意類別名稱命名時要使用大駝峰(ClassName)的寫法 
 
-我們在下面分別說明一些這個例子中用到的語法與關鍵字的重要概念。
+下面分別說明一些這個例子中用到的語法與關鍵字的重要概念，以及類別延伸的一些語法。
 
 #### this
 
-在這個物件的類別定義中，我們第一次真正見到`this`關鍵字的用法，`this`簡單的說來，是物件實體專屬的指向變數，`this`指的就是"這個物件實體"，以上面的例子來說，也就是當物件真正實體化時，`this`變數會指向這個物件實體。`this`是怎麼知道要設定到那一個物件實體？是因為`new`運算符造成的結果。
+在這個物件的類別定義中，我們第一次真正見到`this`關鍵字的用法，`this`簡單的說來，是物件實體專屬的指向變數，`this`指向的就是"這個物件實體"，以上面的例子來說，也就是當物件真正實體化時，`this`變數會指向這個物件實體。`this`是怎麼知道要指到哪一個物件實體？是因為`new`運算符造成的結果。
 
-`this`變數是JavaScript不容易理解的一個特性，它也是隱藏的內部變數之一，當函式呼叫或物件實體化時，這個`this`變數都會存在於它的影響。
+`this`變數是JavaScript的一個特性，它是隱藏的內部變數之一，當函式呼叫或物件實體化時，都會以這個`this`變數的指向對象，作為執行期間的依據。
 
-還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。另外也有一種執行上下文(Execution context)的概念，就是對於`this`的影響範圍所稱的，它是以物件為基礎的的檢視角度。
+還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。而JavaScript中，另外也有一種執行上下文(Execution context)的概念，就是對於`this`的在執行期間所依據的影響，即是以物件為基礎的的檢視角度。
 
 `this`也就是執行上下文可以簡單用三個情況來區分:
 
@@ -146,34 +133,36 @@ console.log(bStudent.toString())
 所以當建構式呼叫時，也就是使用`new`運算符建立物件時，`this`會指向新建立的物件，也就是下面這段程式碼:
 
 ```js
-const aStudent = new Student(111, 'Eddy', 'Chang')
+const inori = new Player('Inori', 16, 'girl', 'pink')
 ```
 
-因此在建構式中的指定值的語句，裡面的`this`值就會指向是這個新建立的物件，也就是`aStudent`:
+因此在建構式中的指定值的語句，裡面的`this`值就會指向是這個新建立的物件，也就是`inori`:
 
 ```js
-constructor(id, firstName, lastName) {
-        this.id = id
-        this.firstName = firstName
-        this.lastName = lastName
+constructor(fullName, age, gender, hairColor) {
+        this.fullName = fullName
+        this.age = age
+        this.gender = gender
+        this.hairColor = hairColor
     }
 ```
 
-也就是說在建立物件後，經建構式的執行語句，這個`aStudent`的三個屬性值就會被指定完成，所以可以用像下面的語法來存取屬性:
+也就是說在建立物件後，經建構式的執行語句，這個`inori`物件中的屬性值就會被指定完成，所以可以用像下面的語法來存取屬性:
 
 ```js
-aStudent.id
-aStudent.firstName
-aStudent.lastName
+inori.fullName
+inori.age
+inori.gender
+inori.hairColor
 ```
 
-第3種情況是呼叫物件中的方法，也就是像下面的程式碼中，`this`會指向這個呼叫toString方法的物件，也就是`aStudent`:
+第3種情況是呼叫物件中的方法，也就是像下面的程式碼中，`this`會指向這個呼叫toString方法的物件，也就是`inori`:
 
 ```
-aStudent.toString()
+inori.toString()
 ```
 
-對於`this`的說明大致上就是這樣而已，這裡都是很直覺的說明。`this`當然也不只是這麼簡單，在特性篇中有獨立的一個章節來說明`this`的一些特性與應用情況。
+對於`this`的說明大致上就是這樣而已，這裡都是很直覺的說明。`this`還有一部份的細節與應用情況，在特性篇中有獨立的一個章節來說明`this`的一些特性與應用情況。
 
 #### 建構式(constructor)
 
@@ -351,6 +340,19 @@ class ColorPoint extends Point {
 
 ## 物件相關方法
 
+### instanceof運算符
+
+`instanceof`運算符用於測試某個物件是否由給定的建構式所建立，聽起來可能會覺得有點怪異，這個字詞從字義上看起來應該是"測試某個物件是否由給定的**類別**所建立"，但要記得JavaScript中本身就沒有類別這東西，物件的實體化是由建構函式，組成原型鏈而形成的。以下為一個簡單的範例:
+
+```js
+const eddy = new Student(11, 'Eddy', 'Chang')
+console.log(eddy instanceof Student) //true
+```
+
+> 註: instanceof運算符並不是100%精確的，它有一個例外情況是在處理來自HTML的frame或iframe資料時會失效。
+
+> 註: 關於原型鏈的說明請見本章最下面的"常見問答"的介紹，或特性篇的"原型物件導向"章節
+
 ### 物件的拷貝
 
 在陣列的章節中，有談到淺拷貝(shallow copy)與深拷貝(deep copy)的概念，同樣在物件資料結構中，在拷貝時也同樣會有這個問題。陣列基本上也是一種特殊的物件資料結構，其實這個概念應該是由物件為主的發展出來的。詳細的內容就不多說，以下只針對淺拷貝的部份說明:
@@ -495,7 +497,7 @@ console.log('childMethod' in aObj)
 
 ### 物件的遍歷(traverse)
 
-在JavaScript中的定義，一般物件不是內建為可迭代的(Iterable)，只有像陣列、字串與TypedArray、Map、Set這三種特殊物件，才是可迭代的。所以這種稱之為對物件屬性遍歷(traverse，整個走過一遍)的語句，而且一般物件的遍歷的效率與陣列的迭代相比極差無比。
+在JavaScript中的定義，一般物件不是內建為可迭代的(Iterable)，只有像陣列、字串與TypedArray、Map、Set這三種特殊物件，才是可迭代的。所以這種一般稱為對物件屬性遍歷(traverse，整個走過一遍)或列舉(enumerate)的語句，而且一般物件的遍歷的效率與陣列的迭代相比非常的差。
 
 > 註: `for..of`只能用在可迭代的(Iterable)的物件上。
 
@@ -555,6 +557,48 @@ properties
 - 物件字面定義延伸出的JSON資料格式，成為JavaScript用來作資料交換的首選格式
 - 物件導向的相關特性與語法只會拿來應用現成的DOM或內建物件，或是用來擴充原本內建的物件之用
 - 對於程式碼的組織方式與命名空間的解決方案，主要會使用模組模式(即IIFE)或模組系統來作，而非物件導向的相關語法或模式
+- 以合成(或擴充)代替繼承(composition over inheritance)
+
+### JavaScript中的物件可以多重繼承嗎？或是有像介面的設計？
+
+沒有多重繼承，可以用Mixins(混合)的樣式，或是ES6標準的Proxy物件，來達到類似多重繼承的需求。
+
+介面或抽象類別也沒有，因為這些就是類別為基礎的物件導向才會有的概念。不過，有模擬類似需求的語法或樣式。
+
+### 原型鏈(prototype chain)是什麼？
+
+> 注意: 本節的內容很容易與函式內容混淆，請小心閱讀
+
+本文章中已經多次提及"原型鏈"這個專有名詞，原型鏈是JavaScript中以原型為基礎的物件導向特性，指的是使用原型來作物件實體化，會產生"原型鏈"的結構。
+
+在原型的物件導向設計中，每個物件都有一個自己的原型，而每個物件實體化都是由其他的原型繼承而來，這和以類別為基礎的物件導向設計不同，以類別為基礎的物件導向，是先定義好類別所有定義後，再用實體化的語句來作物件實體的工作。
+
+原型的物件實體化工作，有二個主要條件，一是需要有建構函式，另一個是要有繼承的對象，建構函式說穿了就是一種特別為了物件實體化用的函式，它長得會像之前看到的類別定義中的建構式的語句，但裡面的變數定義不太像一般的函式。
+
+```js
+function Player(fullName, age, eyecolor) {
+    this.fullName = fullName
+    this.age = age
+    this.eyeColor = eyecolor
+}
+```
+
+物件的實體化也是用`new`運算符進行，如下面的程式碼:
+
+```js
+const inori = new Player('Inori', 16, 'blue')
+```
+
+在實體化之後，JavaScript會有一個內部的物件`\_\_proto\_\_`指向繼承對象的原型，以下面的程式碼來知道了:
+
+```js
+console.log(inori.__proto__)
+console.log(inori.__proto__ === Player.prototype)
+```
+
+這種藉由原型繼承，然後實體化物件，會產生一個原型(子)與原型(父母)之間的連結結構，就稱之為原型鏈(Prototype chain)結構，你可以把它想成是原型繼承時所產生的連結結構。
+
+由於原型的物件導向有一些細節，在這裡只是簡單的介紹而已，在特性篇會有一篇專文介紹JavaScript的原型物件導向特性。
 
 ## 參考
 
