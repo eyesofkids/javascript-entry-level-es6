@@ -19,7 +19,7 @@ console.log(Player.prototype.constructor === Player) //true
 
 ![Prototype Image 01](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/prototype_1.png)
 
-再來是`__proto__`這個隱藏屬性，它是一個存取器(accessor)屬性，意思是用getter和setter函式合成出來的屬性，我們可以用來更加深入理解整個原型的樣貌。`__proto__`是每一個JavaScript中物件都有的內部屬性，代表該物件繼承而來的源頭，也就是指向該物件的原型(prototype)，它會用來架構出原型鏈，或用原型繼承結構來理解。
+再來是`__proto__`這個隱藏屬性，它是一個存取器(accessor)屬性，意思是用getter和setter函式合成出來的屬性，我們可以用來更加深入理解整個原型的樣貌。`__proto__`是每一個JavaScript中物件都有的內部屬性，代表該物件繼承而來的源頭，也就是指向該物件的原型(prototype)，它會用來連接出**原型鏈**，或可以理解為原型的繼承結構。
 
 對於一個函式而言，它本身也是一個物件，它的原型就是最上層的`Function.prototype`，你可以說這是所有函式的原產地。所以`Player`函式本身的`__proto__`指向`Function Prototype`，這應該可以理解。
 
@@ -30,6 +30,7 @@ function Player() { }
 
 console.log(Player.__proto__)
 console.log(Player.prototype.__proto__)
+console.log(Object.prototype.__proto__)  //null
 
 console.log(Player.__proto__ === Function.prototype)  //true
 console.log(Player.prototype.__proto__ === Object.prototype) //true
@@ -40,15 +41,24 @@ console.log(Function.prototype.__proto__ === Object.prototype) //true
 
 ![Prototype Image 02](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/prototype_2.png)
 
+> 註: `__proto__`注意是前後各有兩條下底線(_)，不是只有一條而已。這個屬性的實作一直爭議性的，在一些舊的瀏覽器品牌(例如IE)中不能使用，在這裡只是為了說明之用的，請不要用在真正的應用程式上。在ES6中已經正式納入標準之中，未來所有的瀏覽器品牌與新版本都應該會支援它。
 
-> 註: `__proto__`屬性的實作一直是有爭議性的，在一些瀏覽器品牌(例如IE)中不能使用，在這裡只是為了說明之用的，請不要用在真正的應用程式上。不過，在ES6中已經正式納入標準之中，未來所有的瀏覽器品牌與新版本都應該會支援它。
-
-
-## 原型鏈
-
-對於一個物件來說，我們需要有如何定義它的方式，用物件字面文字的定義是很直覺得，這在物件篇中也有提過了。例如以下的例子來說:
+當進一步使用Player函式作為建構函式，產生物件實體時，也就是使用new運算符的語句。像下面這樣簡單的例子，在建構函式中會用this.name的方式來指定傳入參數，this按照之前在物件篇的內容所說明，指向的是new運算符中指定的物件實體。
 
 ```js
+function Player(name) {
+  this.name = name
+}
 
+const newPlayer = new Player('Inori')
 ```
+
+此時在newPlayer物件中的`prototype`與`__proto__`又是如何？
+
+```js
+console.log(newPlayer.prototype)  // undefined
+console.log(newPlayer.__proto__)  // 
+```
+
+
 
