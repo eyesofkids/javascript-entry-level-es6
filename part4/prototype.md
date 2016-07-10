@@ -264,6 +264,14 @@ const player = {}
 console.log(player.toString())
 ```
 
+### instanceof
+
+http://tobyho.com/2011/01/28/checking-types-in-javascript/
+
+http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
+
+http://stackoverflow.com/questions/3145700/javascript-inheritance-instanceof-not-working
+
 ## new有害說與物件實體化
 
 JavaScript長期以來就有反對使用new運算符用於實體化物件的言論。在這本"JavaScript: The Good Parts"具有指標意義的書也把new列為壞的部份，建議大家不要使用它來作物件的實體化，主要的理由是語言本身設計上的缺陷:
