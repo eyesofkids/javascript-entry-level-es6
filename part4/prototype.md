@@ -257,33 +257,26 @@ new Employee();  //4
 
 原型鏈的觀念如此重要，在於有很多物件的行為都是與它相關，在物件篇已經有介紹過物件中的一些方法，都是會遍歷整個物件的原型鏈，而不僅是物件本身而已。這與原型的物件實體化設計有關，因為物件的實體化過程，就是原型的繼承過程，也就是物件的實體化是由繼承其他物件而來的。
 
-先看一下物件屬性的存取這件事，這裡用簡單的`__proto__`屬性指向，來製作出一個物件與它的子物件，
+先看一下物件屬性的存取這件事，下面的例子中，我們並沒有在`player`物件中定義`toString`方法，但它的確是存在的，這個`toString`方法是來自原型鏈上層的物件中，也就是繼承得來的。
 
 ```js
 const player = {}
-const vipPlayer = {}
-vipPlayer.__proto__ = player
-
-console.log(vipPlayer.level); // undefined
-
-player.level = '10'
-
-console.log(vipPlayer.level); //'10'
+console.log(player.toString())
 ```
 
 ## new有害說與物件實體化
 
-JavaScript長期以來就有反對使用new運算符用於實體化物件的言論。在這本具有指標意義的書JavaScript: The Good Parts也把new列為壞的部份，建議大家不要使用它來作物件的實體化，主要的理由是語言本身設計上的缺陷:
+JavaScript長期以來就有反對使用new運算符用於實體化物件的言論。在這本"JavaScript: The Good Parts"具有指標意義的書也把new列為壞的部份，建議大家不要使用它來作物件的實體化，主要的理由是語言本身設計上的缺陷:
 
-> 忘了在物件實體化時加上new運算符: 函式並無明確區分建立物件用的建構式與一般的函式，如果你是要用來實體化物件，而忘了加上new關鍵字，不會產生任何錯誤，但事情會很大條。
+> 忘了在物件實體化時加上new運算符，函式並無明確區分建立物件用的建構式與一般的函式，如果你是要用來實體化物件，而忘了加上new關鍵字，不會產生任何錯誤，但事情會很大條。
 
-以下用幾個方向來討論如何正確的其他作法，以避免這些問題。
+以下用幾個方向來討論如何正確的其他作法，以避免其中可能的問題。
 
 ### Object.create
 
 `Object.create`方法可以使用的是物件的原型來建立物件。這是一個ES5後加入的新方法，最早在10年前在這篇文章[Prototypal Inheritance in JavaScript](http://javascript.crockford.com/prototypal.html)提出的想法與實作。文章中提及`new`本身就是一個為了要讓JavaScript中的物件實體化，用起來像是類別為基礎的程式語言，才會設計的一個語法，但因此模糊了原型繼承的真正作法。
 
-`Object.create`並不只是new運算符的取代方法這麼簡單，它提供了更多的彈性，把物件導向的語法結構變成原本的原型導向，它的基本語法如下:
+`Object.create`並不只是`new`運算符的取代方法這麼簡單，它提供了更多的彈性，把物件導向的語法結構變成原本的原型導向，它的基本語法如下:
 
 > Object.create(proto[, propertiesObject])
 
@@ -388,9 +381,9 @@ const newObject = new ClassName()
 - 用來描述資料模型的物件: 用來作為最終的資料交換使用，描述資料的物件，頂多5~10個物件。
 - 用於應用程式的物件: 例如一個遊戲中，對於怪物、玩家角色、NPC的這些物件，大概就是20-50個。
 
-以效能來說，物件的建立這件事，不太可能像你在網路上找得到的那種測試報告的情況，一次建立幾十萬個或百萬個物件。物件的建立與各種運算，本身就是高消費的，也不可能真有那麼多資源給你這樣建立，所以在物件的建立，反而效率並不是太重要的課題，而是它在撰寫時的高閱讀性、易於維護與擴充、使用的彈性等等。
+以效能來說，物件的建立這件事，不太可能像你在網路上找得到的那種測試報告的模擬情況，一次建立幾十萬個或百萬個物件。物件的建立與各種運算，本身就是高消費的，也不可能真有那麼多資源給你這樣建立，所以在物件的建立，反而效率並不是太重要的課題，而是它在撰寫時的高閱讀性、易於維護與擴充、使用的彈性等等。
 
-以上面的三種物件建立的方式來說，效率最佳的是物件字面定義(花括號({})定義物件)，其次為建構函式與new運算符這種，通常稱之為建構式樣式(Constructor Pattern)，最差的則是`Object.create`。
+以上面的三種物件建立的方式來說，效率最佳的是物件字面定義(花括號({})定義物件)，其次為建構函式與new運算符這種，通常稱之為"建構式樣式(Constructor Pattern)"，最差的則是`Object.create`。
 
 但物件字面定義語法有一些問題，它只會有一個物件實體。它沒辦法直接複製出其他的物件實體，所以如果是要指"可建立多個物件"的語法，這個並不是可以這樣使用的，它需要寫成一個像下面這樣的函式，才能達到需求，這稱之為工廠樣式(Factory Pattern)的語法:
 
@@ -411,7 +404,6 @@ console.log(inori.toString())
 
 const ayase = PlayerFactory('ayase', 17)
 console.log(ayase.toString())
-
 ```
 
 工廠樣式在效率上也是輸了使用建構函式與new運算符一大截，不過它有許多優點，所以有很多程式設計師依然會使用它，工廠模式可以寫成很具有高度彈性的物件產生函式。不過，由於所有的物件實體都類似於物件字面所定義出來的，它們的原型都是Object.prototype。
@@ -436,7 +428,72 @@ new Error
 
 "建構式樣式"是以建構函式式為主的語法樣式，使用new作為物件實體化的唯一方式，最後回傳物件實體。而只能把物件的定義內容寫在建構式之中，只會回傳物件實體，限制住很多能使用的情況。建構函式原本就是一個JavaScript中十分怪異的設計，除了初學者一定很容易和一般的函式搞混，它有一些隱含的機制也很奇特。
 
-"工廠樣式"的語法提供了更多的彈性，相較於"建構式樣式"只能回傳物件，"工廠樣式"可以回傳任何東西，不見得一定要回傳物件實體，"工廠樣式"中也可以回傳以物件字面定義的物件、使用new或Object.create方法，可以視情況提供各種物件實體的應對程式碼，此外，工廠樣式可以對物件資料進行更好的封裝(encapsulation)與資料隱藏(data hiding)，這一點在建構式樣式中完全是個無法比得上的。
+"工廠樣式"的語法提供了更多的彈性，相較於"建構式樣式"只能回傳物件，"工廠樣式"最後直接回傳物件實體，但"工廠樣式"也可以多了很多彈性，可以視情況提供各種物件實體的應對程式碼，最後可以回傳以物件字面定義的物件、使用new或Object.create方法。此外，工廠樣式可以對物件資料進行更好的封裝(encapsulation)與資料隱藏(data hiding)，這一點在建構式樣式中完全是個無法比得上的。
+
+### 更進階的樣式
+
+工廠樣式提供了更多的彈性，因為Object.create直接由一個單純的物件來建立物件，失去了原型鏈的擴充彈性，你可以用下面的樣式來調整:
+
+```js
+function Player(){}
+
+Player.prototype.toString = function(){
+  return this.name
+}
+
+function PlayerFactory(name){
+  const obj = Object.create(Player.prototype)
+  obj.name = name
+
+  return obj
+}
+```
+
+實際上Player函式與PlayerFactory函式兩者可以合併，像下面這樣:
+
+```js
+function PlayerFactory(name){
+  const obj = Object.create(PlayerFactory.prototype)
+  obj.name = name
+
+  return obj
+}
+
+PlayerFactory.prototype.toString = function(){
+  return this.name
+}
+
+const inori = PlayerFactory('Inori')
+console.log(inori.toString())
+console.log(inori)
+```
+
+### 多重繼承
+
+這個樣式可以建立繼承自多個物件的新物件，用的是Object.assign加上Object.create方法的語法，Object.assign並沒有限定第二個參數之後只能加一個物件進來合併，所以可以加很多物件來合併成為一個新的物件。
+
+```js
+let player = {
+  name: 'player',
+  toString() {
+   return this.name
+  }
+}
+
+function PlayerFactory(name, age) {
+  return Object.assign(Object.create(player), {
+    name: name,
+    age: age,
+    toString(){
+      return 'Name: '+ this.name + ' Age:'+ this.age
+    }
+  })
+}
+
+const inori = PlayerFactory('inori', 16)
+console.log(inori.toString())
+console.log(inori)
+```
 
 ## 參考
 
@@ -445,3 +502,12 @@ new Error
 - https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/
 - http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/
 - http://www.w3schools.com/js/js_object_prototypes.asp
+
+---
+
+http://www.datchley.name/understanding-prototypes-delegation-composition/
+http://chimera.labs.oreilly.com/books/1234000000262/ch03.html#prototype_cloning
+https://www.safaribooksonline.com/library/view/learning-javascript-design/9781449334840/ch09s10.html
+https://gist.github.com/KJlmfe/11241224
+http://www.dofactory.com/javascript/prototype-design-pattern
+https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.bqskkthz2
