@@ -20,7 +20,6 @@
    * [函式與作用域](part3/function_scope.md)
    * [陣列](part3/array.md)
    * [物件](part3/object.md)
-   * [日期與時間](part3/date_time.md)
    * [錯誤與例外處理](part3/error.md)
 * [Part IV 特性](part4/README.md)
    * [原型物件導向](part4/prototype.md)
