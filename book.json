@@ -2,7 +2,6 @@
     "plugins": [
         "anchorjs"
     ],
-    "gitbook": ">=3.1.0",
     "pluginsConfig": {
         "theme-default": {
             "showLevel": true
