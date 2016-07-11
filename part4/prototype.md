@@ -4,11 +4,11 @@
 you don’t understand JavaScript.
 > 如果你沒搞懂原型，你不算真的懂JavaScript
 
-JavaScript本身就是原型為基礎的物件導向設計，至今仍沒變動過。在物件的章節中所介紹的類別定義方式，只是原型物件導向語法的語法糖，骨子裡還是原型，並不是真正的以類型為基礎的物件導向設計。理解JavaScript的原型，可以看到JavaScript中物件是如何設計的原貌，有助於對很多程式碼與概念。
+JavaScript本身就是原型為基礎的物件導向設計，至ES6標準後仍沒變動過。在物件的章節中所介紹的類別定義方式，只是原型物件導向語法的語法糖，骨子裡還是原型，並不是真正的以類型為基礎的物件導向設計。理解JavaScript的原型是很重要的，畢竟它的確是一個物件導向語言，只是雜混得讓初學者難以理解。
 
 ## 函式 - 原型的起手式
 
-所有JavaScript中的函式都有一個內建的`prototype`屬性，指向一個特殊的prototype物件，prototype物件中也有一個`contructor`屬性，指向原來的函式，你可能會覺得有點怪異，但設計就是如此。
+所有JavaScript中的函式都有一個內建的`prototype`屬性，指向一個特殊的prototype物件，prototype物件中也有一個`contructor`屬性，指向原來的函式，互相指來指去會讓你覺得有點怪異，但設計就是如此。
 
 以下的程式碼可以看出這個關係:
 
@@ -193,7 +193,7 @@ class VipPlayer extends Player {
 }
 ```
 
-總而言之，在很多真實的應用情況下，"以合成(或擴充)代替繼承(composition over inheritance)"才是正解，在JavaScript中合成比繼承容易得多了，彈性高應用也很廣，也比較符合語言本身的特性。思考的重點不同，才能撰寫出符合應用情況的程式碼，要不然只會在原有的類別框架中打轉而已。
+總而言之，在很多真實的應用情況下，"以合成(或擴充)代替繼承(composition over inheritance)"才是正解，在JavaScript中合成比繼承容易得多了，彈性高應用也很廣，也比較符合語言本身的特性。思考的重點不同，才能撰寫出符合應用情況的程式碼。
 
 ## 私有/公開成員
 
@@ -255,7 +255,7 @@ new Employee();  //4
 
 ## 原型鏈(prototype chain)
 
-原型鏈的觀念如此重要，在於有很多物件的行為都是與它相關，在物件篇已經有介紹過物件中的一些方法，都是會遍歷整個物件的原型鏈，而不僅是物件本身而已。這與原型的物件實體化設計有關，因為物件的實體化過程，就是原型的繼承過程，也就是物件的實體化是由繼承其他物件而來的。
+原型鏈是JavaScript中以原型為基礎的物件導向特性，指的是使用原型來作物件實體化，會產生"原型鏈"的結構。原型鏈的觀念如此重要，在於有很多物件的行為都是與它相關，在物件篇已經有介紹過物件中的一些方法，都是會遍歷整個物件的原型鏈，而不僅是物件本身而已。這與原型的物件實體化設計有關，因為物件的實體化過程，就是原型的繼承過程，也就是物件的實體化是由繼承其他物件而來的。
 
 先看一下物件屬性的存取這件事，下面的例子中，我們並沒有在`player`物件中定義`toString`方法，但它的確是存在的，這個`toString`方法是來自原型鏈上層的物件中，也就是繼承得來的。
 
@@ -266,19 +266,109 @@ console.log(player.toString())
 
 ### instanceof
 
-http://tobyho.com/2011/01/28/checking-types-in-javascript/
+`instanceof`是一個運算符，主要是用來判斷一個物件在原型鏈中是否有存在某個建構式，如果存在回傳`true`，要不然就是`false`值。它的前面的運算子是物件，後面則是建構式，語法是像下面這樣:
 
-http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
+> object instanceof constructor
 
-http://stackoverflow.com/questions/3145700/javascript-inheritance-instanceof-not-working
+`instanceof`常會拿來和存取物件實體的`constructor`屬性的方式作比較，由於`constructor`只會指向最接近的建構式，而`instanceof`會找遍整個原型鏈，當然結果會有所有不同，以下為範例:
+
+```js
+function Animal(){}
+
+function Cat(){}
+Cat.prototype = new Animal()
+Cat.prototype.constructor = Cat
+
+const kitty = new Cat()
+
+
+console.log(kitty instanceof Cat) // true
+console.log(kitty instanceof Animal) // true
+console.log(kitty.constructor === Cat) // true
+console.log(kitty.constructor === Animal) // false
+```
+
+`instanceof`有一些例外情況，它對於原始資料類型(數字、字串、布林、null、undefined)是無法判斷的，必定是回傳`false`，這和用`constructor`屬性判斷是不同的結果，例如以下的範例:
+
+```js
+console.log(3 instanceof Number) // false
+console.log(true instanceof Boolean) // false
+console.log('abc' instanceof Boolean) // false
+console.log((3).constructor === Number) // true
+console.log(true.constructor === Boolean) // true
+console.log('abc'.constructor === String) // true
+```
+
+另外對在iframe、frame或著另開視窗中所產生的物件進行判斷時，它也會失效。
+
+在不使用建構式的物件建立的情況，它也無法判斷，而且會產生錯誤，所以它並不能使用於像`Object.create`方法，或直接回傳物件的工廠樣式，只能用於建構式樣式。
+
+### in與for...in
+
+`in`運算符是用來判斷某個屬性是否存在於某個物件中，存在的話會回傳true，否則會回傳false。`in`一樣會尋遍整個原型鏈，對比`hasOwnProperty`則是只會在這物件當中，並不會往原型鏈尋找，`in`通常會搭配for使用`for...in`語句。以下這個語法是最常見到的:
+
+```js
+for(let key in obj){
+    if (obj.hasOwnProperty(key)) {
+        console.log(obj[key]); 
+    }
+}
+```
+
+### 鴨子類型(Duck typing)
+
+那麼我們要如何正確的判斷一個物件，就是我們需要的物件？首先，`typeof`運算符所能判斷的情況過少，只能用於判斷資料類型，在資料類型那個章節就有提及它的內容。對於物件、陣列、null來說，它都會回傳'object'。
+
+`instaceof`只能用於以`new`實體化的物件，也就是有建構式的情況，而且它有一些失效的情況，`instaceof`有時會直接產生錯誤中斷執行，而不是回傳`false`。`instaceof`並不是不能使用，常見的使用情況是用於判斷語言內建的幾個物件，例如以下幾個:
+
+```js
+[1, 2, 3] instanceof Array // true
+/abc/ instanceof RegExp // true
+({}) instanceof Object // true
+(function(){}) instanceof Function // true
+```
+
+那如果是在一個函式的傳入參數，要如何判斷這個傳入物件實體是我們要的？
+
+答案就是使用"鴨子類型(Duck typing)"，也就是使用該物件的屬性或行為複合地來判斷它，類似像下面的說明:
+
+> 當看到一隻鳥走起來像鴨子、游泳起來像鴨子、叫起來也像鴨子，那麼這隻鳥就可以被稱為鴨子。
+
+所以當我們要判斷一個自訂的物件，可以用其中應該包含的屬性與方法來判斷，例如以下的判斷函式:
+
+```js
+function isPlayer(object) {
+  return object != null && typeof object === 'object' &&
+    'name' in object && 'age' in object && 'toString' in object
+}
+```
 
 ## new有害說與物件實體化
 
-JavaScript長期以來就有反對使用new運算符用於實體化物件的言論。在這本"JavaScript: The Good Parts"具有指標意義的書也把new列為壞的部份，建議大家不要使用它來作物件的實體化，主要的理由是語言本身設計上的缺陷:
+JavaScript長期以來就有反對使用new運算符用於實體化物件的言論，建議大家不要使用它來作物件的實體化，主要的理由是語言本身設計上的缺陷:
 
-> 忘了在物件實體化時加上new運算符，函式並無明確區分建立物件用的建構式與一般的函式，如果你是要用來實體化物件，而忘了加上new關鍵字，不會產生任何錯誤，但事情會很大條。
+> 忘了在物件實體化時加上new運算符，函式並無明確區分建立物件用的建構式與一般的函式，如果你是要用來實體化物件，而忘了加上new關鍵字，雖然不會產生任何錯誤，但事情會很大條。
 
-以下用幾個方向來討論如何正確的其他作法，以避免其中可能的問題。
+以下用幾個方向來討論如何正確的其他作法，以及如何避免其中可能的問題。
+
+### 防止錯誤的語法樣式
+
+這個樣式可以防止程式設計師少加了`new`運算子。一般的JavaScript函式庫並不鼓勵使用它的程式設計師使用`new`，反而會希望用它的程式設計師都使用函式的方式來建立物件實體，原因除了防止漏寫的錯誤外，在函式也有可能會隱藏對於物件實體的複雜的生成過程。以下為範例:
+
+```js
+function Player(name, age)
+{
+   if (this instanceof Player){
+      this.name = name
+      this.age = age
+   }else{
+      return new Player(name, age)
+   }
+}
+
+const aPlayer = Player('Inori', 16) 
+const bPlayer = new Player('Gi', 16)
+```
 
 ### Object.create
 
@@ -309,7 +399,7 @@ JavaScript長期以來就有反對使用new運算符用於實體化物件的言�
 1. 定義一個物件當作原型物件
 2. 從這個原型物件建立另一個新的物件(過程可以加入其他的屬性)
 
-以一個最簡單的範例來說，你可以看到`Object.create`完全不使用建構函式來設定新物件實體的屬性值，只是把原型鏈建立好，並回傳物件而已。
+以一個最簡單的範例來說，你可以看到`Object.create`完全不使用建構函式來設定新物件實體的屬性值，只是從原型物件產生一個新物件而已。
 
 ```js
 const PlayerPrototype = {
@@ -389,9 +479,9 @@ const newObject = new ClassName()
 - 用來描述資料模型的物件: 用來作為最終的資料交換使用，描述資料的物件，頂多5~10個物件。
 - 用於應用程式的物件: 例如一個遊戲中，對於怪物、玩家角色、NPC的這些物件，大概就是20-50個。
 
-以效能來說，物件的建立這件事，不太可能像你在網路上找得到的那種測試報告的模擬情況，一次建立幾十萬個或百萬個物件。物件的建立與各種運算，本身就是高消費的，也不可能真有那麼多資源給你這樣建立，所以在物件的建立，反而效率並不是太重要的課題，而是它在撰寫時的高閱讀性、易於維護與擴充、使用的彈性等等。
+以效能來說，物件的建立這件事，不太可能像在網路上測試報告的情況，一次建立幾十萬個或百萬個物件。物件的建立與各種運算，本身就是高消費的，所以在物件的建立，反而效率並不是太重要的課題，而是它在撰寫時的高閱讀性、易於維護與擴充、使用的彈性等等。
 
-以上面的三種物件建立的方式來說，效率最佳的是物件字面定義(花括號({})定義物件)，其次為建構函式與new運算符這種，通常稱之為"建構式樣式(Constructor Pattern)"，最差的則是`Object.create`。
+以上面的三種物件建立的方式來說，效率最佳的是物件字面定義(花括號({})定義物件)，其次為建構函式加上new運算符這種，通常稱之為"建構式樣式(Constructor Pattern)"，最差的則是`Object.create`。
 
 但物件字面定義語法有一些問題，它只會有一個物件實體。它沒辦法直接複製出其他的物件實體，所以如果是要指"可建立多個物件"的語法，這個並不是可以這樣使用的，它需要寫成一個像下面這樣的函式，才能達到需求，這稱之為工廠樣式(Factory Pattern)的語法:
 
@@ -414,9 +504,7 @@ const ayase = PlayerFactory('ayase', 17)
 console.log(ayase.toString())
 ```
 
-工廠樣式在效率上也是輸了使用建構函式與new運算符一大截，不過它有許多優點，所以有很多程式設計師依然會使用它，工廠模式可以寫成很具有高度彈性的物件產生函式。不過，由於所有的物件實體都類似於物件字面所定義出來的，它們的原型都是Object.prototype。
-
-另一種就是用上面說的Object.create方法，搭配物件字面定義出來的物件，建立新的物件實體，上面已經有範例，要用哪一種，都是要視應用的情況而定的。
+單純使用物件字面定義的工廠樣式在效率上是吊車尾的，而且由於所有的物件實體都類似於物件字面所定義出來的，它們的原型都是`Object.prototype`。工廠模式也可以用的`Object.create`方法來建立物件實體，搭配物件字面定義出來的物件，建立新的物件實體，上面已經有範例，要用哪一種，都是要視應用的情況而定的。
 
 ### 必要的情況(內建物件)
 
@@ -438,9 +526,11 @@ new Error
 
 "工廠樣式"的語法提供了更多的彈性，相較於"建構式樣式"只能回傳物件，"工廠樣式"最後直接回傳物件實體，但"工廠樣式"也可以多了很多彈性，可以視情況提供各種物件實體的應對程式碼，最後可以回傳以物件字面定義的物件、使用new或Object.create方法。此外，工廠樣式可以對物件資料進行更好的封裝(encapsulation)與資料隱藏(data hiding)，這一點在建構式樣式中完全是個無法比得上的。
 
-### 更進階的樣式
+### 更多的樣式
 
-工廠樣式提供了更多的彈性，因為Object.create直接由一個單純的物件來建立物件，失去了原型鏈的擴充彈性，你可以用下面的樣式來調整:
+#### 原型鏈共享的工廠樣式
+
+工廠樣式提供了更多的彈性，因為`Object.create`直接由一個單純的物件來建立物件，失去了原型鏈的擴充彈性，你可以用下面的樣式來調整:
 
 ```js
 function Player(){}
@@ -476,9 +566,9 @@ console.log(inori.toString())
 console.log(inori)
 ```
 
-### 多重繼承
+#### 多重繼承(複合)樣式
 
-這個樣式可以建立繼承自多個物件的新物件，用的是Object.assign加上Object.create方法的語法，Object.assign並沒有限定第二個參數之後只能加一個物件進來合併，所以可以加很多物件來合併成為一個新的物件。
+這個樣式可以建立繼承自多個物件的新物件，用的是`Object.assign`加上`Object.create`方法的語法，這方式可以一次增加多個新物件的屬性與方法，此外`Object.assign`並沒有限定第二個參數之後只能加一個物件進來合併，所以可以加很多物件來合併成為一個新的物件，類似多重繼承的結果。以下為範例:
 
 ```js
 let player = {
@@ -503,19 +593,23 @@ console.log(inori.toString())
 console.log(inori)
 ```
 
-## 參考
+#### extend(擴充)樣式
 
-- http://aaditmshah.github.io/why-prototypal-inheritance-matters/#toc_9
-- https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.64lu1pi2e
-- https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/
-- http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/
-- http://www.w3schools.com/js/js_object_prototypes.asp
+某些時候對於簡單的物件，像是設定值之類的物件，如果都要用到物件實體化或各種語法樣式，實在太過沉重。這個時候用extend(擴充)的方式是快速簡便的，並不一定要額外進行物件實體化，extend(擴充)樣式是一種Mixins(混合)樣式，它並不是繼承或物件實體化的樣式。簡單的extend函式就只是個迴圈語句而已，範例如下(出自[SweetAlert](https://github.com/t4t5/sweetalert)):
 
----
+```js
+var extend = function extend(a, b) {
+  for (var key in b) {
+    if (b.hasOwnProperty(key)) {
+      a[key] = b[key];
+    }
+  }
+  return a;
+};
+```
 
-http://www.datchley.name/understanding-prototypes-delegation-composition/
-http://chimera.labs.oreilly.com/books/1234000000262/ch03.html#prototype_cloning
-https://www.safaribooksonline.com/library/view/learning-javascript-design/9781449334840/ch09s10.html
-https://gist.github.com/KJlmfe/11241224
-http://www.dofactory.com/javascript/prototype-design-pattern
-https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.bqskkthz2
+> 註: 許多JavaScript函式庫例如jQuery、underscore、lodash都有提供extend(擴充)的API，其他也有像clone(複製)、merge(合併)、assign(指定)之類的用於物件的API
+
+## 結語
+
+JavaScript中原型物件導向設計其實並不難理解，難的是它裡面混雜的太多奇奇怪怪的設計，而且又常要與類別為基礎的物件導向設計相比較。本章除了提供原型鏈的基礎知識說明外，也加入了很多你可能會在實際使用時遇到的樣式，工廠樣式與建構式樣式，這兩個基本的樣式你應該要先熟悉。
