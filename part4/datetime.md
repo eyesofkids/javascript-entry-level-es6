@@ -12,11 +12,11 @@ Date物件中包含了許多對日期時間處理方法，大致上可以分成�
 - setter: 設定某種時間格式，例如setFullYear設定西元年
 - 格式化的getter: 通常是要獲取不同地區的日期(或時間)格式，以及轉換成各種資料格式
 
-> 註: 微秒(Millisecond, ms)是千分之一秒的意思
+> 註: 微秒(Millisecond, ms)是千分之一秒
 
 ## Date物件的建構式
 
-Date物件一定只能使用new運算符來建立，這是JavaScript中不變的規則，有一些內建的物件一定要使用建構式進行實體化。
+Date物件一定只能使用`new`運算符來建立，這是JavaScript中的規則，有一些內建的物件一定要使用建構式進行實體化。
 
 Date物件有四種可在建構式傳入參數的類型，如以下的語法說明，其中第三種的dateString指的是遵守國際日期與時間標準[RFC2822](https://tools.ietf.org/html/rfc2822#section-3.3)或[ISO 8601](https://zh.wikipedia.org/wiki/ISO_8601)兩種的字串格式，後面再說明其中的內容。
 
@@ -41,7 +41,7 @@ console.log(datetime.toUTCString()) //Tue, 12 Jul 2016 03:35:48 GMT
 console.log(datetime.toTimeString()) //11:35:48 GMT+0800 (CST)
 ```
 
-另一種要用於計算時間用的格式，則是把Date物件轉成只用微秒作數值的格式，它是一個由`1 January 1970 00:00:00 UTC`開始計算，到目前日期時間的微秒值。這個時間稱之為[UNIX時間](https://zh.wikipedia.org/wiki/UNIX%E6%97%B6%E9%97%B4)，原本是UNIX系統使用來表示時間的方式，現在很常用於程式設計中計算時間之用。有兩種方式可以獲得這個數字值:
+另一種要用於計算時間用的格式，則是把Date物件轉成只用微秒作數值的格式，它是一個由`1 January 1970 00:00:00 UTC`開始計算，到目前日期時間的微秒數字值。這個時間稱之為[UNIX時間](https://zh.wikipedia.org/wiki/UNIX%E6%97%B6%E9%97%B4)，原本是UNIX系統使用來表示時間的方式，現在很常用於程式設計中計算時間之用。有兩種方式可以獲得這個數字值:
 
 ```js
 //常用，正號(+)是強制轉換為數字的語法
