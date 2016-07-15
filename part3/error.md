@@ -1,11 +1,11 @@
 # 錯誤與例外處理
 
-Error(錯誤)與Exception(例外)在JavaScript中同意義的名詞，那是因為JavaScript的設定問題，它長期以來是在一個受限的執行環境下執行，加上只有設定內建的Error物件，專門作為處理例外之用，在API中也有一些以error作為名稱的方法，而且在ECMAScript規範中也沒有很明確的區別。實際上在程式設計領域中，只有"例外處理(Exception Handling)"的說法，而沒有"錯誤處理(Error handling)"。本文統一以"例外處理"作為使用名詞。
-
-在其他語言中是有區分的，例如在Java語言中，就有明確區分這兩種不同的物件，它的分別大概是以下這樣:
+實際上在程式設計領域中，只有"例外處理(Exception Handling)"的說法，而沒有"錯誤處理(Error handling)"。而在其他語言中是有區分的，例如在Java語言中，就有明確區分這兩種不同的物件，它的分別大概是以下這樣:
 
 - Error(錯誤):指的是無法回復的錯誤，經常是因為執行環境造成的錯誤
 - Exception(例外):可以用try-catch語句或throw語句捕抓到例外，可以從例外中回復，經常是因為應用程式本身造成的例外
+
+不過，在JavaScript中，Error(錯誤)與Exception(例外)基本上是同一種意思，因為JavaScript的設計中，它以來是在一個受限的執行環境下執行(瀏覽器)，加上只有一個內建的專門作為處理例外用的Error物件，在API中也有一些以error作為名稱的方法。而且，在ECMAScript標準中也沒有很明確的區別，所以常常用錯誤處理作為說明的標題。
 
 > 註: [例外處理(Exception Handling) 維基百科](https://en.wikipedia.org/wiki/Exception_handling)
 
