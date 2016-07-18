@@ -80,11 +80,11 @@ if(document.getElementById('test')){
 
 `try...catch`語句最後還可以額外加上`finally`區塊，它是不論如何都會執行的語句區塊，例如你在try語句中開啟了一個檔案要進行處理，不論有沒有發生例外，最後需要把這個檔案進行關閉，這就是寫在`finally`區塊中。
 
-`try...catch`語句聽起來似乎不錯使用，但它實際上很少用在JavaScript程式撰寫上，有幾個明顯的原因:
+`try...catch`語句聽起來似乎不錯，但在使用上的確需要再三考慮，尤其是在伺服器端的Node.js上。有幾個明顯的原因:
 
 - 它是高消費的語句: 在有重大效能考量或迴圈的語句，不建議使用`try...catch`語句。
-- 它是同步的語句: 如果是重度使用callback(回調)或promise樣式的異步程式，不需要使用它。promise可以完全取代它，而且是異步的語句。
-- 不需要: 如果可以使用`if...else`的簡單判斷根本不需要它，在簡單程式中不會看到它的存在。
+- 它是同步的語句: 如果是重度使用callback(回調)或promise樣式的異步程式，不需要使用它。promise可以完全取代它。
+- 不需要: 如果可以使用`if...else`的簡單程式碼中不會看到它的存在。在複雜的對外取得資源的功能，我們都會使用外部函式庫來協助處理，這些函式庫都有考量到比你想得到還完整的各種例外情況，所以你也不需要親自動手作例外處理。
 
 那麼`try...catch`語句會使用在什麼情況下？通常會搭配會在例外發生時，直接丟出例外的方法上，這些方法有可能是JavaScript內建的，也可能是程式設計師自己設計的。最常見的是`JSON.parse`這個內建的用於解析JSON格式字串為對應物件的方法，範例如下:
 
@@ -111,9 +111,9 @@ function checkUserEntry()
 {
     const userEntry = document.getElementById('email').value
 
-    if(userEntry.length === 0) {
+    if (userEntry.length === 0) {
         throw new Error('請輸入字串')
-    } else if(userEntry.indexOf('@') === -1) {
+    } else if (userEntry.indexOf('@') === -1) {
         throw new Error('請提供合法的Email住址')
     }
 
@@ -143,6 +143,16 @@ document.getElementById('clickme').addEventListener('click', validateEntry)
 ```
 
 ## 丟出例外的throw
+
+`throw`語句會"丟出"程式設計師自訂的例外，`throw`語句會使接下來的任何語句都中斷執行，然後把控制權轉交給呼叫堆疊(call stack)中第一個的`catch`區塊，如果沒有`catch`區塊就會停止應用程式。`throw`語句後面雖然是可以使用任何的表達式，但一般使用上都會使用Error物件。以下為簡單的範例:
+
+```js
+if( x === 0){
+  throw new Error('x equals zero')
+}
+```
+
+有些內建的JavaScript方法，在發生錯誤時就會自動"丟出"對應的例外，例如常見的`JSON.parse`方法，你也可以在自己撰寫的函式裡這樣作，例如上一節中的範例，這也是很常見的一種作法。
 
 ## window.onerror
 
