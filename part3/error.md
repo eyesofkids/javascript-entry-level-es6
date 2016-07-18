@@ -54,11 +54,11 @@ try {
 }
 ```
 
-Error物件有很多非標準的屬性，在每種瀏覽器品牌的實作情況的不一定，一般不建議你使用這些非標準的屬性。如果你要使用其中的stack屬性，可以考慮使用外部的函式庫，例如[TraceKit](https://github.com/csnover/TraceKit/)或[stacktrace.js](https://github.com/stacktracejs/stacktrace.js)。
+使用Error物件有一些優點，有些瀏覽器品牌會針對Error物件作額外的擴充屬性或功能，讓它在除錯上更佳方便，例如stack(堆疊)這個屬性，它可以對目前Error物件發生的程式碼堆疊然後進行追蹤，在複雜的應用程式中，可以很快找出是位於某個程式碼中的呼叫所造成的錯誤。不過，這些都算是Error物件中非標準的屬性，在每種瀏覽器品牌的實作情況的不一定，除了在開發階段使用，不建議你使用這些非標準的屬性在正式的應用程式中。如果你要使用其中的stack屬性，可以考慮使用外部的函式庫，例如[TraceKit](https://github.com/csnover/TraceKit/)或[stacktrace.js](https://github.com/stacktracejs/stacktrace.js)。
 
 ## 捕抓例外的try...catch語句
 
-`try...catch`語句是一種測試語法，意思是如果所有位於`try`區塊中的語句都沒問題的話，就執行它，當發生例外時會將控制權轉到`catch`區塊執行其中的語句。簡單的範例如下:
+`try...catch`語句也是一種控制流程的語句。意思是如果所有位於`try`區塊中的語句都沒問題的話，就執行它，當發生例外時會將控制權轉到`catch`區塊執行其中的語句。簡單的範例如下:
 
 ```js
 try{
@@ -78,12 +78,13 @@ if(document.getElementById('test')){
 }
 ```
 
-`try...catch`語句最後還可以加上`finally`區塊，它是不論如何都會執行的語句區塊，例如你在try語句中開啟了一個檔案要進行處理，不論有沒有發生例外，最後需要把這個檔案進行關閉，這就是寫在`finally`區塊中。
+`try...catch`語句最後還可以額外加上`finally`區塊，它是不論如何都會執行的語句區塊，例如你在try語句中開啟了一個檔案要進行處理，不論有沒有發生例外，最後需要把這個檔案進行關閉，這就是寫在`finally`區塊中。
 
-`try...catch`語句聽起來似乎不錯，但它實際上很少用在JavaScript程式撰寫上，有幾個明顯的原因:
+`try...catch`語句聽起來似乎不錯使用，但它實際上很少用在JavaScript程式撰寫上，有幾個明顯的原因:
 
-- 它是高消費的語句: 如果有效能考量或迴圈的語句，切勿使用`try...catch`語句
-- 它是同步的語句: 如果是高度使用callback(回調)或promise樣式的異步程式，不需要使用`try...catch`語句，過於簡單的程式也不需要它
+- 它是高消費的語句: 在有重大效能考量或迴圈的語句，不建議使用`try...catch`語句。
+- 它是同步的語句: 如果是重度使用callback(回調)或promise樣式的異步程式，不需要使用它。promise可以完全取代它，而且是異步的語句。
+- 不需要: 如果可以使用`if...else`的簡單判斷根本不需要它，在簡單程式中不會看到它的存在。
 
 那麼`try...catch`語句會使用在什麼情況下？通常會搭配會在例外發生時，直接丟出例外的方法上，這些方法有可能是JavaScript內建的，也可能是程式設計師自己設計的。最常見的是`JSON.parse`這個內建的用於解析JSON格式字串為對應物件的方法，範例如下:
 
@@ -103,7 +104,7 @@ console.log(validateData('[1, 5, "false"]'))
 console.log(validateData('1, 11'))
 ```
 
-用於使用者輸入檢查的情況，這也是會用到`try...catch`語句的常見情況，以下為範例程式:
+另外用於使用者輸入檢查的情況，這也是會用到`try...catch`語句的常見情況，這種通常稱之為錯誤中心(Error Center)的方式，用於集中很多不同的例外為一個語句中。以下為範例程式:
 
 ```js
 function checkUserEntry()
@@ -137,9 +138,7 @@ document.getElementById('clickme').addEventListener('click', validateEntry)
 
 ```html
 <input type="text" id="email" />
-
-<button id="clickme">Click</button>
-
+<button id="clickme">點我</button>
 <div id="console" style="height:200px; width:300px; background-color: green"></div>
 ```
 
