@@ -1,0 +1,1 @@
+http://www.2ality.com/2012/06/continuation-passing-style.html
