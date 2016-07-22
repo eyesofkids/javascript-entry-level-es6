@@ -65,7 +65,6 @@ func()
 
 ## 深入 函式 中
 
-
 > 所有的函式在呼叫時，其實都有一個擁有者物件來進行呼叫。所以你可以說，其實所有函式都是物件中的"方法"。所有的函式執行都是以Object.method()方式呼叫。
 
 關於這一點，下面的範例就可以說明一切了，有個全域物件(在瀏覽器中是window物件)是所有函式在呼叫時預設物件，下面三種函式呼叫都是同樣的作用:
@@ -195,21 +194,69 @@ https://howchoo.com/g/ztbjzjqwngq/javascript-function-invocation-and-this-with-e
 
 https://debugmode.net/2013/09/03/invocation-patterns-in-javascript/
 
-## scope VS context
+## Scope vs Context
 
-Scope refers to variables within a function, and context refers to the object within which a function is executed.
+Scope(作用域, 作用範圍)指的是在函式中變數(常數)的可使用範圍，JavaScript使用的是靜態或詞法的(lexical)作用域，意思是說作用域在函式定義時就已經決定了。JavasScript中只有兩種的Scope(作用域)，全域(global)與函式(function)。
 
-## scope chain
+Context(上下文)指的是函式在被呼叫執行時，所處的物件環境。上面已經有很詳細的解說了。
 
-This is because JavaScript uses static scope; that is, the scope chain of a function is defined at the moment that function is created and never changes; the scope chain is a property of the function.
+> Scope通常被稱為Variable Scope(變數作用域)，意思是代表"變數可存取的作用域"。
 
-## Execution context
+> Context通常被稱為this Context，意思是"由this值所代表的上下文"。
+
+## 執行上下文(Execution Context)
+
+執行上下文(Execution Context)看起來與上下文(Context)頗像，但嚴格的來說指的是不同的概念。
+
+JavaScript使用執行上下文(Execution Context)的抽象概念來說明程式是如何被執行的，在ES標準中並沒有明確規定它應該是一個什麼樣的結構。
+
+> 所有的JavaScript程式碼都是在某個執行上下文中被執行。
+
+當一個函式被呼叫時，會產生一個新的物件，裡面包含函式要如何呼叫、呼叫什麼、被誰(物件)呼叫，這個新物件中會有一個this屬性。
+
+All javascript code is executed in an execution context. Global code (code executed inline, normally as a JS file, or HTML page, loads) gets executed in global execution context, and each invocation of a function (possibly as a constructor) has an associated execution context. Code executed with the eval function also gets a distinct execution context but as eval is never normally used by javascript programmers it will not be discussed here. The specified details of execution contexts are to be found in section 10.2 of ECMA 262 (3rd edition).
+
+When a javascript function is called it enters an execution context, if another function is called (or the same function recursively) a new execution context is created and execution enters that context for the duration of the function call. Returning to the original execution context when that called function returns. Thus running javascript code forms a stack of execution contexts.
+
+When an execution context is created a number of things happen in a defined order. First, in the execution context of a function, an "Activation" object is created. The activation object is another specification mechanism. It can be considered as an object because it ends up having accessible named properties, but it is not a normal object as it has no prototype (at least not a defined prototype) and it cannot be directly referenced by javascript code.
+
+The next step in the creation of the execution context for a function call is the creation of an arguments object, which is an array-like object with integer indexed members corresponding with the arguments passed to the function call, in order. It also has length and callee properties (which are not relevant to this discussion, see the spec for details). A property of the Activation object is created with the name "arguments" and a reference to the arguments object is assigned to that property.
+
+Next the execution context is assigned a scope. A scope consists of a list (or chain) of objects. Each function object has an internal [[scope]] property (which we will go into more detail about shortly) that also consists of a list (or chain) of objects. The scope that is assigned to the execution context of a function call consists of the list referred to by the [[scope]] property of the corresponding function object with the Activation object added at the front of the chain (or the top of the list).
+
+Then the process of "variable instantiation" takes place using an object that ECMA 262 refers to as the "Variable" object. However, the Activation object is used as the Variable object (note this, it is important: they are the same object). Named properties of the Variable object are created for each of the function's formal parameters, and if arguments to the function call correspond with those parameters the values of those arguments are assigned to the properties (otherwise the assigned value is undefined). Inner function definitions are used to create function objects which are assigned to properties of the Variable object with names that correspond to the function name used in the function declaration. The last stage of variable instantiation is to create named properties of the Variable object that correspond with all the local variables declared within the function.
+
+The properties created on the Variable object that correspond with declared local variables are initially assigned undefined values during variable instantiation, the actual initialisation of local variables does not happen until the evaluation of the corresponding assignment expressions during the execution of the function body code.
+
+It is the fact that the Activation object, with its arguments property, and the Variable object, with named properties corresponding with function local variables, are the same object, that allows the identifier arguments to be treated as if it was a function local variable.
+
+Finally a value is assigned for use with the this keyword. If the value assigned refers to an object then property accessors prefixed with the this keyword reference properties of that object. If the value assigned (internally) is null then the this keyword will refer to the global object.
+
+The global execution context gets some slightly different handling as it does not have arguments so it does not need a defined Activation object to refer to them. The global execution context does need a scope and its scope chain consists of exactly one object, the global object. The global execution context does go through variable instantiation, its inner functions are the normal top level function declarations that make up the bulk of javascript code. The global object is used as the Variable object, which is why globally declared functions become properties of the global object. As do globally declared variables.
+
+The global execution context also uses a reference to the global object for the this object.
+
+---
 
 Execution context is different and separate from the scope chain in that it is constructed at the time a function is invoked (whether directly – func(); – or as the result of a browser invocation, such as a timeout expiring). The execution context is composed of the activation object (the function's parameters and local variables), a reference to the scope chain, and the value of this.
 
 Execution context is a concept in the language spec that—in layman's terms—roughly equates to the 'environment' a function executes in; that is, variable scope (and the scope chain, variables in closures from outer scopes), function arguments, and the value of the this object.
 
 The call stack is a collection of execution contexts.
+
+## scope chain
+
+This is because JavaScript uses static scope; that is, the scope chain of a function is defined at the moment that function is created and never changes; the scope chain is a property of the function.
+
+The scope chain of the execution context for a function call is constructed by adding the execution context's Activation/Variable object to the front of the scope chain held in the function object's [[scope]] property, so it is important to understand how the internal [[scope]] property is defined.
+
+In ECMAScript functions are objects, they are created during variable instantiation from function declarations, during the evaluation of function expressions or by invoking the Function constructor.
+
+Function objects created with the Function constructor always have a [[scope]] property referring to a scope chain that only contains the global object.
+
+Function objects created with function declarations or function expressions have the scope chain of the execution context in which they are created assigned to their internal [[scope]] property.
+
+
 
 ## call stack
 
