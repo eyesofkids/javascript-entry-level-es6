@@ -74,6 +74,10 @@ el.addEventListener( 'click', function(){
 
 > 註: 微軟IE瀏覽器在舊版本中使用自己定義的事件處理方法，所以要與舊版本相容時需要特別注意。IE9之後就能使用上述的事件監聽方式。
 
+## 同步事件
+
+http://javascript.info/tutorial/events-and-timing-depth#synchronous-events
+
 ## 事件觸發的順序
 
 在同一個元素上註冊多個不同的事件監聽者(事件處理函式)，它的在事件觸發時的執行順序是怎麼樣子的？是按照程式碼所寫的順序嗎？
