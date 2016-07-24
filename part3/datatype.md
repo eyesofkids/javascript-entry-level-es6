@@ -2,7 +2,7 @@
 
 資料是所有電腦運算的基礎，對於電腦來說，所有的資料都只是0與1的訊號。但對於人類來說，資料類型的區分就複雜得多了，需要因應各種不同的情況來使用。
 
-JavaScript中有6種原始的原始資料類型(Primitive Data Type)，分別是數字(Number)、字串(String)與布林(Boolean)，以及空(null)與未定義(undefined)兩種特殊值，ES6後加入了符號(symbol)。
+JavaScript中有6種原始的原始資料類型(Primitive Data Type)，分別是數字(Number)、字串(String)與布林(Boolean)，以及空(null)與未定義(undefined)兩種特殊值，ES6後加入了符號(Symbol)。
 
 另外還有另一個非常重要的第7種資料類型 - Object(物件)。
 
@@ -27,9 +27,9 @@ JavaScript中有6種原始的原始資料類型(Primitive Data Type)，分別是
 - 陣列(Array/額瑞/)
 - 物件(Object/阿捷特/)
 
-> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean的物件，用來對應原始資料類型，它們是一種包裝物件(wrapper object)，提供了原始資料類型使用的一些延申的屬性與方法，真正會用到這些物件只有在特殊情況下。
+> 註: 所謂的"原始資料類型"，指的是在程式語言中，最低階的一種資料類型，不屬於物件也沒有方法。它也具有不可改變的(immutable)特性。不過，JavaScript語言中也存在名稱為String、Number、Boolean的物件，用來對應原始資料類型，它們是一種包裝物件(wrapper object)，提供了原始資料類型可以使用的一些延申的屬性與方法。
 
-> 註: 是的，JavaScript的確是一個物件導向的程式語言。不過，JavaScript的物件導向特性與其他目前所流行的物件導向語言例如Java、C++等有很大的不同。
+> 註: JavaScript的確是一個物件導向的程式語言。不過，JavaScript中的物件導向特性與其他目前所流行的物件導向語言例如Java、C++等有很大的不同。
 
 ## 鬆散資料類型
 
@@ -56,6 +56,8 @@ console.log(typeof null) //'object'
 
 > 註: 為何null資料類型的的`typeof`結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對`typeof`的規定就是回傳'object'。不過目前有一些反對的聲音，認為null是原始資料類型，理應當回傳自己本身的資料類型。也有認為現在修改這個太晚了，一經改動的話會造成很多舊程式被影響。截至ES6標準這一規定仍然沒有更動。
 
+> 註: typeof的回傳值還有一個特例，就是函式的回傳值是'function'，因為在JavaScript覺得它太特別了，所以另外給它獨有的回傳值。
+
 ## 數字(Number)
 
 JavaScript的數字(Number/難波/)類型是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/ 資料類型。但在JavaScript中數字類型沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。所以，對JavaScript來說，`1`與`1.0`指的是相同的類型與值。另外，數字可以使用算術運算符(+-*/%)等來進行運算。以下是幾個宣告的範例:
@@ -67,6 +69,8 @@ const negValue= -5.5
 ```
 
 > 註: 浮點數(float, FP)指的是帶有小數的數值，使用64位元儲存一個浮點數的稱為雙精度浮點數(double)
+
+> 註: 雖然對JavaScript語言來說，浮點數與整數都屬於同一種資料類型。但瀏覽器內部的JavaScript引擎並不是這樣，它其實會把這兩種不同的數字類型區分出來，大部情況整數的運算都會比浮點數快很多。
 
 電腦中的程式語言在數學上的運算，總會有超出儲存的極限與無法處理的情況。JavaScript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況:
 
@@ -116,13 +120,13 @@ const y = 0xAA33BC
 
 ```js
 //8進位
-const octalNumber = parseInt('071',8)
+const octalNumber = parseInt('071', 8)
 
 //2進位
-const binaryNumber = parseInt('0111',2)
+const binaryNumber = parseInt('0111', 2)
 
 //16進位
-const hexNumber = parseInt('0xFF',16)
+const hexNumber = parseInt('0xFF', 16)
 ```
 
 > 註: `parseInt`雖然主要是傳入字串，轉換為整數。但也有傳入浮點數，轉換為整數的功能。
@@ -135,7 +139,7 @@ const octalNumber = Number('0o11') // 9
 const hexNumber = Number('0x11')  // 17
 ```
 
-> 註: 不論是2、8、16進位的數字，直接輸出到HTML碼中必定會自動轉成10進位輸出。
+> 註: 不論是2、8、16進位的數字，直接輸出到HTML碼中必定會自動轉成10進位的數字字串輸出。
 
 另一個情況是要將10進位數字以不同的進位基數(radix)轉為字串，通常是用在輸出時，這時要使用數字的方法 - `toString([radix])`。不過輸出後的字串格式不太像上面的格式，請見以下的範例:
 
@@ -151,7 +155,7 @@ console.log(decimalNumber.toString(16)) //'7d'
 
 #### 字串轉浮點數
 
-對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，對於JavaScript來說，數字就是數字。以下是範例:
+對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1。以下是範例:
 
 ```js
 const aNumber = parseFloat("10")  //10
@@ -164,7 +168,7 @@ const fNumber = parseFloat("He was 40")  //NaN
 
 ####  浮點數轉整數
 
-至於浮點數要轉換為整數，需要使用Math物件中的幾個方法來轉換，因為浮點數是要轉換為直接進位，還是四捨五入，還是直接去掉小數點，就看你需要的情況:
+至於浮點數要轉換為整數，需要使用`Math`物件中的幾個方法來轉換，因為浮點數是要轉換為直接進位，還是四捨五入，還是直接去掉小數點，就看你需要的情況:
 
 ```js
 const floatValue = 10.55
@@ -173,11 +177,11 @@ const intValueTwo = Math.ceil( floatValue ) //天花板值 11
 const intValueThree = Math.round( floatValue ) //四捨五入值 11
 ```
 
-> 註: Math是專門用於數學運算使用的JavaScript語言內建物件，裡面有很多好用的數學方法，請參考[Math(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)與[JavaScript Math Object](http://www.w3schools.com/js/js_math.asp)
+> 註: Math是專門用於數學運算使用的JavaScript語言內建工具物件，裡面有很多好用的數學方法，請參考[Math(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)與[JavaScript Math Object](http://www.w3schools.com/js/js_math.asp)
 
 #### 整數轉浮點數
 
-再強調一下，對於JavaScript來說，數字就是數字，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在JavaScript中來說都是一樣的，直接轉出數字3.00依然會用3來顯示。
+再強調一下，對於JavaScript來說，數字就是數字類型，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在JavaScript中來說都是一樣的，直接轉出數字3.00依然會用3來顯示。
 
 唯一可能的情況，是希望調整輸出的格式。這時可以用數字物件中的`toFixed([digits])`方法來達成，不過它會回傳成字串，這已經不是數字了:
 
@@ -192,7 +196,7 @@ const numObjString = numObj.toFixed() //string, 123456
 
 #### 雙位元反相運算(Double Bitwise NOT)(\~\~)
 
-波浪符號(Tilde)(~)，在JavaScript語言中的運算符名稱為位元反相運算(Bitwise NOT)，這是長得像波浪或毛毛蟲樣子的符號。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
+波浪符號(Tilde)(~)，在JavaScript語言中的運算符名稱為 位元反相運算(Bitwise NOT)，這是長得像波浪或毛毛蟲樣子的符號。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
 
 ```js
 const a = ~10 //a is -11
@@ -559,9 +563,9 @@ const cBool = !!NaN //false
 
 ### falsy與短路求值
 
-Douglas Crockford是在JavaScript語言界相當知名的大師級人物，他主張使用"truthy"與"falsy"來描述資料類型的值，在邏輯的上下文如何被評價。也就是說，像上面說講的那些會轉換為布林值的false值的資料類型的值，通稱為"falsy"(字典裡是沒這個字詞，意思是"false的")，你可以把它當成是"false家族的成員之一"。
+Douglas Crockford是在JavaScript語言界相當知名的大師級人物，他主張使用"truthy"與"falsy"來描述資料類型的值，在邏輯的上下文如何被評價。也就是說，像上面說講的那些會轉換為布林值的false值的資料類型的值，通稱為"falsy"(字典裡是沒這個字詞，意思是"false的")，你可以把它當成是"false家族成員"。
 
-> "falsy"包含了0, -0, null, NaN, undefined, 空白字串('')，當然也一定有的false值
+> "falsy"包含了0, -0, null, NaN, undefined, 空白字串('')，當然也一定包含了false值
 
 "falsy"的概念在JavaScript的邏輯運算，以及布林值中都是很重要的概念。之前已經看到一個邏輯運算符 - 邏輯反相(Logic NOT)(!)的運用，還有兩個邏輯運算符，也很常用到:
 
