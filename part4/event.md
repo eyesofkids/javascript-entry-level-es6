@@ -31,10 +31,10 @@ Event物件屬性(以下屬性都是只能讀不能寫):
 - currentTarget: 目前的事件對象
 - target: 分派事件的原始對象
 - type: 事件的類型，共有數十種
-- bubbles: 泡泡狀態，布林值，true代表會在DOM中往上冒泡
+- bubbles: 冒泡狀態，布林值，true代表會在DOM中往上冒泡
 - cancelable: 事件是否為可取消的，布林值 
 
-> 註: 目前的事件對象(currentTarget)與分派事件的原始對象(target)，在泡泡與捕抓階段，其中的值會不同。
+> 註: 目前的事件對象(currentTarget)與分派事件的原始對象(target)，在冒泡與捕抓階段，其中的值會不同。
 
 Event物件方法:
 
@@ -43,27 +43,42 @@ Event物件方法:
 
 > 註:事件的傳播行為在下面的章節有再加說明。
 
-Event介面只是個基礎物件，從它擴充了使用於特定情況的事件，包含對特定事件的資訊，詳見以下的階層圖:
+Event介面只是個基礎物件，從它擴充了使用於特定情況的事件，包含對特定事件的資訊，詳見以下的階層圖(出自[這個網站](https://www.w3.org/TR/uievents/)):
 
 ![event-inheritance](https://www.w3.org/TR/uievents/images/event-inheritance.svg)
 
-依照事件階層圖中，UIEvent與CustomEvent(自訂事件)繼承自Event物件，從UIEvent中又擴充出各種不同的對應事件，例如針對滑鼠與鍵盤的，FocusEvent是設計給Focus(鎖定、聚焦)事件使用的，Composition Event是針對輸入文字事件使用的，由於輸入文字並不一定使用鍵盤(用輸入法輸入或用語音輸入等等)，它與鍵盤事件也可以用相輔的應用情況。而WheelEvent是滾輪設備使用的。
+依照事件階層圖中，UIEvent與CustomEvent(自訂事件)繼承自Event物件，從UIEvent中又擴充出各種不同的對應事件，例如針對滑鼠與鍵盤的，FocusEvent是設計給Focus(鎖定、聚焦)事件使用的，CompositionEvent是針對輸入文字事件使用的，這是因為輸入文字並不一定單純使用鍵盤(用輸入法輸入或用語音輸入等等)，它與鍵盤事件也可以相互輔助。而WheelEvent是有滾輪的設備使用的。
 
-> 註: 許多外部函式庫例如jQuery，對於Event物件會進行擴充，與W3C原本的定義有所不同。
+> 註: 許多外部函式庫例如jQuery，對於Event物件會以W3C的標準進行擴充。
 
 ## EventTarget物件(介面)
 
-EventTarget物件則是JavaScript中設計的一種用於介面的物件，它可以接收事件，以及讓監聽者註冊到上面。DOM元素、document、window物件，是最常見的EventTarget物件，另外也有其他的物件可作為EventTarget。EventTarget物件中有三個內建方法:
+EventTarget物件則是JavaScript所設計的一種當作介面的物件，它可以接收事件，以及讓監聽者註冊到上面。DOM元素、document、window物件，是最常見的EventTarget物件，另外也有其他的物件可作為EventTarget。EventTarget物件中有三個方法:
 
 - addEventListener: 在事件對象上加入事件監聽者
 - removeEventListener: 從事件對象移除事件監聽者
 - dispatchEvent: 送出事件給所有有訂閱的監聽者
 
-另外需要提到的一點，W3C標準中對於[EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener)也有定義它是一個介面，作為事件監聽者之用，不過JavaScript語言會自動把所有的函式物件都實作這個介面，所以事件監聽者在呼叫handleEvent(處理事件)方法時，相當於呼叫函式。
+另外需要提到的一點，W3C標準中對於[EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener)也有定義它是一個介面，作為事件監聽者之用，不過JavaScript語言會自動把所有的函式物件都實作這個介面，所以事件監聽者在呼叫handleEvent(處理事件)方法時，相當於呼叫函式。EventListener(事件監聽者)或稱為事件處理函式，可以自動得到事件傳入參數值，以此可以存取得到事件的屬性與方法，例如以下的範例:
+
+```js
+const me = document.getElementById('me')
+
+me.addEventListener('click',
+    function(e){
+      console.log(e.currentTarget)
+      console.log(e.target)
+      console.log(e.type)
+      console.log(e.bubbles)
+      console.log(e.cancelable)
+      e.stopPropagation()
+    }, 
+    false)
+```
 
 ## 事件處理模型
 
-現行的事件處理模型通常會使用"監聽"(listen)的方式，作為事件處理的樣式，因為DOM標準制定歷史版本不同，實際上有好幾種不同的方法可以作事件處理。以下分述這幾級的差異，其中第一種與第二種是舊的方式，不建議使用。
+現行的事件處理模型通常會使用"監聽"(listen)的方式，作為事件處理的標準樣式，因為DOM標準制定歷史版本不同，實際上有好幾種不同的方法可以作事件處理。以下分述這幾級的差異，其中第一種與第二種是舊的方式，不建議使用。
 
 ### 內聯模型
 
@@ -77,7 +92,7 @@ JavaScript引擎中會產生一個對應的匿名函式，包含在onclick中的
 
 ### 傳統模型
 
-傳統模型(Traditional model)方式，提供了分離HTML與JavaScript程式碼的語法，它比之前內聯模型的方式好得多了。不過它依然有個大問題，就是它只能在一個元素上使用一個事件。所以也不建議使用。
+傳統模型(Traditional model)方式，提供了分離HTML與JavaScript程式碼的語法，它比之前內聯模型的方式好得多了。不過它依然有個大問題，就是它只能在一個元素上使用一個事件，所以也不建議使用。
 
 ```js
 document.getElementById('myButton').onclick = function(){
@@ -113,29 +128,140 @@ el.addEventListener( 'click', function(){
 
 在DOM的第3代標準也已經明定順序由註冊到事件目標的監聽者順序決定，而且現在常見的瀏覽器品牌與新版本，都會依照程式碼中的順序為執行的順序。
 
-## 事件的泡泡、捕捉
+## 事件的冒泡、捕捉
+
+事件的冒泡(往上冒泡)與捕捉(往下捕抓)是兩種事件在DOM中的傳播(propagation)的方式。這是由於DOM元素的樹狀結構，它是有父母-子女關係(parent-child)，這兩種傳播會在事件監聽時，形成一種特別的事件傳播模型，影響事件監聽者在不同父母-子女關係(parent-child)時的執行順序。例如下面的圖解(出自[這個網站](https://www.w3.org/TR/DOM-Level-3-Events/)):
 
 ![eventflow](https://www.w3.org/TR/DOM-Level-3-Events/images/eventflow.svg)
 
-上面所說的這個順序還會涉及到更複雜的一種，就是DOM元素的樹狀結構，它是有父母-子女關係(parent-child)，那麼如果在父母層的事件監聽，在子女層也會被同時監聽嗎？或是反過來也可以作得到嗎？這個時候的事件處理函式的順序又是如何？
+那為什麼會出現兩種相反的事件傳播方式？這是因為在第一次瀏覽器大戰時，Netscape採用了事件捕捉(capturing)，而微軟採用了事件冒泡(bubbling)，現行的W3C標準則一併使用了兩者，目前的瀏覽器品牌中都有支援兩者，而微軟從IE9之後也支援兩者。事件捕捉(capturing)與事件冒泡(bubbling)並沒有說哪一種就比較好，這純粹是看程式設計師的需求而定，不過要特別注意的是，有些事件並沒有支援事件的傳播，例如onfocus或onblur。
+
+那麼要如何控制使用哪一種？一般都是使用事件監聽的方法，以傳入參數值作控制，也就是addEventListener方法的最後一個參數來決定。它的語法如下:
+
+> addEventListener( type, handler, phase )
+
+phase(階段)是一個布林值，如果是false就用事件冒泡(bubbling)，如果是true就使用事件捕捉(capturing)。預設沒寫的話，就是false，也就是預設使用事件冒泡(bubbling)機制。
+
+> 註: 記法有很多種，自行想像發揮。例如 fb(false = bubbling)。true與capture都有"t"。抓免子(捕抓=true)，廢砲(false=冒泡)。
+
+事件冒泡(bubbling)的情況時，當最內部的元素被觸發事件時，會先執行自己本身的事件處理函式，然後才會執行上層父母元素的事件處理函式。以下為範例:
+
+```js
+const parent = document.getElementById('parent')
+const child = document.getElementById('child')
+
+parent.addEventListener('click',
+     function(){ console.log('parent clicked') }, false)
+
+child.addEventListener('click',
+     function(){ console.log('child clicked') }, false)
+```
+
+HTML中的程式碼如下:
+
+```html
+<div id="parent">
+      click me(parent)
+    <div id="child">
+      click me(child)
+    </div>
+</div>
+```
+
+事件捕捉(capturing)則是倒過來的情況，當最內部的元素被觸發事件時，會先從最外圍的事件處理函式執行，依序到最後才是執行自己本身的處理函式。以下為範例:
+
+```js
+const parent = document.getElementById('parent')
+const child = document.getElementById('child')
+
+parent.addEventListener('click',
+     function(){ console.log('parent clicked') },true)
+
+child.addEventListener('click',
+     function(){ console.log('child clicked') }, true)
+```
+
+HTML中的程式碼如下:
+
+```html
+<div id="parent">
+      click me(parent)
+    <div id="child">
+      click me(child)
+    </div>
+</div>
+```
+
+不論事件的傳播方式為何種，Event物件提供了stopPropagation()方法，可以阻止事件的傳播，這可以在某些應用情況中使用。不過這個stopPropagation方法在事件冒泡(bubbling)與事件捕捉(capturing)兩種不同情況下，使用時要小心，以免連元素自己的事件處理函式都被擋住。例如像下面的例子:
+
+```js
+const taiwan =  document.getElementById('taiwan')
+const taipei = document.getElementById('taipei')
+const me = document.getElementById('me')
+
+taiwan.addEventListener('click',
+     function(){ console.log('taiwan clicked') },false)
+
+taipei.addEventListener('click',
+     function(){ console.log('taipei clicked') },false)
+
+me.addEventListener('click',
+     function(){ console.log('me clicked') }, false)
+```
+
+taiwan是最外圍的DOM元素，然後裡面含有taipei層，最裡面是me這一層。以下是點按me層元素的結果:
+
+```js
+//事件冒泡(bubbling)，全部false參數值的結果是
+me -> taipei -> taiwan
+
+//事件捕捉(capturing)，全部為true參數值的結果是
+taiwan -> taipei -> me
+```
+
+假使在第2層中，也就是taipei層加上stopPropagation方法，阻止事件傳播，如以下的程式碼:
+
+```js
+taipei.addEventListener('click',
+     function(e){
+      console.log('taipei clicked') 
+      e.stopPropagation() 
+    },false)
+```
+
+你可以再比對一次點按me層元素的結果如下:
+
+```js
+//事件冒泡(bubbling)，全部false參數值的結果是
+me -> taipei (stop!) 
+
+//事件捕捉(capturing)，全部為true參數值的結果是
+taiwan -> taipei (stop!)
+```
+
+也就是說只要經過有阻止傳播的層，就會不再有事件處理函式被觸發，不論這個事件處理函是不是註冊為該層，這一點特性需要特別小心使用。
+
+另外，混用事件冒泡(bubbling)與事件捕捉(capturing)兩種在程式碼中，絕對是個不智之舉，在簡單的DOM結構時，可能可以推測出來事件處理函式的順序，但在真實情況，DOM的結構的複雜程度是超過你所能想像的，千萬不要這麼作。如果你不確定該使用哪一種方式，使用預設的事件冒泡(bubbling)方式，也就是使用`false`值就行了。
+
+> 註: 事件捕捉(capturing)也稱為事件滴流(trickling)，滴流是向下流動的意思。總之就是向上冒泡的反義詞。
+
+## this與event.target、event.currentTarget
+
+在W3C標準的定義中，this相等於event.currentTarget。而不論事件冒泡(bubbling)或事件捕捉(capturing)，event.target永遠指向觸發事件的那個元素。以下有一張事件冒泡(bubbling)的解說圖片(來自[這個網站](http://javascript.info/tutorial/bubbling-and-capturing#this-and-event-target)):
+
+![event-order-bubbling-target](http://javascript.info/files/tutorial/browser/events/event-order-bubbling-target.png)
+
+## 自訂事件
+
+
+
+---
 
 http://www.quirksmode.org/js/events_order.html
 
 http://stackoverflow.com/questions/9512551/the-order-of-multiple-event-listeners
 
 http://www.quirksmode.org/js/events_advanced.html
-
-## 事件監聽者的this
-
-
-## 同步事件
-
-並非所有的事件都會進入到事件迴圈之中，有些極少數的事件會直接執行，稱之為同步事件(Synchronous Events)，其實你可以把這些當成特例，它的行為像一般的函式呼叫而已，例如:
-
-- focus
-- DOMAttrModified(setAttribute)
-
----
 
 https://www.w3.org/TR/DOM-Level-3-Events/#event-flow
 
@@ -150,6 +276,7 @@ http://blog.bitovi.com/a-crash-course-in-how-dom-events-work/
 https://w3c.github.io/uievents/#ui-events-intro
 
 http://www.quirksmode.org/js/this.html
+
 http://d.hatena.ne.jp/ynakajima/20090207/p1
 
 https://danmartensen.svbtle.com/events-concurrency-and-javascript
