@@ -4,10 +4,6 @@
 
 - https://github.com/eyesofkids/javascript-entry-level-es6/issues
 
-在學習的過程中，如果你有任何的問題，可以使用以下的討論區，發問或尋求協助:
-
-- https://reactjs-tw.org/category/8/es6-es7
-
-作者的個人部落格與連絡方式:
+在學習的過程中，如果你有任何的問題，可以使用作者的個人部落格與連絡方式，發問或尋求協助:
 
 - http://eddychang.me
