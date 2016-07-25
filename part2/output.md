@@ -70,6 +70,6 @@ demo.appendChild(newText)
 
 其中的`demo`要求是HTML中已經存在的DOM節點。不過，這個方法比`innerHTML`複雜些，而且效能更低，只會用在特別的情況，例如有需要作節點的處理時。
 
-## 小結
+## 結語
 
 不論是`innerHTML`、`alert`、`createTextNode`、`document.write`，因為輸出到網頁上的HTML碼中，所以必定會轉變為字串值。也就是不論這轉出的值原本是數字的2進位、8進位、16進位，就會變成10進位，而其他的類型的值也會自動轉成字串值。在開發時並不會用這樣的輸出方式，所以還是只有`console.log`這方式可用。
