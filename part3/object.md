@@ -4,7 +4,7 @@
 
 在JavaScript中，除了原始的資料類型例如數字、字串、布林等等之外，所有的資料類型都是物件。不過，JavaScript的物件與其他目前流行的物件導向程式語言的設計有明顯的不同，它一開始是使用原型基礎(prototype-based)的設計，而其他的物件導向程式語言，大部份都是使用類別基礎(class-based)的設計。
 
-在ES6之後加入了類別為基礎的語法(是原型基礎的語法糖)，JavaScript仍然是原型基礎，但可以用類別語法建立物件與繼承之用，雖然目前來說，仍然都是很基本的類別語法，但讓開發者多了另一種選擇。
+在ES6之後加入了類別為基礎的語法(是原型基礎的語法糖)，JavaScript仍然是原型基礎，但可以用類別語法建立物件與繼承之用，雖然目前來說，仍然是很基本的類別語法，但讓開發者多了另一種選擇。
 
 物件在JavaScript語言中可分為兩種應用層面來看:
 
@@ -20,7 +20,7 @@
 
 ### 物件字面(Object Literals)
 
-用於資料描述的物件定義，使用花括號(curly braces)`{}`作為區塊宣告，其中加入無順序的"鍵-值"成對值，屬性的值可以是任何合法的值，可以包含陣列、函式或其他物件。
+用於資料描述的物件定義，使用花括號(curly braces)({})作為區塊宣告，其中加入無關順序的"鍵-值"成對值，屬性的值可以是任何合法的值，可以包含陣列、函式或其他物件。
 
 而在物件定義中的"鍵-值"，如果是一般的值的情況，稱為"屬性(property, prop)"，如果是一個函式，稱之為"方法(method)"。屬性與方法我們通常合稱為物件中的成員(member)。
 
@@ -57,7 +57,7 @@ console.log(bArray[2]) //yes
 console.log(bObject.thirdKey) //yes
 ```
 
-不過，對於陣列的有順序索引值，而且只有索引值的情況，我們會更加關心"鍵"的存在，上面的程式碼雖然在`thirdKey`不存在時，會自動進行擴充，不過通常物件的定義是在使用前就會定義好的，而物件的擴充是常使用在對現有的JavaScript語言內建物件，或是函式庫的擴充之用。
+不過，對於陣列的有順序索引值，而且只有索引值的情況，我們會更加關心物件中"鍵"的存在，物件中的成員(屬性與方法)，都是使用物件加上點(.)符號來存取。上面的程式碼雖然在`thirdKey`不存在時，會自動進行擴充，但通常物件的定義是在使用前就會定義好的，總是要處於可預測情況下是比較好的作法。物件的擴充是經常使用在對現有的JavaScript語言內建物件，或是函式庫的擴充之用。
 
 > 註: 存取物件中的成員(屬性或方法)，使用的是句點(.)符號，這已經在書中的很多內建方法的使用時都有用到，相信你應該不陌生。
 
@@ -78,7 +78,7 @@ function getProp(prop) {
 const isJedi = getProp('jedi');
 ```
 
-上面這種定義物件的方式，稱之為單例(singleton)的物件，也就是在程式碼中只能有唯一一個物件實體，就是你定義的這個物件。當你需要產生同樣內容的多個物件時，那又該怎麼作？那就是要另一種定義方式了。
+上面這種定義物件的字面文字方式，這是一種單例(singleton)的物件，也就是在程式碼中只能有唯一一個物件實體，就是你定義的這個物件。當你需要產生同樣內容的多個物件時，那又該怎麼作？那就是要用另一種定義方式了。
 
 物件字面定義方式，通常單純只用於物件類型的資料描述，也就是只用於定義單純的"鍵-值"對應的資料，在裡面不會定義函式(方法)。而基於物件字面定義，發展出JSON(JavaScript Object Notation)的資料定義格式，這是現今在網路上作為資料交換使用的一種常見的格式，在特性篇會再對JSON格式作更多的說明。
 
@@ -110,7 +110,7 @@ const tsugumi = new Player('Tsugumi', 14, 'girl', 'purple')
 console.log(tsugumi.toString())
 ```
 
-> 註: 注意類別名稱命名時要使用大駝峰(ClassName)的寫法 
+> 註: 注意類別名稱命名時要使用大駝峰(ClassName)的寫法
 
 下面分別說明一些這個例子中用到的語法與關鍵字的重要概念，以及類別延伸的一些語法。
 
@@ -120,7 +120,7 @@ console.log(tsugumi.toString())
 
 `this`變數是JavaScript的一個特性，它是隱藏的內部變數之一，當函式呼叫或物件實體化時，都會以這個`this`變數的指向對象，作為執行期間的依據。
 
-還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。而JavaScript中，另外也有一種上下文或環境(Context)的概念，就是對於`this`的在執行期間所依據的影響，即是以物件為基礎的的檢視角度。
+還記得我們在函式的章節中，使用作用範圍(Scope)來說明以函式為基礎的檢視角度，在函式區塊中可見的變數與函式的領域的概念。而JavaScript中，另外也有一種上下文環境(Context)的概念，就是對於`this`的在執行期間所依據的影響，即是以物件為基礎的的檢視角度。
 
 `this`也就是執行上下文可以簡單用三個情況來區分:
 
@@ -262,7 +262,7 @@ class Student {
           this._numOfStudents++
       }
     }
-    
+
     //用getter與靜態方法取出目前的學生數量
     static get numOfStudents(){
       return this._numOfStudents
@@ -324,14 +324,14 @@ class Point {
         return '(' + this.x + ', ' + this.y + ')';
     }
 }
-    
+
 class ColorPoint extends Point {
     constructor(x, y, color) {
-        super(x, y) 
+        super(x, y)
         this.color = color
     }
     toString() {
-        return super.toString() + ' in ' + this.color 
+        return super.toString() + ' in ' + this.color
     }
 }
 ```
@@ -389,7 +389,7 @@ JSON是使用物件字面文字的定義方式，延伸用來專門定義資料�
 const aObj = { a: 1, b: 'b', c: { p : 1 }, d: function() {console.log('d')} }
 
 const aCopyObj = JSON.parse(JSON.stringify(aObj))
-console.log(aCopyObj) 
+console.log(aCopyObj)
 
 const bCopyObj = Object.assign({}, aObj)
 console.log(bCopyObj)
@@ -439,7 +439,7 @@ console.log(obj.hasOwnProperty('hasOwnProperty'))   // false
 
 console.log('prop' in obj)   
 console.log('toString' in obj)  
-console.log('hasOwnProperty' in obj) 
+console.log('hasOwnProperty' in obj)
 ```
 
 搭配物件類別定義使用時，`hasOwnProperty`的行為是無法檢測出在類別中定義的方法，只能檢測該物件擁有的屬性，以及在建構式(constructor)中定義的物件擁有方法(算是一種具有函式值的屬性)。
@@ -506,7 +506,7 @@ console.log('childMethod' in aObj)
 ```js
 for(let key in obj){
     if (obj.hasOwnProperty(key)) {
-        console.log(obj[key]); 
+        console.log(obj[key]);
     }
 }
 ```
@@ -534,7 +534,7 @@ Object.keys(obj).forEach(function(key){
 
 ## 英文解說
 
-function 
+function
 method
 
 properties
@@ -564,4 +564,3 @@ properties
 介面或抽象類別也沒有，因為這些就是類別為基礎的物件導向才會有的概念。不過，有模擬類似需求的語法或樣式。
 
 ## 參考
-

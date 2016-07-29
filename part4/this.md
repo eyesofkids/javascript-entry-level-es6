@@ -4,7 +4,7 @@
 
 ## 函式的呼叫
 
-我們在"函式與作用域"、"物件"與"原型物件導向"的章節中，都有看到函式的一些說明內容，也有看到用函式作為建構式來作物件實體化的工作，這時候會看到以`this`的一些說明，那麼在不是用來當作建構式的函式中，就是我們所認知的一般函式，裡面也有`this`嗎？有的，不論是在物件中的方法，或是一般的函式，每個函式中都有`this`值。以下是一個很簡單的範例，一個是我們所認知的普通函式，一個是在物件中的方法: 
+我們在"函式與作用域"、"物件"與"原型物件導向"的章節中，都有看到函式的一些說明內容，也有看到用函式作為建構式來作物件實體化的工作，這時候會看到以`this`的一些說明，那麼在不是用來當作建構式的函式中，就是我們所認知的一般函式，裡面也有`this`嗎？有的，不論是在物件中的方法，或是一般的函式，每個函式中都有`this`值。以下是一個很簡單的範例，一個是我們所認知的普通函式，一個是在物件中的方法:
 
 ```js
 function func(param1, param2){
@@ -200,7 +200,7 @@ objB.methodB.call(objA) //objA
 
 ### this值的產生規則是什麼？
 
-this值會遵守[ECMAScript標準](http://www.ecma-international.org/ecma-262/5.1/#sec-10.4.3)中所定義的一些基本規則，大概摘要如下，函式中的`this`值按順序一一檢視，只會符合其一種結果:
+this值會遵守[ECMAScript標準](http://www.ecma-international.org/ecma-262/5.1/#sec-10.4.3)中所定義的一些基本規則，大概摘要如下，函式中的`this`值按順序一一檢視，只會符合其一種結果(if...else語句):
 
 1. 當使用strict code(嚴格模式程式碼)時，直接設定為call方法裡面的thisArg(this參數值)。
 2. 當thisArg(this參數值)是null或undefined時，會綁定為全域(global)物件。
@@ -232,7 +232,7 @@ this值會遵守[ECMAScript標準](http://www.ecma-international.org/ecma-262/5.
 
 ## Scope vs Context
 
-Scope(作用域, 作用範圍)指的是在函式中變數(常數)的可使用範圍，JavaScript使用的是靜態或詞法的(lexical)作用域，意思是說作用域在函式定義時就已經決定了。JavasScript中只有兩種的Scope(作用域)，全域(global)與函式(function)。
+Scope(作用域, 作用範圍)指的是在函式中變數(常數)的可使用範圍，JavaScript使用的是靜態或詞法的(lexical)作用域，意思是說作用域在函式定義時就已經決定了。JavaScript中只有兩種的Scope(作用域)，全域(global)與函式(function)。
 
 Context(上下文)指的是函式在被呼叫執行時，所處的物件環境。上面已經有很詳細的解說了。這兩個東西雖然都與函式有關，但是是不一樣概念的東西。
 
@@ -262,7 +262,7 @@ JavaScript語言中使用執行上下文(EC)的抽象概念，來說明程式是
 
 不過，當函式呼叫時的執行上下文，因為還需要包含傳入的參數值，以及那個設計相當有問題的隱藏"偽"陣列物件 - arguments物件，所以又多了一個新名詞叫Activation object(啓動物件，簡稱AO)，AO除了上面說的VO定義外，又會多包含了剛說的參數值與arguments物件。所以在函式呼叫的執行上下文，AO會用來扮演VO的角色。
 
-Scope chain(作用域鏈)的設計概念與Prototype chain(原型鏈)非常相似，如果你有認真看過"原型物件導向"那個章節的內容，大概心中就有個底了。以函式執行上下文來說，AO裡面會有一個屬性，用來指向上一層(父母層)的AO，這個鏈結會一直串到全域的VO上。
+Scope chain(作用域鏈)的設計概念與Prototype chain(原型鏈)非常相似，如果你有認真看過"原型物件導向"那個章節的內容，大概心中就有個底了。以函式執行上下文來說，AO裡面會有一個屬性，用來指向上一層(父母層)的AO，這個鏈結會一直串到全域的VO上。函式執行時，尋找變數時會用作用域鏈尋找。
 
 Scope chain(作用域鏈)的概念，在實際使用上，會出現在函式中的函式(內部函式，子母函式)結構的情況，也就是JavaScript語言中強大但也是不易理解的其中一個特性 - 閉包(Closure) 的結構之中。這也是為何內部函式可以存取得到外部函式的作用域的原理。
 
@@ -520,4 +520,3 @@ ECStack = [
 - [How to access the correct `this` / context inside a callback?](http://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-context-inside-a-callback)
 - [How does the “this” keyword work?](http://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work)
 - [JavaScript function invocation and this (with examples)](https://howchoo.com/g/ztbjzjqwngq/javascript-function-invocation-and-this-with-examples)
-
