@@ -163,6 +163,8 @@ import { $ as jQuery } from 'jquery';   // import a named export to a different 
 import * as crypto from 'crypto';    // import an entire module instance object
 ```
 
+http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281
+
 http://exploringjs.com/es6/ch_modules.html
 
 http://www.2ality.com/2014/09/es6-modules-final.html
