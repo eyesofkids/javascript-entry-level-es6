@@ -18,29 +18,29 @@ JavaScript語言是一個沒有命名空間設計的程式語言，也沒有支�
 ```js
 // The module pattern
 var feature = (function() {
- 
+
     // Private variables and functions
     var privateThing = "secret";
     var publicThing = "not secret";
- 
+
     var changePrivateThing = function() {
         privateThing = "super secret";
     };
- 
+
     var sayPrivateThing = function() {
         console.log( privateThing );
         changePrivateThing();
     };
- 
+
     // Public API
     return {
         publicThing: publicThing,
         sayPrivateThing: sayPrivateThing
     };
 })();
- 
+
 feature.publicThing; // "not secret"
- 
+
 // Logs "secret" and changes the value of privateThing
 feature.sayPrivateThing();
 ```
@@ -97,7 +97,7 @@ console.log(aString)
 console.log(aObject)
 ```
 
-另一種是使用萬用字元(*)，代表要輸入所有的輸出定義的值，不過你需要加上一個模組名稱，例如下面程式碼中的`myModule`，這是為了防止命名空間的衝突之用的，之後的程式碼中都需要用這個模組名稱來存取輸出模組中的值，這個作法不常使用:
+另一種是使用萬用字元(\*)，代表要輸入所有的輸出定義的值，不過你需要加上一個模組名稱，例如下面程式碼中的`myModule`，這是為了防止命名空間的衝突之用的，之後的程式碼中都需要用這個模組名稱來存取輸出模組中的值，這個作法不常使用:
 
 ```js
 import  * as myModule from './lib.js'
