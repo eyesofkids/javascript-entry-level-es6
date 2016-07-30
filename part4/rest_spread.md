@@ -121,6 +121,10 @@ n; // { x: 1, y: 2, a: 3, b: 4 }
 - [Features Of ES6 Part 5: The Spread](http://odetocode.com/blogs/scott/archive/2014/09/02/features-of-es6-part-5-the-spread.aspx)
 - [Features of ES6 Part 4: Rest Parameters](http://odetocode.com/blogs/scott/archive/2014/08/18/features-of-es6-part-4-rest-parameters.aspx)
 - [ES6 Spread and Butter in Depth](https://ponyfoo.com/articles/es6-spread-and-butter-in-depth)
+
+
+## 暫存
+
 ```
 var callMe(fn, ...args) {
     return fn.apply(args);
