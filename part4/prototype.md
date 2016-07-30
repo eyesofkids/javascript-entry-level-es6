@@ -49,7 +49,7 @@ console.log(Function.prototype.__proto__ === Object.prototype) //true
 
 ![Prototype Image 02](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/prototype_2.png)
 
-> 註: `__proto__`注意是前後各有兩條下底線(_)，不是只有一條而已。
+> 註: `__proto__`注意是前後各有兩條下底線(\_)，不是只有一條而已。
 
 > 註: `__proto__`在一些舊的瀏覽器品牌(例如IE)中不能使用。雖然在ES6中已經正式納入標準之中，它是危險的內部屬性，也不要用在真正的應用程式上。
 
@@ -310,7 +310,7 @@ console.log('abc'.constructor === String) // true
 ```js
 for(let key in obj){
     if (obj.hasOwnProperty(key)) {
-        console.log(obj[key]); 
+        console.log(obj[key]);
     }
 }
 ```
@@ -366,7 +366,7 @@ function Player(name, age)
    }
 }
 
-const aPlayer = Player('Inori', 16) 
+const aPlayer = Player('Inori', 16)
 const bPlayer = new Player('Gi', 16)
 ```
 
@@ -460,10 +460,10 @@ console.log(inori)
 
 //物件字面定義，相等於new Object()
 const newObject = {}
- 
+
 //使用Object.create方法
 const newObject = Object.create( proto )
- 
+
 //ES6類別定義，或是建構函式。通常稱為建構式樣式。
 const newObject = new ConstructorFunc()
 const newObject = new ClassName()
@@ -512,7 +512,7 @@ console.log(ayase.toString())
 
 ```js
 new Date()
-new XMLHttpRequest() 
+new XMLHttpRequest()
 new Error
 ```
 
