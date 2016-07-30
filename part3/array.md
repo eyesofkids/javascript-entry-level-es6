@@ -13,7 +13,7 @@
 陣列的索引值(index)是從0開始的順序整數值，此外，陣列可以用方括號([])來取得成員的指定值，用這個方式也可以改變成員包含的值:
 
 ```js
-const aArray = [] 
+const aArray = []
 const bArray = [1, 2, 3]
 
 console.log(aArray.length) //0
@@ -43,7 +43,7 @@ const bArray = new Array(1, 2, 3)
 console.log(aArray.length) //10
 ```
 
-> 註: JavaScript的內建物件都不建議`new`作初始定義的。
+> 註: JavaScript的內建物件都不建議`new`作初始定義的。不過有一些特例是一定要的，例如Date、Error等等。
 
 ### 陣列定義注意事項
 
@@ -74,7 +74,7 @@ const magicMatrix = [
       [6, 1, 8]
 ]
 
-magicMatrix[2][1] 
+magicMatrix[2][1]
 ```
 
 維數過多時在處理上會愈複雜，一般常見的只有二維。通常需要另外撰寫專屬的處理函式，或是搭配額外的函式庫在容易上會較為方便。
@@ -355,7 +355,7 @@ console.log(aArray.indexOf(3, -1))
 `pop`的例子如下，它會回傳被砰出的值:
 
 ```js
-const aArray = [1, 2, 3] 
+const aArray = [1, 2, 3]
 const popValue = aArray.pop()
 
 console.log(aArray) //[1,2]
@@ -800,7 +800,7 @@ function pureSplice(aArray, start, deleteCount, ...items) {
   return [ ...aArray.slice(0, start), ...items, ...aArray.slice(start + deleteCount) ]
 }
 
-const pureSplice = (aArray, start, deleteCount, ...items) => 
+const pureSplice = (aArray, start, deleteCount, ...items) =>
 [ ...aArray.slice(0, start), ...items, ...aArray.slice(start + deleteCount) ]
 ```
 
@@ -849,4 +849,3 @@ const pureDelete = (aArray, index) => aArray.slice(0,index).concat(aArray.slice(
 但現在的電腦硬體已經進步太多，所謂的執行資源的限制早就與10年前不同。效率在今天的程式開發早就已經不是唯一的重點，更多其他的因素都需要加入來一併考量，以前的應用程式也可能只是小小的特效或某個小功能，現在的應用程式將會是很龐大而且結構複雜的。所以，程式碼的閱讀性與語法簡潔、易於測試、維護與除錯、易於規模化等等，都會變成要考量的其他重點。純粹函式的確是未來的主流想法，當一個應用程式慢慢變大、變複雜，純粹函式可以提供的好處會變成非常明顯，所以一開始學習這個概念是必要的。
 
 ## 參考
-
