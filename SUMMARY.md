@@ -12,6 +12,8 @@
    * [工具](part2/tools.md)
    * [ES6環境](part2/es6_env.md)
    * [輸出](part2/output.md)
+   * [除錯](part2/debug.md)
+   * [單元測試](part2/unit_test.md) 
 * [基礎](part3/README.md)
    * [變數、常數與命名](part3/var_const_naming.md)
    * [資料類型(值)](part3/datatype.md)
@@ -36,7 +38,6 @@
    * [解構賦值](part4/destructuring.md)
    * [箭頭函式](part4/arrow_function.md)
    * [模組系統](part4/module_system.md)
-
 * [附錄](part5/README.md)
    * [程式語言符號](part5/comp_symbol.md)
    * [關鍵字與保留字](part5/keyword.md)
