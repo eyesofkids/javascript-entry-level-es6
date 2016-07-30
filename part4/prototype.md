@@ -1,4 +1,4 @@
-# 原型物件導向
+# 原型基礎物件導向
 
 > If you don’t understand prototypes,
 you don’t understand JavaScript.
