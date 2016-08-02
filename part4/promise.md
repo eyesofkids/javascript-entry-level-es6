@@ -54,10 +54,11 @@ promise必定是以下三種狀態中的其中一種: pending(等待中)、fulfi
     2.3.1.1 必定不會再轉變到其他任何狀態
     2.3.1.2 必定有不能再更動的值reason(理由)
 
-這個狀態用下面的圖解說明:
+這個狀態用下面的圖解說明，應該可以很清楚的理解:
 
+![Promise狀態](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/promise_1.png)
 
-
+一開始promise物件建立出來後，狀態都是pending(等待中)，之後可以轉變到fulfilled(已實現)就是rejected(已拒絕)其中一個，然後就固定不會再變了。
 
 
 ### executor執行者
