@@ -33,13 +33,13 @@ Deferred(延期)的設計在不同函式庫中略有不同，例如知名的Q函
 
 ### 專門用語
 
-- `promise` 是一個帶有遵照這個規格的then方法的物件或函式
+- `promise` (承諾)是一個帶有遵照這個規格的then方法的物件或函式
 - `thenable` 是一個有定義then方法的物件或函式
 - `value` 合法的JavaScript值(包含undefined、thenable與promise)
-- `exception` 使用throw語句丟出來的值
-- `reason` 表明為什麼promise被拒絕(rejected)的值
+- `exception` (例外)使用throw語句丟出來的值
+- `reason` (理由)表明為什麼promise被拒絕(rejected)的值
 
-> 另外很常見到有個專有名詞 `settled` 一個promise最後的狀態，也就是fulfilled(已實現)或rejected(已拒絕)
+> 另外很常見到有個專有名詞 `settled`(固定的)一個promise最後的狀態，也就是fulfilled(已實現)或rejected(已拒絕)
 
 ### Promise狀態
 
@@ -58,15 +58,85 @@ promise必定是以下三種狀態中的其中一種: pending(等待中)、fulfi
 
 ![Promise狀態](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/promise_1.png)
 
-一開始promise物件建立出來後，狀態都是pending(等待中)，之後可以轉變到fulfilled(已實現)就是rejected(已拒絕)其中一個，然後就固定不會再變了。
+狀態是Promise結構很重要的一個特性，因為Promise結構一開始都是代表懸而未決的值，所以一開始在promise物件建立出來後，狀態都是pending(等待中)，之後可以轉變到fulfilled(已實現)就是rejected(已拒絕)其中一個，然後就固定不會再變了。通常有value(值)的情況下是轉變到fulfilled(已實現)狀態，而如果是有reason(理由)時，代表要轉變到rejected(已拒絕)狀態。
+
+### Promise物件的建立與使用
+
+#### Promise物件的建立
+
+一個簡單的Promise語法結構如下:
+
+```js
+const promise = new Promise(function(resolve, reject) {
+  // 成功時
+  resolve(value)
+  // 失敗時
+  reject(reason)
+});
+
+promise.then(function(value) {
+  // on fulfillment(已實現時)
+}, function(reason) {
+  // on rejection(已拒絕時)
+})
+```
+
+首先先看Promise的建構函式，它的語法如下(來自[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)):
+
+```
+new Promise( function(resolve, reject) { ... } )
+```
+
+用箭頭函式可以簡化一下:
+
+```
+new Promise( (resolve, reject) => { ... } )
+```
+
+建構函式的傳入參數值需要一個函式。
+
+這個函式中又有兩個傳入參數值，`resolve`(決定)與`reject`(拒絕)都是要求一定是函式類型。成功的話，也就是有合法值的情況下執行`resolve(value)`，promise物件的狀態會跑到fulfilled(已實現)固定住。失敗或是發生錯誤時用執行`reject(reason)`，reason(理由)通常是用Error物件，然後promise物件的狀態會跑到rejected(已拒絕)狀態固定住。
+
+這種函式稱之為executor(執行者)函式，又稱之為[Revealing Constructor Pattern](https://blog.domenic.me/the-revealing-constructor-pattern/)，executor會在物件實體化時回傳物件實體前立即執行，也就是說當傳入這個函式時，Promise物件會立即決定裡面的狀態，看是要以`resolve`來回傳值，還是要用`reject`來作錯誤處理。也因為它與一般的物件實體化的過程不太一樣，所以常會先包到一個函式中，使用時再呼叫這個函式來產生promise物件，例如像下面這樣的程式碼:
+
+```js
+function initPromise(value) {
+    return new Promise(function(resolve, reject){
+        if(value)
+            resolve(value) // fulfilled已實現，成功
+        else
+            reject(reason) // 錯誤，拒絕
+    });
+}    
+```
+
+Promise建構函式與Promise.prototype物件的設計，主要是要讓設計師作Promisify用的，也就是要把原本異步或同步的程式碼，包裝成為Promise物件來使用。包裝後才能使用Promise的語法結構，也就是我們所說的異步程式的語法結構。
+
+#### then與catch
 
 
-### executor執行者
+### all與race
+
+
+
+### 執行順序
+http://stackoverflow.com/questions/29111626/javascript-promise-then-ordering
+http://stackoverflow.com/questions/36526639/es6-promise-execution-order
+http://stackoverflow.com/questions/29853578/understanding-javascript-promises-stacks-and-chaining/29854205#29854205
+
+### 實踐
 
 ---
-http://www.datchley.name/es6-promises/
 
-http://exploringjs.com/es6/ch_promises.html
+** https://gist.github.com/domenic/3889970
+
+
+
+** http://www.datchley.name/es6-promises/
+
+
+
+** http://exploringjs.com/es6/ch_promises.html
 
 http://www.datchley.name/promise-patterns-anti-patterns/
 
