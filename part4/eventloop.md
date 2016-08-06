@@ -71,7 +71,7 @@ Event Loop(事件迴圈)直接由名稱上理解，主要是為了事件(Events)
 - 使用外部資源: 資料庫、檔案、Web I/O
 - DOM處理的反應: 回應DOM處理時的元素對應事件
 
-> 註: 對照Call Stack(呼叫堆疊)是LIFO(後進先出)的順序。
+> 註: 對照Call Stack(呼叫堆疊)是FILO(先進後出)或LIFO(後進先出)的順序。
 
 在瀏覽器端的JavaScript程式語言中，除了一般的事件分派外，還有少數幾個內建的API與相關物件有類似的異步機制，有一些簡單的樣式可以利用它們模擬出異步的執行程式:
 
@@ -104,7 +104,93 @@ Event Loop(事件迴圈)直接由名稱上理解，主要是為了事件(Events)
 
 使用`setTimeout`方法可以簡單模擬出異步程式，將程序放到事件迴圈的任務佇列之中。
 
+## 常見問答
 
+### 異步執行的流程比同步執行的流程快？
+
+沒有。
+
+比較慢，在呼叫堆疊與工作佇列切換，是需要時間的。你可以把異步執行的函式，視為一種"暫緩執行"的函式，既然是暫緩執行，一定不會比直接在呼叫堆疊中的函式快。
+
+### 異步執行的函式裡面如果有異步執行的其他函式，這樣的執行有順序規則可言嗎？
+
+有。不過執行順序要視情況決定。
+
+主執行緒的執行規則是同步規則，所以是一行接一行，先放到呼叫堆疊中。呼叫堆疊在執行時，是先進後出(FILO)的規則。
+
+如果呼叫堆疊中看到異步的函式，會先移到工作佇列中，工作佇列中等事件迴圈看到呼叫堆疊沒有其他函式EC(執行上下文後)後才會把佇列中的EC移回主執行緒中。這個移回去的順序是依照先進先出(FILO)的規則。
+
+異步中的異步，上面的流程會再重新作一遍，不斷循環直到所有程式碼都執行完畢。所以以幾個情況來說，如果假設都是一樣延時的異步函式。
+
+1. 同樣異步的函式，看誰在全域EC中(也就是程式碼中)先被執行，誰就先完成執行
+2. 異步只要差一層，在全域EC中(也就是程式碼中)的執行順序就會無關，愈多層的一定比較慢完成
+
+下面的範例的輸出結果必定是`a->b`，因為setTimeout中的時間代表加入到工作佇列的時間，只要加入佇列的時間一樣，就會依程式碼從上到下執行的順序為順序。
+
+```js
+function aFunc(value, cb){
+  setTimeout(cb, 1000, value);
+}
+
+function bFunc(value, cb){
+  setTimeout(cb, 1000, value);
+}
+
+aFunc('a', function cbA(value){console.log(value)});
+bFunc('b', function cbB(value){console.log(value)});
+```
+
+但上面都是同樣的異步執行函式的規則，如果是有一點點的時間差，結果會變為`b->a`，像下面的範例:
+
+```js
+function aFunc(value, cb){
+  setTimeout(cb, 1000, value);
+}
+
+function bFunc(value, cb){
+  setTimeout(cb, 900, value);
+}
+
+function cbA(value){
+  console.log(value)
+}
+
+function cbB(value){
+  console.log(value)
+}
+
+aFunc('a', cbA);
+bFunc('b', cbB);
+```
+
+時間差不只對同樣層的異步執行函式有用，對多層的情況也會影響，因為時間差代表的是異步回調函式加到佇列的時間，如果這個時間晚於前一個多層異步函式加入又移回執行，然後又加入移回執行，那就只能比之前的慢。下面的範例說明了這點。
+
+```js
+function aFunc(value, cb){
+  setTimeout(cb, 1000, value);
+}
+
+function bFunc(value, cb){
+  setTimeout(cb, 0, value);
+}
+
+function inCbB(value){
+  console.log(value)
+}
+
+function cbB(value){
+  setTimeout(inCbB, 0, value)
+}
+
+function cbA(value){
+  console.log(value)
+}
+
+aFunc('a', cbA);
+bFunc('b', cbB);
+```
+
+雖然`aFunc`中的異步執行函式`cbA`只有1秒的時間差才加到工作佇列中，但`bFunc`中的`cbB`會搶先加到工作佇列，然後回到呼叫堆疊中執行，`inCbA`再搶先加到工作佇列中，先執行完成，對我們來說短短一秒，實際上在電腦世界裡是可能有幾天感覺差異。這個結果也是`b->a`
 
 
 https://github.com/vasanthk/async-javascript

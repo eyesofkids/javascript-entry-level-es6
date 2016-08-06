@@ -4,7 +4,6 @@
 
 不論這個專有名詞用中文的"回呼"、"回叫"、"回調"，都是聽起來很怪異的講法，callback在英文是"call back"兩個單字的合體，你應該有聽過"call me back"的英文，大概是有客戶留電話給你，當你在忙碌時，請你等會有空時再"回電"給它，這裡的說法是指在電信公司裡的callback名詞的涵意。而用在軟體工程上，callback它的使用情境其實也是有類似的地方，[維基上的說明](http://en.wikipedia.org/wiki/Callback_(computer_programming))我就不說了，其實我也有看沒有懂。雖然在許多程式語言中都可以實現callback，但這裡專注的是在Javascript上的"異步(asynchronous) callback"機制。其他關於"同步callback機制"參考維基百科。
 
-
 ## 情境
 
 專業一些來說，callback是什麼：
