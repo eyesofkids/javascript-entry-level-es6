@@ -369,7 +369,7 @@ function foo(err, callback) {
 }
 ```
 
-或是用`if...else`寫清楚，但這個樣式也不是太好:
+或是用`if...else`寫清楚，但這個樣式也不是太理想，CPS風格的最後一行應該就是回調函式:
 
 ```js
 function foo(err, callback) {

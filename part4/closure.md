@@ -1,6 +1,63 @@
 # Closure 閉包
 
+## Closure 閉包
+
+由於JavaScript語言中的函式(function)是頭等函式(first-class function)的設計，代表函式在語言中享有與一般原始資料類型的值有同等的地位，函式可以傳入其他函式作為傳入參數，可以當作另一個函式的回傳值，也可以指定為一個變數的值，或是儲存在資料結構中(例如陣列或物件)，在語言中甚至是有自己獨有的資料類型(`typeof`一個函式回傳值是'function')。
+
+一個閉包就是會記憶函式以及函式建立當下環境的記錄，環境指的就是獨立變數(自由變數)的值。在JavaScript中，每次當函式被建立時，一個閉包就會被產生，閉包只是一個函式產生時的自有特性，並不是什麼獨特的語法樣式。雖然我們經常使用函式中的函式，也就是巢狀(nested)函式(或內部函式)的語法結構作為範例來說明閉包，這的確是可以觀察閉包的產生的方式，不過這也只是一種特性上的說明。
+
+```js
+function aFunc(x){
+  function bFunc(){
+    console.log( x++ )
+  }
+  return bFunc
+}
+
+const newFunc = aFunc(1)
+newFunc()
+newFunc()
+```
+
+bFunc可以不需要名稱，直接用return匿名函式的語法更簡潔:
+
+```js
+function aFunc(x){
+  return function(){
+    console.log( x++ )
+  }
+}
+```
+
+用箭頭函式更是簡潔，已經快要可以寫成一行了:
+
+```js
+function aFunc(x){
+  return () => console.log( x++ )
+}
+```
+
+執行這個範例後，你會發現`x`值會在`aFunc`呼叫後屍骨未寒，陰魂不散的還留在新的`newFunc`函式裡，每當執行一次`newFunc`函式，`x`值就會再+1。
+
+不過，用這個這個閉包範例可能會產生誤解的地方，在於以下幾點:
+
+- "函式呼叫"與"函式建立"實際上是兩件事，在`aFunc`"函式呼叫"過後，`newFunc`才是"函式建立"，這時候`newFunc`中的閉包才會產生。
+- 匿名函式的使用，閉包並不是只會在匿名函式才會產生。
+- 閉包不是只會產生在巢狀(內部)函式的回傳時。所有函式在建立時都會產生閉包。
+
+要觀察閉包中所記錄的環境變數，可以從瀏覽器的除錯器中看到，像上面的範例如果用除錯器在第一個`newFunc`函式加入中斷點時，執行後應該可以看到像下面的圖:
+
+
+
+
+http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
+https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-closure-b2f0d2152b36#.rsbh1mas5
+http://eloquentjavascript.net/03_functions.html
+https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/
+
 ## Closure範例程式碼
+
+Closure(閉包)的基本結構是函式中的函式，也就是巢狀(nested)函式，或是稱之為內部(inner)函式的語法結構，由於callback(回調)函式也會在某個函式中被執行，實際上它也是算是一種閉包的結構。
 
 先看範例，一個典型的closure(閉包)會長這個樣子：
 
