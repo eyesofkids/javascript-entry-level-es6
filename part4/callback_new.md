@@ -6,7 +6,7 @@
 
 ## CPS風格與直接風格
 
-延續傳遞風格(Continuation-passing style, CPS)，它的對比是"直接風格(Direct style)"，這兩種是程式開發時所使用的風格，CPS早在1970年代就已經被提出來了。CPS用的是明確地移轉控制權到下一個函式中，也就是使用"延續函式"，一般稱它為"回調函式"或"回調(callback)"。這是一個可以作為傳入參數的函式，用於在目前的函式呼叫執行最後移交控制權，而不使用回傳值的方法。直接風格的控制權移交是不明確的，它是用回傳值的方式，然後進行到下一行程式碼或呼叫接下來的函式。下面以範例來說明會比較容易。
+延續傳遞風格(Continuation-passing style, CPS)，它的對比是"直接風格(Direct style)"，這兩種是程式開發時所使用的風格，CPS早在1970年代就已經被提出來了。CPS用的是明確地移轉控制權到下一個函式中，也就是使用"延續函式"的方式，一般稱它為"回調函式"或"回調(callback)"。回調是一個可以作為傳入參數的函式，用於在目前的函式呼叫執行最後移交控制權，而不使用函式回傳值的方式。直接風格的控制權移交是不明確的，它是用回傳值的方式，然後進行到下一行程式碼或呼叫接下來其他函式。下面以範例來說明會比較容易。
 
 直接風格的範例如下，其實就是一般函式呼叫的方式，或是用回傳的方式:
 
@@ -17,7 +17,7 @@ function func(x) {
 }
 ```
 
-CPS風格就不是這樣，它會用另一個函式作為函式中的傳入參數的樣式來撰寫程式，然後將本來應該要回傳的值(不一定只有一個)，傳給下一個延續函式，繼續下個函式的執行:
+CPS風格就不是這樣，它會用另一個函式作為函式中的傳入參數的樣式來撰寫程式，然後將本來應該要回傳的值(不限定只有一個)，傳給下一個延續函式，繼續下個函式的執行:
 
 ```js
 //CPS風格
@@ -58,23 +58,24 @@ function display(avatar){
 
 getAvatar('eddy', display)
 ```
-長久以來，直接風格的程式碼是最常見的，因為它容易被學習者與開發者理解，一個步驟接著一個步驟，伺服器端的設計通常也是這樣設計，主要是因為伺服器端使用多執行緒的執行方式，不論是網站伺服器還是資料庫伺服器，都是多執行緒的。CPS風格反而不易被理解，並沒有明顯的誘因讓程式設計師一定要用CPS風格，而且也不是所有的程式語言都能使用CPS風格。
+
+長久以來在程式語言開發界，直接風格的程式碼是最常見的，因為它容易被學習與理解，一個步驟接著一個步驟，學校的程式語言課程也是用這種風格來教學，不論在個人電腦上的、在伺服器端的程式語言設計通常也是這樣。主要是因為個人電腦端或是伺服器端，通常使用多執行緒或改進底層運作的執行方式，來解決多工或並行的問題。CPS風格反而不易被理解，並沒有明顯的誘因讓程式設計師一定要用CPS風格，而且也不是所有的程式語言都能使用CPS風格。
 
 CPS風格還有一些明顯的缺點:
 
-- 相較於直接風格，在愈複雜的情況時，程式碼愈不易撰寫與理解
+- 相較於直接風格，在愈複雜的應用情況時，程式碼愈不易撰寫與理解
 - 錯誤處理較為困難
 
 JavaScript中會大量使用CPS風格，除了它本身可以使用這種風格外，其實是有原因:
 
-- 以CPS風格來設計事件異步處理的模型
-- 只有單執行緒，在瀏覽器端只有一個使用者，但事件或網路要求(AJAX)要求不能阻塞其他程式的進行，但這也僅限在這些特殊的情況。不過在伺服器端的執行情況都很嚴峻，要能同時讓多人連線使用，必需要達到不能阻塞I/O，才能與以多執行緒執行的伺服器一樣的執行
+- 它就只有單執行緒，在瀏覽器端只有一個使用者，但事件或網路要求(AJAX)要求不能阻塞其他程式的進行，但這也僅限在這些特殊的情況。不過在伺服器端的執行情況都很嚴峻，要能同時讓多人連線使用，必需要達到不能阻塞I/O，才能與以多執行緒執行的伺服器一樣的執行
+- 它一開始就是以CPS風格來設計事件異步處理的模型
 
-> 要有高階函式(High Order Function)的特性才能使用CPS風格，也就是可以把某個函式當作另一函式的傳入參數，也可以回傳函式。除了JavaScript語言外，常見的語言具有高階函式特性的有Python、Java、Ruby、Swift等。
+> 基本上一個程式語言要具有高階函式(High Order Function)的特性才能使用CPS風格，也就是可以把某個函式當作另一函式的傳入參數，也可以回傳函式。除了JavaScript語言外，常見具有高階函式特性的程式語言有Python、Java、Ruby、Swift等等。
 
 ## 複雜在何處
 
-callback運用在瀏覽器端似乎並沒有想像中複雜，一個事件的處理範例大概會像下面這樣:
+callback(回調)運用在瀏覽器端似乎並沒有想像中複雜，一個事件的處理範例大概會像下面這樣:
 
 ```js
 const el = document.getElementById('myButton')
@@ -96,7 +97,7 @@ const el = document.getElementById('myButton')
 el.addEventListener('click', callback, false)
 ```
 
-AJAX是另一個常使用的情況，內建的`XMLHttpRequest`物件的行為類似於事件監聽，而且都打包好了。實際上`XMLHttpRequest.onreadystatechange`這個屬性，就是`XMLHttpRequest`物件在處理事件的callback(回調)函式。只是從程式碼中你看不到`XMLHttpRequest`內部是怎麼運作的:
+AJAX是另一個常使用的情況，內建的`XMLHttpRequest`物件的行為類似於事件監聽，而且都打包好了。實際上`onreadystatechange`這個屬性，就是`XMLHttpRequest`物件在處理事件的callback(回調)函式。只是從程式碼中你看不到`XMLHttpRequest`內部是怎麼運作的:
 
 ```js
 var xhr = new XMLHttpRequest();
@@ -121,7 +122,7 @@ xhr.send()
 
 ### 匿名函式、函式定義與函式呼叫的混合
 
-第一個我認為它會複雜的原因是來自匿名函式、函式定義與函式呼叫的混合寫法。所以當在看程式碼時，你的腦袋很容易打結。
+首先，我會認為它會複雜的原因是來自匿名函式、函式定義與函式呼叫的混合寫法。所以當在看程式碼時，你的腦袋很容易打結。
 
 ```js
 function func(x, cb){
@@ -175,7 +176,7 @@ callback的最大優點，它給了程式開發者很大的彈性，允許可以
 
 ### 回調地獄(Callback Hell)
 
-複雜的情況是在於CPS風格使用callback來移往下一個函式執行，當你開始撰寫一個接著一個執行的流程，也就是一個函式呼叫後接下一個時，就會看到"回調中回調"，也就是所謂的"回調地獄"的結構，像下面這樣的例子:
+複雜的情況是在於CPS風格使用callback來移往下一個函式執行，當你開始撰寫一個接著一個執行的流程，也就是一個函式呼叫後接下一個時，就會看到所謂的"回調地獄"的結構，像下面這樣的例子:
 
 ```js
 step1(x, function(value1){
@@ -195,6 +196,8 @@ step1(x, function(value1){
 2. `function(value1)`執行到`step2`，`step2`執行到最後，value2已經有值，移往`function(value2)`
 3. `function(value2)`執行到`step3`，`step3`執行到最後，value3已經有值，移往`function(value3)`
 4. `function(value3)`執行完成
+
+寫成流程大概是像下面這樣的順序:
 
 ```
 step1 -> function(value1) -> step2 -> function(value2) -> step3 -> function(value3)
@@ -228,11 +231,11 @@ for(let i=0; i< 100000000;i++){
 console.log('bArray done!')
 ```
 
-在主緒行緒阻塞是一個嚴重的情況，異步執行的回調函式並不代表異步執行後就不會阻塞，也有可能從異步執行的佇列回到主緒行緒後，因為需要CPU密集型的運算，仍然會阻塞到緒行緒的進行。異步執行的回調函式，是JavaScript為了在只有單執行緒的情況，用來達成並行(concurrency)模型的一種設計。
+在主執行緒阻塞是一個嚴重的情況，異步執行的回調函式並不代表異步執行後就不會阻塞，也有可能從異步執行的佇列回到主緒行緒後，因為需要CPU密集型的運算，仍然會阻塞到緒行緒的進行。異步執行的回調函式，只是暫時先移到佇列中放著，讓它先不干擾目前的主執行緒的執行，這是JavaScript為了在只有單執行緒的情況，用來達成並行(concurrency)模型的設計方式。
 
 > 如果要配合JavaScript的異步處理流程，也就是非阻塞的I/O處理，只有CPS可以，直接風格會造成阻塞
 
-Node.js使用了CPS作為主要的I/O處理語法，老實說是一個不得已的選擇，它的樣式是使用error-first(以錯誤為主)的CPS風格，因為callback要處理錯誤不容易，所以要優先處理錯誤，它的主要原則如下:
+Node.js一開始就使用了CPS作為主要的I/O處理方式，老實說是一個不得已的選擇，當時沒有太多的選擇。這種樣式是使用error-first(以錯誤為主)的CPS風格，因為callback要處理錯誤不容易，所以要優先處理錯誤，它的主要原則如下:
 
 - callback的第一個參數保留給Error(錯誤)物件，當錯誤發生時，它將會以第一個參數回傳。
 - callback的第2個參數保留給成功回應的資料。當沒有錯誤發生時，error(即第一個參數)會設定為null，然後將成功回應的資料傳入第二個參數。
@@ -249,13 +252,42 @@ fs.readFile('foo.txt', 'utf8', function(err, data) {
 });
 ```
 
-Node.js使用CPS風格很容易出現回調地獄的問題，這是因為在伺服器端的各種I/O處理相當頻繁而且流程愈來愈複雜。相反的，過去很少人會討論在瀏覽器(客戶端)的回調地獄的問題。所幸現在已經有很多協助處理的方式，回調地獄可以用例如Promise、generator、async/await之類的語法結構，或是[Async](https://github.com/caolan/async)、[co](https://github.com/tj/co)外部函式庫等等，來協助在流程處理上更容易。
+Node.js使用CPS風格在複雜的流程下，很容易出現回調地獄的問題，這是因為在伺服器端的各種I/O處理相當頻繁而且流程愈來愈複雜。一個典型的資料庫連接與查詢的範例如下，出自[Node.js MongoDB Driver API](http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html#find):
 
-此外，隨著技術不斷的進步，現在的JavaScript已經有可以讓它使用其他執行緒的技術，有[Web Worker](https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers)，或是專門給Node.js使用的child_process模組與cluster(叢集)模組。
+```js
+// A simple query using the find method on the collection.
+
+var MongoClient = require('mongodb').MongoClient,
+  test = require('assert');
+MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+
+  // Create a collection we want to drop later
+  var collection = db.collection('simple_query');
+
+  // Insert a bunch of documents for the testing
+  collection.insertMany([{a:1}, {a:2}, {a:3}], {w:1}, function(err, result) {
+    test.equal(null, err);
+
+    // Peform a simple find and return all the documents
+    collection.find().toArray(function(err, docs) {
+      test.equal(null, err);
+      test.equal(3, docs.length);
+
+      db.close();
+    });
+  });
+});
+```
+
+上面這個範例雖然還算簡單，但裡面的回調已經有三層的結構，再寫多一點有可能會到四層、五層。基本上，這種複雜的語法結構不好維護，就算是老練的程式設計師也需要花點時間才能夠看清楚來龍去脈，更不用說剛負責的新手程式設計師。我會認為這是一種舊時代的程式碼組織的弊病，或是不得已的解決方案，當新式的、更理想的語法結構可以取代時，這種語法未來大概只會出現在教科書中。
+
+幸運的是，現在已經有很多協助處理的方式，回調地獄可以用例如Promise、generator、async/await之類的語法結構，或是[Async](https://github.com/caolan/async)、[co](https://github.com/tj/co)外部函式庫等等，來協助在流程處理上更容易。這些才是你現在應該就要學習的程式組織方式。
+
+此外，隨著技術不斷的進步，現在的JavaScript也已經有可以讓它使用其他執行緒的技術，有[Web Worker](https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers)，或是專門給Node.js使用的[child_process](https://nodejs.org/api/child_process.html#child_process_child_process)模組與[cluster](https://nodejs.org/api/cluster.html)(叢集)模組。
 
 ## 異步回調函式
 
-我需要再次強調，並非所有的使用callbacks(回調)函式的API都是異步執行的。在JavaScript中，除了DOM事件處理中的回調函式9成9都是異步執行的，只有少部份的API的的回調函式是異步執行的，要讓callbacks(回調)的執行轉變為異步，有以下幾種方式:
+並非所有的使用callbacks(回調)函式的API都是異步執行的。在JavaScript中，除了DOM事件處理中的回調函式9成9都是異步執行的，只有少部份的API的的回調函式是異步執行的，要讓callbacks(回調)的執行轉變為異步，有以下幾種方式:
 
 - 使用計時器(timer)函式: `setTimeout`, `setInterval`
 - 特殊的函式: `nextTick`, `setImmediate`
@@ -296,9 +328,58 @@ bFunc(4, cb4)
 
 這個程式執行的流程，可以看[這個在loupe網站的流程模擬](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gYUZ1bmModmFsdWUsIGNiKXsKICBjYih2YWx1ZSk7Cn0KCmZ1bmN0aW9uIGJGdW5jKHZhbHVlLCBjYil7CiAgc2V0VGltZW91dChjYiwgMCwgdmFsdWUpOwp9CgpmdW5jdGlvbiBjYjEodmFsdWUpeyBjb25zb2xlLmxvZyh2YWx1ZSk7IH0KZnVuY3Rpb24gY2IyKHZhbHVlKXsgY29uc29sZS5sb2codmFsdWUpOyB9CmZ1bmN0aW9uIGNiMyh2YWx1ZSl7IGNvbnNvbGUubG9nKHZhbHVlKTsgfQpmdW5jdGlvbiBjYjQodmFsdWUpeyBjb25zb2xlLmxvZyh2YWx1ZSk7IH0KCmFGdW5jKDEsIGNiMSk7CmJGdW5jKDIsIGNiMik7CmFGdW5jKDMsIGNiMyk7CmJGdW5jKDQsIGNiNCk7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
 
-由這個範例中，可以看到異步的回調程式執行並沒有比同步的回調程式快，反而是更慢了點，它只是一種因應特別情況所採用的函式執行方式，例如需要與外部資源存取(I/O)、DOM事件的處理或是計時器的情況。
+由這個範例中，可以看到異步的回調函式執行並沒有比同步的回調函式更慢，異步回調函式有另一個名稱是延時回調(defer callback)，是一種延時執行的函式。這只是一種因應特別情況所採用的函式執行方式，例如需要與外部資源存取(I/O)、DOM事件處理或是計時器的情況。等待的時間則是在Web API(也就是JavaScript)中，等有外部資源有回應了才會加到佇列中，佇列裡並不會執行程式碼，只是個排隊進入主執行緒的機制，程式一律還是在主執行緒中執行。
 
 > 關於函式的異步執行與事件迴圈資料，請參考[異步執行與事件迴圈]的章節
+
+## 反樣式
+
+callback其實有幾個反樣式，第一種是return callback(回傳回調)，基本上我會認為它不是一個很好的樣式，它會出現在如果回調除了要進行下一步之外，還要負責處理函式在執行中途的錯誤情況，例如:
+
+```js
+//這是錯誤的寫法，最後的callback()依然會執行
+function foo(err, callback) {
+    if (err) {
+        callback(err);
+    }
+    callback();
+}
+```
+
+為了讓最後的callback()不執行，正確的作錯誤處理，有可能會寫成這樣:
+
+```js
+function foo(err, callback) {
+    if (err) {
+        return callback(err);
+    }
+    callback();
+}
+```
+
+但是`return`用在callback上是個完全不好的樣式，正確的寫法應該是要用下面的寫法:
+
+```js
+function foo(err, callback) {
+    if (err) {
+        callback(err);
+        return;
+    }
+    callback();
+}
+```
+
+或是用`if...else`寫清楚，但這個樣式也不是太好:
+
+```js
+function foo(err, callback) {
+    if (err) {
+        callback(err);
+    } else {
+        callback();    
+    }
+}
+```
 
 ## 參考資源
 
