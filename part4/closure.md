@@ -2,9 +2,9 @@
 
 ## Closure 閉包
 
-由於JavaScript語言中的函式(function)是頭等函式(first-class function)的設計，代表函式在語言中享有與一般原始資料類型的值有同等的地位，函式可以傳入其他函式作為傳入參數，可以當作另一個函式的回傳值，也可以指定為一個變數的值，或是儲存在資料結構中(例如陣列或物件)，在語言中甚至是有自己獨有的資料類型(`typeof`一個函式回傳值是'function')。
+由於JavaScript語言中的函式(function)是頭等函式(first-class function)的設計，代表函式在語言中的應用上享有與一般原始資料類型的值同等地位，函式可以傳入其他函式作為傳入參數，可以當作另一個函式的回傳值，也可以指定為一個變數的值，或是儲存在資料結構中(例如陣列或物件)，在語言中甚至是有自己獨有的資料類型(`typeof`一個函式回傳值是'function')。
 
-一個閉包就是會記憶函式以及函式建立當下環境的記錄，環境指的就是獨立變數(自由變數)的值。在JavaScript中，每次當函式被建立時，一個閉包就會被產生，閉包只是一個函式產生時的自有特性，並不是什麼獨特的語法樣式。雖然我們經常使用函式中的函式，也就是巢狀(nested)函式(或內部函式)的語法結構作為範例來說明閉包，這的確是可以觀察閉包的產生的方式，不過這也只是一種特性上的說明。
+一個閉包就是記憶函式以及函式建立當下環境的記錄，環境指的就是獨立變數(自由變數)的值。在JavaScript中，每次當函式被建立時，一個閉包就會被產生，閉包只是一個函式產生時的自有特性，並不是什麼獨特的語法樣式。雖然我們經常使用函式中的函式，也就是巢狀(nested)函式(或內部函式)的語法結構作為範例來說明閉包，這的確是可以觀察閉包的產生的方式，不過這也只是方便說明而且是最常見的情況，但這並非是絕對的。
 
 ```js
 function aFunc(x){
@@ -47,7 +47,7 @@ function aFunc(x){
 
 要觀察閉包中所記錄的環境變數，可以從瀏覽器的除錯器中看到，像上面的範例如果用除錯器在第一個`newFunc`函式加入中斷點時，執行後應該可以看到像下面的圖:
 
-
+![Closoure in Scope](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/closure_1.png)
 
 
 http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
@@ -57,7 +57,7 @@ https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closu
 
 ## Closure範例程式碼
 
-Closure(閉包)的基本結構是函式中的函式，也就是巢狀(nested)函式，或是稱之為內部(inner)函式的語法結構，由於callback(回調)函式也會在某個函式中被執行，實際上它也是算是一種閉包的結構。
+Closure(閉包)的基本結構是函式中的函式，也就是巢狀(nested)函式，或是稱之為內部(inner)函式的語法結構，
 
 先看範例，一個典型的closure(閉包)會長這個樣子：
 
