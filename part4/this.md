@@ -351,13 +351,13 @@ outter.call(obj) //Object {a: 1}
 ```js
 const obj = {a:1}
 
-function funcCb(cb){
-  cb()
+function funcCb(x, cb){
+  cb(x)
 }
 
-const callback = function(){ console.log(this) }
+const callback = function(x){ console.log(this) }
 
-funcCb.call(obj, callback) //undefined
+funcCb.call(obj, 1, callback) //undefined
 ```
 
 實際上傳入參數值這個東西，如果是函式的話，都是位於全域物件之下的，這callback(回調)在呼叫時的`this`值就是全域物件。用call或bind方法就可以解決這個問題:
@@ -365,13 +365,13 @@ funcCb.call(obj, callback) //undefined
 ```js
 const obj = {a:1}
 
-function funcCb(cb){
-  cb.call(this)
+function funcCb(x, cb){
+  cb.call(this, x)
 }
 
 const callback = function(){ console.log(this) }
 
-funcCb.call(obj, callback) //Object {a: 1}
+funcCb.call(obj, 1, callback) //Object {a: 1}
 ```
 
 更進階的一種情況，使用例如像`setTimeout`方法，裡面帶有callback(回調)函式的傳入參數，像下面這樣的程式碼:
