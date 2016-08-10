@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "anchorjs", "disqus",  "gitbook-plugin-twfont"
+        "anchorjs", "disqus"
     ],
     "pluginsConfig": {
         "theme-default": {
