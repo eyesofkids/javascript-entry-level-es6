@@ -1,97 +1,180 @@
 # 箭頭函式
 
-## 前言
+箭頭函式(Arrow Functions)是ES6標準中，最受觀迎的一種新語法。它會受歡迎的原因是好處多多，而且沒有什麼副作用或壞處。有什麼好處呢？大致上有以下幾點:
 
-ECMAScript 6在2015年終於制訂好標準規格，我們簡稱ES2015或ES6規格。這對Javascript市場又起了一大震憾，現階段可以透過像[babel](http://babeljs.io)的編譯器來編輯給ES5(目前大部份的新瀏覽器都支援的規格)使用，也有很多的教學文件可以參考。但瀏覽器各家還在努力中，大概還需要至少一兩年的時間，才能完成大部份的新標準實作。在這之前，雖然還有很多路要走。
+- 語法簡單。少打很多字元。
+- 可以讓程式碼的可閱讀性提高
+- 某些情況下可以綁定`this`值
 
-ES6的新特性很多，這裡研究其中的一個新特性 - "Arrow Functions"，我使用的是Typescript。
+## 語法
 
-## Arrow Functions
+箭頭函式的語法如下，出自[箭頭函數(MDN)](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/Arrow_functions)：
 
-這是啥米碗糕？以下三點簡單來說：
+```js
+([param] [, param]) => {
+   statements
+}
 
-- 中文是"箭頭函式"
-- 符號是"=>" (肥箭頭，"->"是瘦箭頭)
-- 基本特性是函式的簡短寫法，(() => {} vs. function () {})
+param => expression
+```
+
+簡單的說明如下:
+
+- 符號是肥箭頭(=>) (註: "->"是瘦箭頭)
+- 基本特性是函式的簡短寫法
 
 一個簡單的範例是：
 
-```ts
-var inc = (x) => x+1;
+```js
+const func = (x) => x + 1
 ```
 
 相當於
 
 ```javascript
-var inc = function (x) { return x + 1; };
+const func = function (x) { return x + 1 }
 ```
 
-所以你可以少打很多英文，和一些標點符號之類的，所有的函式會變成匿名的函式。基本上的符號使用如下說明：
+所以你可以少打很多英文字元與一些標點符號之類的，所有的函式會變成匿名的函式。基本上的符號使用如下說明：
 
-- 花括號"{}"可有可無，不過如果函式沒回傳東西就要花括號。例如 `()=>{}`
-- 只有單一個傳入參數時，括號"()"可以不用，例如 `x=>x*x`
+- 花括號({})是有意義的，如果函式沒回傳東西就要花括號。例如 `()=>{}`
+- 只有單一個傳入參數時，括號(())可以不用，例如 `x=>x*x`
 
-這個語法不是只有那麼簡單，它有一個很重要的特別用途：
+最容易搞混的是下面這個例子，有花括號"{}"與沒有是兩碼子事:
 
-- Lexical `this` binding (詞彙上綁定`this`變數)
+```js
+const funcA = x => x + 1
+const funcB = x => { x + 1 }
 
-因為Javascript中的`this`變數是一個很特別難搞的東西，它有可能在不同情況或舊的瀏覽器中，指向不同的數值。一個最典型的範例就是使用像setInterval的函式時：
-
+funcA(1) //2
+funcB(1) //undefined
 ```
-function Person() {
-    this.age = 0;
-    console.log('base age: ' + this.age);
 
-    setInterval(function growUp() {
-        this.age++;
-        console.log('new age: ' + this.age);
-    }, 1000);
+沒用花括號時，代表會自動加`return`，也只能用一行的語句。用花括號則是可以加入多行的語句，不過`return`不會自動加，你要自己加上。
+
+## 綁定`this`值
+
+箭頭函式可以取代原有使用`var self = this`或`.bind(this)`的情況，它可以在詞彙上綁定`this`變數。這在特性篇this章的內容中有提到。但有時候情況會比較特殊，要視情況而定，而不是每種情況都一定可以用箭頭函式來取代。
+
+原本的範例:
+
+```js
+const obj = {a:1}
+
+function func(){
+  const that = this
+
+  setTimeout(
+    function(){
+      console.log(that)
+    }, 2000)
 }
 
-var p = new Person();
+func.call(obj) //Object {a: 1}
 ```
 
-上面的範例的`'base age: ' + this.age`是有數值的，但在setInterval裡面的`'new age: ' + this.age`就抓不到`this`變數。
+可以改用箭頭函式:
 
-以前的解決這個問題的作法，是會先用`self = this`，然後在setInterval改用`self`。
+```js
+const obj = {a:1}
 
-有了`肥箭頭`之後，用這個就可直接解決這個問題，其實只是把`function growUp()`改成`()=>`：
-
-```
-function Person() {
-    this.age = 0;
-    console.log('base age: ' + this.age);
-
-    setInterval(() => {
-        this.age++;
-        console.log('new age: ' + this.age);
-    }, 1000);
+function func(){
+  setTimeout( () => { console.log(this) }, 2000)
 }
 
-var p = new Person();
+func.call(obj)
 ```
 
-看一下Typescript編譯的結果，這是給ES5瀏覽器用的，其實和之前的舊解決方式是類似的：
+用bind方法的部份函式語法，也可以用箭頭函式來取代，範例出自[Arrow functions vs. bind()](http://www.2ality.com/2016/02/arrow-functions-vs-bind.html):
 
+```js
+function add(x, y) {
+       return x + y
+   }
+
+const plus1 = add.bind(undefined, 1)
 ```
-function Person() {
-    var _this = this;
-    this.age = 0;
-    console.log('base age: ' + this.age);
-    setInterval(function () {
-        _this.age++;
-        console.log('new age: ' + _this.age);
-    }, 1000);
+
+箭頭函式的寫法如下:
+
+```js
+const plus1 = y => add(1, y)
+```
+
+## 不可使用箭頭函式的情況
+
+以下這幾個範例都是與`this`值有關，所以如果你的箭頭函式裡有用到`this`值要特別小心。
+
+### 使用字面文字定義物件時
+
+箭頭函式會以定義當下的`this`值為`this`值，也就是window物件(或是在嚴格模式的undefined)，所以是存取不到物件中的`this.array`值的。
+
+```js
+const calculate = {
+  array: [1, 2, 3],
+  sum: () => {
+    return this.array.reduce((result, item) => result + item)
+  }
 }
-var p = new Person();
+
+//TypeError: Cannot read property 'array' of undefined
+calculate.sum()
 ```
 
-## 並非萬靈丹
+### 物件的prototype屬性中定義方法時
 
-肥箭頭函式用於解決一般的`this`問題是很好，但並不適用於全部的情況，尤其是在像jQuery、underscore之類有callback之類的函式時，有可能不是如預期般的結果。
+這種情況也是像上面的類似，箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)
+
+```js
+function MyCat(name) {
+  this.catName = name
+}
+
+MyCat.prototype.sayCatName = () => {
+  return this.catName
+}
+
+cat = new MyCat('Mew')
+// ReferenceError: cat is not defined
+cat.sayCatName()
+```
+
+### DOM事件處理的監聽者(事件處理函式)
+
+箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)。這裡的`this`值如果用一般函式的寫法，應該就是DOM元素本身。
+
+```js
+const button = document.getElementById('myButton')
+
+button.addEventListener('click', () => {
+  this.innerHTML = 'Clicked button'
+})
+//TypeError: Cannot set property 'innerHTML' of undefined
+```
+
+### 建構函式
+
+這會直接在用new運算符時拋出例外，根本不能用。
+
+```js
+const Message = (text) => {
+  this.text = text;
+}
+// Throws "TypeError: Message is not a constructor"
+const helloMessage = new Message('Hello World!');
+```
+
+## 其他的限制或陷阱
+
+- 函式物件中的call()、apply()、bind()三個方法，無法改變箭頭函式中的`this`值，也就是說無法"覆蓋"箭頭函式中的`this`值。
+- 箭頭函式無法用於建構式(constructor)，使用new會產生錯誤。(上面有範例)
+- 箭頭函式沒有一般函式有的隱藏arguments物件。
+- 箭頭函式不能當作generators使用，使用yield會產生錯誤。
+- 箭頭函式用於解決一般的`this`問題是很好，但並不適用於全部的情況，尤其是在像jQuery、underscore之類有callback(回調)之類的API時，有可能不是如預期般的結果。
 
 ## 參考資料
 
-- [Arrow This](http://blog.getify.com/arrow-this/)
 - [Arrow Functions](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#arrow-functions)
 - [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/content/docs/arrow-functions.html)
+- [ES6 Arrow Functions: The New Fat & Concise Syntax in JavaScript](https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/)
+- [When 'not' to use arrow functions](https://rainsoft.io/when-not-to-use-arrow-functions-in-javascript/)
