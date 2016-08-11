@@ -85,7 +85,7 @@ function func(){
 func.call(obj)
 ```
 
-用bind方法的部份函式語法，也可以用箭頭函式來取代，範例出自[Arrow functions vs. bind()](http://www.2ality.com/2016/02/arrow-functions-vs-bind.html):
+用`bind`方法的來回傳一個部份函式的語法，也可以用箭頭函式來取代，範例出自[Arrow functions vs. bind()](http://www.2ality.com/2016/02/arrow-functions-vs-bind.html):
 
 ```js
 function add(x, y) {
@@ -103,7 +103,7 @@ const plus1 = y => add(1, y)
 
 ## 不可使用箭頭函式的情況
 
-以下這幾個範例都是與`this`值有關，所以如果你的箭頭函式裡有用到`this`值要特別小心。
+以下這幾個範例都是與`this`值有關，所以如果你的箭頭函式裡有用到`this`值要特別小心。以下的範例都只能用一般的函式定義方式。
 
 ### 使用字面文字定義物件時
 
@@ -123,7 +123,7 @@ calculate.sum()
 
 ### 物件的prototype屬性中定義方法時
 
-這種情況也是像上面的類似，箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)
+這種情況也是像上面的類似，箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)。
 
 ```js
 function MyCat(name) {
@@ -141,7 +141,7 @@ cat.sayCatName()
 
 ### DOM事件處理的監聽者(事件處理函式)
 
-箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)。這裡的`this`值如果用一般函式的寫法，應該就是DOM元素本身。
+箭頭函式的`this`值，也就是window物件(或是在嚴格模式的undefined)。這裡的`this`值如果用一般函式定義的寫法，應該就是DOM元素本身，才是正確的值。
 
 ```js
 const button = document.getElementById('myButton')
@@ -154,7 +154,7 @@ button.addEventListener('click', () => {
 
 ### 建構函式
 
-這會直接在用new運算符時拋出例外，根本不能用。
+這會直接在用`new`運算符時拋出例外，根本不能用。
 
 ```js
 const Message = (text) => {
