@@ -166,11 +166,11 @@ const helloMessage = new Message('Hello World!');
 
 ## 其他限制或陷阱
 
-- 函式物件中的call()、apply()、bind()三個方法，無法改變箭頭函式中的`this`值，也就是說無法"覆蓋"箭頭函式中的`this`值。
-- 箭頭函式無法用於建構式(constructor)，使用new會產生錯誤。(上面有範例)
+- 函式物件中的`call`、`apply`、`bind`三個方法，無法"覆蓋"箭頭函式中的`this`值。
+- 箭頭函式無法用於建構式(constructor)，使用`new`會產生錯誤。(上面有範例)
 - 箭頭函式沒有一般函式有的隱藏arguments物件。
-- 箭頭函式不能當作generators使用，使用yield會產生錯誤。
-- 箭頭函式用於解決一般的`this`問題是很好，但並不適用於全部的情況，尤其是在像jQuery、underscore之類有callback(回調)之類的API時，有可能不是如預期般的結果。
+- 箭頭函式不能當作generators使用，使用`yield`會產生錯誤。
+- 箭頭函式用於解決一般的`this`問題是可以，但並不適用於全部的情況，尤其是在像jQuery、underscore之類有callback(回調)之類的API時，有可能不是如預期般的結果。
 
 ## 參考資料
 
