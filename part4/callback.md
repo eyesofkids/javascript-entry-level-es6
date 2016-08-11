@@ -390,5 +390,4 @@ function foo(err, callback) {
 
 - [By example: Continuation-passing style in JavaScript](http://matt.might.net/articles/by-example-continuation-passing-style/)
 - [Asynchronous programming and continuation-passing style in JavaScript](http://www.2ality.com/2012/06/continuation-passing-style.html)
-https://en.wikipedia.org/wiki/Continuation-passing_style
 - [Enforce Return After Callback](http://eslint.org/docs/rules/callback-return)
