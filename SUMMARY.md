@@ -29,7 +29,7 @@
    * [this](part4/this.md)
    * [Callback 回調](part4/callback.md)
    * [Closure 閉包](part4/closure.md)
-   * (未完成)事件處理
+   * [事件處理](part4/event.md)
    * [異步程式設計與事件迴圈](part4/prototype.md)
    * [箭頭函式](part4/arrow_function.md)
    * [Promise 承諾(電子書)](https://www.gitbook.com/book/eyesofkids/javascript-start-es6-promise/details)
