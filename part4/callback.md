@@ -75,7 +75,7 @@ JavaScript中會大量使用CPS風格，除了它本身可以使用這種風格�
 
 ## 異步回調函式
 
-並非所有的使用callbacks(回調)函式的API都是異步執行的，但CPS的確是一種可以確保異步回調執行流程的風格。在JavaScript中，除了DOM事件處理中的回調函式9成9都是異步執行的，只有少部份的API的的回調函式是異步執行的，要讓callbacks(回調)的執行轉變為異步，有以下幾種方式:
+並非所有的使用callbacks(回調)函式的API都是異步執行的，但CPS的確是一種可以確保異步回調執行流程的風格。在JavaScript中，除了DOM事件處理中的回調函式9成9都是異步執行的，API中使用的回調函式不一定是異步執行的，也有同步執行的例如`Array.forEach`，要讓開發者自訂的callbacks(回調)的執行轉變為異步，有以下幾種方式:
 
 - 使用計時器(timer)函式: `setTimeout`, `setInterval`
 - 特殊的函式: `nextTick`, `setImmediate`
