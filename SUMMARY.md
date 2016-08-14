@@ -32,7 +32,7 @@
    * [異步程式設計與事件迴圈](part4/eventloop.md)
    * [事件處理](part4/event.md)
    * [箭頭函式](part4/arrow_function.md)
-   * [Promise 承諾(電子書)](https://www.gitbook.com/book/eyesofkids/javascript-start-es6-promise/details)
+   * [Promise 承諾](part4/promise.md)
    * (未完成)AJAX與Fetch
    * (未完成)展開運算子與其餘參數
    * (未完成)解構賦值
