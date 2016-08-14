@@ -209,6 +209,18 @@ me.addEventListener('click',
      function(){ console.log('me clicked') }, false)
 ```
 
+index.html上的HTML程式碼如下，為了明顯標出每個區域，加了顏色與大小的樣式:
+
+```html
+<div id="taiwan" style="border:1px solid green; height:300px; width:300px">
+  Click Taiwan
+  <div id="taipei" style="border:1px solid blue; height:200px; width:200px">
+    Click Taipei
+    <div id="me" style="border:1px solid red; height:100px; width:100px">Click Me</div>
+  </div>
+</div>
+```
+
 `taiwan`是最外圍的DOM元素，然後裡面含有`taipei`層，最裡面是`me`這一層。以下是點按me層元素的結果:
 
 ```js
@@ -245,9 +257,11 @@ taiwan -> taipei (stop!)
 
 > 註: 事件捕捉(capturing)也有人稱它為事件滴流(trickling)，滴流是向下流動的意思。總之就是向上冒泡的反義詞。
 
-## this與event.target、event.currentTarget
+## `this`與`event.target`、`event.currentTarget`
 
-在W3C標準的定義中，`this`相等於`event.currentTarget`，也就是目前的事件目標對象，就像地震的傳播一樣，地震中心點先震完了，開始傳播到別的地區，`event.currentTarget`會跟著改變。，但不管是事件冒泡(bubbling)或事件捕捉(capturing)，`event.target`永遠指向觸發事件的那個元素，也就是地震的發生源。以下有一張事件冒泡(bubbling)的解說圖片，你可以看一下`event.target`與`this`(也就是`event.currentTarget`)的比較。(來自[這個網站](http://javascript.info/tutorial/bubbling-and-capturing#this-and-event-target)):
+在W3C標準的定義中，`this`會相等於`event.currentTarget`，也就是說`this`永遠會指向目前的事件目標對象，就像地震的傳播一樣，地震中心點先震完了，開始傳播到別的地區，`event.currentTarget`會跟著改變。事件監聽者(事件處理函式)是一個callback(回調)函式，但這個行為與一般的callback(回調)函式不同，一般的callback(回調)函式的`this`值會總是指向全域的window物件。
+
+但不管是事件冒泡(bubbling)或事件捕捉(capturing)，`event.target`永遠指向觸發事件的那個元素，也就是地震的發生源。以下有一張事件冒泡(bubbling)的解說圖片，你可以看一下`event.target`與`this`(也就是`event.currentTarget`)的比較。(來自[這個網站](http://javascript.info/tutorial/bubbling-and-capturing#this-and-event-target)):
 
 ![event-order-bubbling-target](http://javascript.info/files/tutorial/browser/events/event-order-bubbling-target.png)
 
