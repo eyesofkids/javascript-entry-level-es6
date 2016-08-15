@@ -33,8 +33,8 @@
    * [事件處理](part4/event.md)
    * [箭頭函式](part4/arrow_function.md)
    * [Promise 承諾](part4/promise.md)
+   * [展開運算符與其餘運算符](part4/rest_spread.md)
    * (未完成)AJAX與Fetch
-   * (未完成)展開運算子與其餘參數
    * (未完成)解構賦值
    * (未完成)JSON
    * (未完成)模組系統
