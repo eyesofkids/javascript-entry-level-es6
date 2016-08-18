@@ -6,7 +6,7 @@
 
 ## Expression(表達式)
 
-Expression(表達式)是以字面文字(Literals)、變數/常數名稱、值(運算元)、 運算符，或其他Expression(表達式)的組合體，最終能運算而計算產出(evaluates)一個值。
+Expression(表達式)是以字面文字(Literals)、變數/常數名稱、值(運算元)、 運算符，或其他Expression(表達式)的組合體，最終能運算而計算求出(evaluates)一個值。
 
 > Expression(表達式)代表任何合法的可計算產出值的程式碼單位
 
@@ -56,10 +56,10 @@ const x = 10
 
 //block statement
 {
-  statement_1;
-  statement_2;
+  statement_1
+  statement_2
   ...
-  statement_n;
+  statement_n
 }
 
 //function statment
@@ -94,10 +94,10 @@ Statements(語句)還可以依不同情況的使用進行分類，以下列出:
 
 ```js
 {
-  statement_1;
-  statement_2;
+  statement_1
+  statement_2
   ...
-  statement_n;
+  statement_n
 }
 ```
 
@@ -157,9 +157,9 @@ if (x > 100) {
 const x = 10
 
 //去除block statement
-if (x > 100) 
+if (x > 100)
     console.log('x > 100')
-else 
+else
     console.log('x < 50')
 
 //寫成一行
@@ -298,22 +298,22 @@ if (collection.length) {
 
 ```js
 // 壞寫法
-var isYes = answer === 1 ? true : false;
+var isYes = answer === 1 ? true : false
 
 // 好寫法
-var isYes = answer === 1;
+var isYes = answer === 1
 
 // 壞寫法
-var isNo = answer === 1 ? false : true;
+var isNo = answer === 1 ? false : true
 
 // 好寫法
-var isNo = answer !== 1;
+var isNo = answer !== 1
 
 // 壞寫法
-var foo = bar ? bar : 1;
+var foo = bar ? bar : 1
 
 // 好寫法
-var foo = bar || 1;
+var foo = bar || 1
 ```
 
 - (Airbnb 16.1) 具有多行語句的區塊，需要使用花括號(braces)({})框起來
@@ -321,22 +321,22 @@ var foo = bar || 1;
 ```js
 // 壞寫法
 if (test)
-  return false;
+  return false
 
 // 好寫法
-if (test) return false;
+if (test) return false
 
 // 好寫法
 if (test) {
-  return false;
+  return false
 }
 
 // 壞寫法
-function foo() { return false; }
+function foo() { return false }
 
 // 好寫法
 function bar() {
-  return false;
+  return false
 }
 ```
 
@@ -345,19 +345,19 @@ function bar() {
 ```js
 // 壞寫法
 if (test) {
-  thing1();
-  thing2();
+  thing1()
+  thing2()
 }
 else {
-  thing3();
+  thing3()
 }
 
 // 好寫法
 if (test) {
-  thing1();
-  thing2();
+  thing1()
+  thing2()
 } else {
-  thing3();
+  thing3()
 }
 ```
 
@@ -394,7 +394,7 @@ if (x > 100){
   console.log('x < 100 && x >50')
 } else {
   console.log('x < 50')
-} 
+}
 ```
 
 轉換為switch語句會變成像下面這樣。`switch(true)`代表當`case`中的比較運算需要為布林值的`true`時，才能滿足而執行其中包含的語句:
@@ -480,6 +480,8 @@ x is 50
 x is 10
 ```
 
+> 註: 這算是一個有陷阱的設計，在eslint的[no-fallthrough](http://eslint.org/docs/rules/no-fallthrough)規則頁面上可以看到更多的說明
+
 > 註: 所以不管如何，只要case語句中有包含其它需要執行的語句，一定需要以break作為結尾。但最後一個case或default語句可以不需要break。
 
 判斷時有多個`case`情況而執行同一個語句時，會使用像下面這個範例的語法，這個語法結構也是很常見的用法，例如:
@@ -490,7 +492,7 @@ const fruit = '芒果'
 switch (fruit)
 {
    case '芭樂':
-   case '香蕉': 
+   case '香蕉':
        console.log(fruit, '是四季都出產的水果')
        break
    case '西瓜':
@@ -510,14 +512,14 @@ switch (fruit)
 // 壞寫法
   switch (foo) {
     case 1:
-      let x = 1;
-      break;
+      let x = 1
+      break
     case 2:
-      const y = 2;
-      break;
+      const y = 2
+      break
     case 3:
       function f() {}
-      break;
+      break
     default:
       class C {}
   }
@@ -525,27 +527,27 @@ switch (fruit)
   // 好寫法
   switch (foo) {
     case 1: {
-      let x = 1;
-      break;
+      let x = 1
+      break
     }
     case 2: {
-      const y = 2;
-      break;
+      const y = 2
+      break
     }
     case 3: {
       function f() {}
-      break;
+      break
     }
     case 4:
-      bar();
-      break;
+      bar()
+      break
     default: {
       class C {}
     }
   }
 ```
 
-- (Airbnb 18.3) Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations.
+- (Airbnb 18.3) 在控制語句(if、while等等)的開頭花括號符號({)前面多空一格空白，函式的呼叫或定義則不需要。
 - `defalt`語句習慣固定是放在`switch`語句中的最後一段的位置，雖然它也不是一定要放在那裡。
 - `switch`語句的`case/default`語句，假使是位於最後一段(通常是`default`語句)，它的`break`在功能上並非必要，習慣加上只是為了讓程式碼更具一致性。
 
@@ -553,7 +555,7 @@ switch (fruit)
 
 Expression名詞，有"表情"、"表達"的意思，表情通常指的是人臉部的表情，這個字詞常常用在專業技術性的呈現或表達。至於像常會用的"表情符號"並不是這個字詞，英文字詞是使用emoticon或emoji。emoticon是emotion加上icon的新字詞，emotion則有"情感"、"情緒"的意思，近似於feeling的意思。Expression Emoticon這個組合字詞，通常是指"和人臉部表情有關的表情符號"，哭哭笑笑一類。不過表情符號的範圍比較廣，而且有很多是和動作、物品或標識有關。
 
-Statement名詞，有"聲明"、"語句"、"陳述"等意思，它也可以當作財務或商業上的"報表"、"結算表"來使用，看起來這個字詞是用在正經八百的文件內容或訊息上。另外，它的字根是state，這個字的動詞有"宣佈"、"聲明"、"規定"的意思，名詞還有"州"或"國家"的意思。
+Statement名詞，有"聲明"、"語句"、"陳述"等意思，它也可以當作財務或商業上的"報表"、"結算表"來使用，看起來這個字詞是用在正經八百的文件內容或訊息上。另外，它的字根是state，這個字的動詞有"宣佈"、"聲明"、"規定"的意思，名詞還有"州"或"國家"的意思，在電腦中最常拿來作"狀態"的名詞使用。
 
 Literal名詞，有"文字"、"字面"的意思，也就是"按照字面上的意思就是這樣"。在電腦專業領域通常用這個字詞來作為"固定值"(fixed value)的記號，例如String literal稱為字串字面量，Numeric literal稱為數字字面量，其他還有陣列、物件、函式的字面量。而相對於Literal(字面)的就是 變數/常數 記號。
 
@@ -564,4 +566,3 @@ Literal名詞，有"文字"、"字面"的意思，也就是"按照字面上的�
 另外，在ES6後還有另一個可以用在控制流程的結構 - Promise(承諾)，由於它需要更多基礎的知識，我們將會在"特性"單元中，用獨立的一個章節來說明它。
 
 ## 家庭作業
-

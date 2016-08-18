@@ -33,7 +33,7 @@ JavaScript中有6種原始的原始資料類型(Primitive Data Type)，分別是
 
 ## 鬆散資料類型
 
-JavaScript語言是一個鬆散資料類型(loosely typed)程式語言，或稱為動態的程式語言(dynamic language)。這代表你不需要為變數/常數在定義時，就規定要使用哪一種的資料類型。取而代之的是，只需要指定它的值，JavaScript會依照你所指定的值決定變數/常數的資料類型。
+JavaScript是一個鬆散資料類型(loosely typed)的程式語言，或稱之為"動態的程式語言(dynamic language)"。意思是說你不需要為變數/常數在定義時，就規定要使用哪一種的資料類型。取而代之的是，只需要指定它的值，JavaScript會依照你所指定的值決定變數/常數的資料類型。
 
 ```js
 let foo = 42    // foo現在是Number資料類型
@@ -52,6 +52,7 @@ console.log(typeof '') //'string'
 console.log(typeof (typeof 1)) //'string'
 console.log(typeof true) //'boolean'
 console.log(typeof null) //'object'
+console.log(typeof function(){}) //'function'
 ```
 
 > 註: 為何null資料類型的的`typeof`結果是'object'(物件)，而不是'null'呢？依據[ECMAScript的標準章節11.4.3條](http://www.ecma-international.org/ecma-262/5.1/#sec-11.4.3)對`typeof`的規定就是回傳'object'。不過目前有一些反對的聲音，認為null是原始資料類型，理應當回傳自己本身的資料類型。也有認為現在修改這個太晚了，一經改動的話會造成很多舊程式被影響。截至ES6標準這一規定仍然沒有更動。
@@ -60,7 +61,7 @@ console.log(typeof null) //'object'
 
 ## 數字(Number)
 
-JavaScript的數字(Number/難波/)類型是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/ 資料類型。但在JavaScript中數字類型沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。所以，對JavaScript來說，`1`與`1.0`指的是相同的類型與值。另外，數字可以使用算術運算符(+-\*/%)等來進行運算。以下是幾個宣告的範例:
+JavaScript的數字(Number/難波/)類型是64位元的浮點數，類似於其他程式語言(如Java)的`double`/打波/ 資料類型。但在JavaScript中數字類型沒有如其他程式語言中，有獨立的整數(int)或浮點數(float)類型。所以對JavaScript來說，`1`與`1.0`指的是相同的資料類型與值。另外，數字可以使用算術運算符(+-\*/%)等來進行運算。以下是幾個宣告的範例:
 
 ```js
 const intValue = 123
@@ -70,9 +71,9 @@ const negValue= -5.5
 
 > 註: 浮點數(float, FP)指的是帶有小數的數值，使用64位元儲存一個浮點數的稱為雙精度浮點數(double)
 
-> 註: 雖然對JavaScript語言來說，浮點數與整數都屬於同一種資料類型。但瀏覽器內部的JavaScript引擎並不是這樣，它其實會把這兩種不同的數字類型區分出來，大部情況整數的運算都會比浮點數快很多。
+> 註: 雖然對JavaScript來說，浮點數與整數都屬於同一種資料類型。但瀏覽器內部的JavaScript引擎中是有分別的，它在執行時其實會把這兩種不同的數字類型區分出來，整數的運算理論上都會比浮點數快很多。
 
-電腦中的程式語言在數學上的運算，總會有超出儲存的極限與無法處理的情況。JavaScript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況:
+電腦中的程式語言在數學上的運算，總會有超出儲存的極限與無法處理的情況。JavaScript使用三個特殊的記號，來代表在數字上處理的極限值或非數字的情況，但它們都屬於數字資料類型:
 
 - +Infinity/硬飛了踢/: 正無限值(相當於Infinity)
 - -Infinity: 負無限值
@@ -84,7 +85,7 @@ console.log(1/-0) //-Infinity，0有分+0與-0，這有點算陷阱
 console.log(Infinity - Infinity) //NaN
 ```
 
-數字的最大與最小值，可以使用`Number.MAX_VALUE`與`Number.MIN_VALUE`獲得到。
+在JavaScript中數字的最大與最小值，可以使用`Number.MAX_VALUE`與`Number.MIN_VALUE`獲得。
 
 ```js
 console.log(Number.MAX_VALUE)
@@ -116,7 +117,7 @@ const x = 0xFF
 const y = 0xAA33BC   
 ```
 
-在ES6之前，對於2或8進位並沒有內建的直接可定義方式，需要透過一個字串的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
+在ES6之前，對於2或8進位並沒有內建的直接可定義方式，需要透過一個字串轉數字(整數)的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
 
 ```js
 //8進位
@@ -131,7 +132,7 @@ const hexNumber = parseInt('0xFF', 16)
 
 > 註: `parseInt`雖然主要是傳入字串，轉換為整數。但也有傳入浮點數，轉換為整數的功能。
 
-如果是ES6之後的2、8進位定義格式的字串，需要用Number()方法才能轉為10進位，`parseInt`是無法正確轉換為整數的。範例如下:
+如果是ES6之後的2、8進位定義格式的字串，需要用`Number()`方法才能轉為10進位，`parseInt`是無法正確轉換為整數的。範例如下:
 
 ```js
 const binaryNumber = Number('0b11') // 3
@@ -141,7 +142,7 @@ const hexNumber = Number('0x11')  // 17
 
 > 註: 不論是2、8、16進位的數字，直接輸出到HTML碼中必定會自動轉成10進位的數字字串輸出。
 
-另一個情況是要將10進位數字以不同的進位基數(radix)轉為字串，通常是用在輸出時，這時要使用數字的方法 - `toString([radix])`。不過輸出後的字串格式不太像上面的格式，請見以下的範例:
+另一個情況是要將10進位數字以不同的進位基數(radix)轉為字串，通常是用在輸出時，這時要使用數字的方法 - `toString([radix])`。不過輸出後的字串格式與上面所說的格式不同，請見以下的範例:
 
 ```js
 const decimalNumber = 125
@@ -155,7 +156,7 @@ console.log(decimalNumber.toString(16)) //'7d'
 
 #### 字串轉浮點數
 
-對照上面的`parseInt`方法，字串也有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1。以下是範例:
+對照上面的字串轉數字(整數)的`parseInt`方法，字串中還有另一個`parseFloat(string)`可以轉換數字字串為浮點數，不過就像最上面所說明的，數字1.0相當於1，小數點後面如果是0都會自動消失不見。以下是範例:
 
 ```js
 const aNumber = parseFloat("10")  //10
@@ -168,7 +169,7 @@ const fNumber = parseFloat("He was 40")  //NaN
 
 ####  浮點數轉整數
 
-至於浮點數要轉換為整數，需要使用`Math`物件中的幾個方法來轉換，因為浮點數是要轉換為直接進位，還是四捨五入，還是直接去掉小數點，就看你需要的情況:
+至於浮點數要轉換為整數，需要使用`Math`物件中的幾個方法來轉換，因為浮點數要轉換有幾種不同的情況，看是要轉換為直接進位，還是四捨五入，還是直接捨去小數點，就看你的需要，以下為範例:
 
 ```js
 const floatValue = 10.55
@@ -181,9 +182,9 @@ const intValueThree = Math.round( floatValue ) //四捨五入值 11
 
 #### 整數轉浮點數
 
-再強調一下，對於JavaScript來說，數字就是數字類型，沒有什麼浮點數或整數的類型。如果你強烈想要3.00而不是3的數字，這在JavaScript中來說都是一樣的，直接轉出數字3.00依然會用3來顯示。
+再強調一下，對於JavaScript來說，數字就是數字類型，沒有什麼浮點數或整數的類型。3.00與3的數字在JavaScript中都是一樣的，直接轉出數字3.00依然會用3來顯示。
 
-唯一可能的情況，是希望調整輸出的格式。這時可以用數字物件中的`toFixed([digits])`方法來達成，不過它會回傳成字串，這已經不是數字了:
+唯一可能作的事情是調整輸出的格式，在輸出的時候都會變成字串類型。這時可以用數字物件中的`toFixed([digits])`方法來達成，以下為範例:
 
 ```js
 const myString = (3).toFixed(2) //string, 3.00
@@ -196,7 +197,7 @@ const numObjString = numObj.toFixed() //string, 123456
 
 #### 雙位元反相運算(Double Bitwise NOT)(\~\~)
 
-波浪符號(Tilde)(~)，在JavaScript語言中的運算符名稱為 位元反相運算(Bitwise NOT)，這是長得像波浪或毛毛蟲樣子的符號。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
+波浪符號(Tilde)(~)，在JavaScript語言中的運算符名稱為 "位元反相運算(Bitwise NOT)"，這是長得像波浪或毛毛蟲樣子的符號。根據它的功能文件說明，它會把"數字 x 轉換為 -(x + 1)"。也就是說像下面這樣的例子:
 
 ```js
 const a = ~10 //a is -11
@@ -208,7 +209,7 @@ const a = ~10 //a is -11
 const b = ~~10 //b is 10
 ```
 
-兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在"正"數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。但重點是它的效能在某些瀏覽器非常快。所以有很多程式設計師會使用這樣的寫法。
+兩條毛毛蟲看起來沒什麼用，只是回復原本的數字值而已。不過它的真正功用是轉換其他類型為整數，而且它有相當於`parseInt`的功能，但並不是百分之百相等。在"正"數值情況下，由浮點數轉為整數時，也相當於`Math.floor()`。但重點在於它的效能在某些瀏覽器非常快，所以有很多程式設計師會使用這樣的寫法。以下為範例:
 
 ```js
 console.log(~~'-1')  // -1
@@ -220,13 +221,13 @@ console.log(~~null) // 0
 console.log(~~undefined) // 0
 ```
 
-> 註: `parseInt`雖然主要是傳入字串，轉換為整數。但也有傳入浮點數，轉換為整數的功能。
+> 註: `parseInt`雖然主要是傳入字串轉換為整數。但它也有傳入浮點數，轉換為整數的功能。
 
 > 註: 位元操作符(Bitwise operators)是用於數字類型的位元運算使用的，本書並沒有特別提及，請參考[Bitwise operators(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators)。
 
 #### 正號(+)
 
-正號(Unary Plus)(+)也是一個一元的運算符，它也有轉換其他類型為數字的能力，不過它的功能接近`parseFloat`，但並非完全相等。負號(-)也有同樣的功用，但很少被使用。
+正號(Unary Plus)(+)也是一個一元的運算符，它也有轉換其他類型為數字的能力，不過它的功能接近`parseFloat`，但並非完全相等。負號(-)也有同樣的功用，但很少被使用。以下為範例:
 
 ```js
 console.log(+'2.3') //2.3
@@ -241,7 +242,7 @@ console.log(+null) //0
 
 ### 數字的精確問題
 
-在電腦中的數字並非是永無極限的，有最大的數值上限也有最小的下限。另一種情況是，當在進行運算時，有時候會出現不如你想像的結果，尤其是在浮點數的運算上，這些大部份與浮點數的精確度(precision)，有關以下是幾個典型的範例，這些都有點算是陷阱題目:
+在電腦中的數字並非是永無極限的，有最大的數值上限也有最小的下限。另一種情況是，當在進行運算時，有時候會出現不如你想像的結果，尤其是在浮點數的運算上，這些大部份與浮點數的精確度(precision)有關，以下是幾個典型的範例，這些已經算是陷阱題目:
 
 #### 範例一：
 
@@ -263,11 +264,11 @@ const y = 0.3 - 0.1
 
 > 註: 範例來自[Number, Math](http://JavaScript.info/tutorial/number-math#permissive-conversion-parseint-and-parsefloat)
 
-因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確出了問題。如果你需要處理浮點數的運算，可以測試與尋找合適的函式庫，單靠JavaScript語言本身可能會有所不足。例如[BigDecimal.js](https://github.com/dtrebbien/BigDecimal.js)或[decimal.js](https://github.com/MikeMcl/decimal.js/)
+因此，在處理浮點數時，要格外小心。如果你遇到了不可預期的結果，有可能是精確度出了問題。如果你需要處理浮點數的運算，可以尋找合適的函式庫，單靠JavaScript語言本身可能會有所不足。例如[BigDecimal.js](https://github.com/dtrebbien/BigDecimal.js)或[decimal.js](https://github.com/MikeMcl/decimal.js/)
 
 ## 字串(String)
 
-字串類型用於描述一般的字串值，是使用相當廣泛的值。JavaScript常與HTML搭配使用，而從HTML取得或輸入的值，以及輸出到HTML的值，都是字串值。在JavaScript中，字串是使用Unicode作為編碼(UCS-2/UTF-16)。以下為簡單的宣告範例：
+字串類型用於描述一般的字串值，是使用相當廣泛的值。JavaScript常與HTML搭配使用，而從HTML取得或輸入的值，以及輸出到HTML的值，都是字串類型的值。在JavaScript中，字串是使用Unicode作為編碼(UCS-2/UTF-16)。以下為簡單的宣告範例：
 
 ```js
 const aString = '你好'
@@ -276,13 +277,13 @@ const bString = 'Hello'
 
 對於JavaScript語言來說，使用雙引號標記("")與單引號標記('')來定義字串值，結果都是完全一樣的。在本書中，會推薦優先使用單引號標記('')。主要原因是JavaScript經常需要與HTML碼搭配使用，而HTML碼中也會使用引號來作為標記屬性值的定義，所以讓HTML屬性使用雙引號標記("")，而Javascript中的字串使用單引號標記('')，這變成一個約定俗成的撰寫習慣。
 
-> 註: 有些程式語言(例如PHP)，對於使用雙引號標記("")與單引號標記('')定義兩種字串值，其特性並不完全相同。在JavaScript語言中是完全相同。
+> 註: 有些程式語言(例如PHP)，對於使用雙引號標記("")與單引號標記('')定義兩種字串值，其特性並不完全相同。不過在JavaScript語言中是完全相同。
 
 > 註: 優先使用單引號標記('')只是推薦的撰寫習慣，但不見得每個JavaScript函式庫或框架都這樣作，像Google, Airbnb, Node, npm都是這麼作。而推薦優先使用雙引號標記("")，經常被提到的是jQuery函式庫。
 
 ### 字串與字元
 
-存取一個字串中的單一個字元，可以用類似陣列的存取方式，或是用`charAt()`方法。不過，JavaScript中並沒有所謂的字元(Character)類型，所以它依然是個字串(String)資料類型，只是只有一個字元而已。
+存取一個字串中的單一個字元，可以用類似陣列的存取方式，或是用`charAt()`方法。不過，JavaScript中並沒有所謂的字元(Character)類型，所以它依然是個字串(String)資料類型，只是只有一個字元而已。JavaScript中隱喻的將字串設計作為字元陣列，所以你可能會在字串類型中看到很多與陣列同名的方法，以及類似的使用情況，但這並不代表字串是一種真正的陣列物件。
 
 ```js
 const a = 'cat'.charAt(1)   //  'a'
@@ -306,7 +307,7 @@ const bString = 'This is a blackslash \\'
 
 ### 樣版字串(Template strings)
 
-ES6中新的字串寫法，稱為樣版字串(Template strings)，使用的是重音符號backtick(\`\`)來敘述字串。樣版字串可以多行、加入字串變數，以及其他延申的用法。範例如下：
+ES6中新的字串寫法，稱為樣版字串(Template strings)，使用的是重音符號backtick(\`\`)來敘述字串。樣版字串可以多行、加入字串變數，還有其他延伸的用法，這在一些新式的函式庫或框架中(例如Angular)被大量使用。範例如下：
 
 ```js
 const aString = `hello world`
@@ -331,7 +332,7 @@ console.log(`5 + 3= ${x + 3}`)
 
 ### 字串運算
 
-字串中有很多可以進行處理字串使用的函式與符號，以下以不同的處理情況來說明。不過，因為字串的搜尋、取代等等，需要配合正規表述式的樣式，在這裡的內容就先略過。
+字串中有很多可以進行處理字串使用的函式與符號，以下以不同的處理情況來說明。不過，因為字串的搜尋、取代等等，需要配合正規表述式的樣式，在這裡的內容就先不討論。
 
 #### 字串串接
 
@@ -373,7 +374,7 @@ console.log( 3 + 4 + '5' )
 console.log( 4 + 3 + '5' + 3 )
 ```
 
-所以，當你想要轉換某個類型為字串時，直接與一個空白字串作加號(+)運算，就會變成字串類型了。這也是當用來把其他類型轉為字串的最簡便的語法。當然這是因為每個原始的資料類型，都有內建的toString方法，用加號(+)也是類似的效果，不過這對複合型的資料類型是沒有用處的，例如陣列或物件。
+所以，當你想要轉換某個類型為字串時，直接與一個空白字串作加號(+)運算，就會變成字串類型了。這也是當用來把其他類型轉為字串的最簡便的語法。當然這是因為每個原始的資料類型，都有內建的toString方法，用加號(+)也是類似的效果，不過這對複合型的資料類型是沒有用的，例如陣列或物件。
 
 ```js
 const a = 6 + ''
@@ -384,7 +385,7 @@ const b = true + ''
 
 #### 字串長度
 
-`length`是字串的屬性值，可以讀取出字串目前的長度(字元個數):
+`length`是字串的屬性值，可以讀取出字串目前的長度(字元個數)，中文字每個字算1個長度:
 
 ```js
 const aString = 'Hello World!'
@@ -414,7 +415,7 @@ const bString = aString.trim()
 
 #### 子字串搜尋(索引值)
 
-`indexOf`可以回傳目前在字串中尋找的子字串的索引值，索引值的順序是從左邊由0開始計算，一直到字串的總長度減1。如果尋找不到該子字串，則會回傳`-1`。以下為範例:
+`indexOf`可以回傳目前在字串中尋找的子字串的索引值，索引值的順序是從左邊由0開始計算，一直到字串的總長度減1。如果尋找不到該子字串，則會回傳`-1`，它還有第二個傳入參數是可以指定開始尋找的索引值。以下為範例:
 
 ```js
 const aString = 'Apple Mongo Banana'
@@ -427,11 +428,11 @@ console.log( aString.indexOf('Honey') ) // -1
 
 #### 取出子字串
 
-JavaScript中對於子字串的取出，有三種方法可以使用`substr`、`substring`、`slice`。`substr`與`substring`這兩個英文字詞，在字義上是一模一樣，差異只在於簡寫。而`slice`的字義是"切割"的意思。另外，在陣列(Array)類型中，也有一個同名方法`slice`，這代表在JavaScript中對於子字串提取，與陣列(Array)中的`slice`方法類似。從上面的內容看來，字串資料類型，本身結構也類似由多個單字串組成的陣列。實際上slice方法，與substring十分類似，僅有一些行為上的差異。
+JavaScript中對於子字串的取出，有三種方法可以使用`substr`、`substring`、`slice`，其傳入參數並不相同。`substr`與`substring`這兩個英文字詞，在字義上是一模一樣，差異只在於簡寫。而`slice`的字義是"切割"的意思。另外，在陣列(Array)類型中，也有一個同名方法`slice`，這代表在JavaScript中對於子字串提取，與陣列(Array)中的`slice`方法類似。從上面的內容看來，字串資料類型，本身結構也類似由多個單字串組成的陣列。實際上`slice`方法，與`substring`十分類似，僅有一些行為上的差異。
 
 ##### substring
 
-substring是ECMAScript 5.1標準定義的方法，使用兩個參數，一個是要取出的子字串的開頭索引值，另一個是要取出的子字串的結束索引值，子字串將不會包含結束索引值的那個字元。如同之前`indexOf`中說明的，字串的索引值從字串的開頭是以`0`開始計算。
+`substring`是ECMAScript 5.1標準定義的方法，使用兩個參數，一個是要取出的子字串的開頭索引值，另一個是要取出的子字串的結束索引值，子字串將不會包含結束索引值的那個字元。如同之前`indexOf`中說明的，字串的索引值從字串的開頭是以`0`開始計算。
 
 > 語法: str.substring(start[, end])
 
@@ -514,7 +515,7 @@ console.log(aString.substr(0,8)) //01234567
 
 ## 布林(Boolean)
 
-布林(Boolean/布林/)或簡寫為 Bool/布爾/，它是由發明的科學家George Boole命名。是一種採用兩分法(黑白/陽陰/真假)的值，在JavaScript中以關鍵字`true`與`false`來作為布林的兩種可用值。布林值通常用於判斷式中，與比較運算符有關，常用於流程控制的結構中。 例如以下的範例:
+布林(Boolean/布林/)或簡寫為 Bool/布爾/，它是由發明的科學家George Boole命名。是一種使用絕對兩分法的值(黑白/陰陽/真假)，在JavaScript中以關鍵字`true`與`false`來作為布林的兩種可用的值。布林值通常用於判斷式中，與比較運算符有關，常用於流程控制的結構中。 例如以下的範例:
 
 ```js
 const a = true
@@ -528,7 +529,7 @@ console.log(b!=a) //true
 
 > 注意: 所有的JavaScript關鍵字(保留字)都是小寫的英文，像`true`的話，如果寫成True、 TRUE、TrUe，都是不對的寫法。
 
-布林(Boolean)直接在HTML格式中輸出時，true會輸出true字串，false輸出false字串。不過因為HTML輸入時(或是在HTML上抓取數值時)，有可能需要將true字串或false字串轉成布林值的情況，這時候要用像下面的轉換方式:
+布林(Boolean)直接在HTML格式中輸出時，`true`會輸出'true'字串，`false`輸出'false'字串。不過因為HTML輸入時(或是在HTML上抓取數值時)，有可能需要將'true'字串或'false'字串轉成布林值的情況，這時候要用像下面的轉換方式:
 
 ```js
 const aString = 'true'
@@ -540,7 +541,7 @@ console.log(aBool, typeof aBool) //true "boolean"
 console.log(bBool, typeof bBool) //false "boolean"
 ```
 
-驚嘆號(!)之前有說過是個邏輯運算符，名稱為"Logic NOT"，用在布林值上具有反轉(Inverted)的功能，雙驚嘆號(!!)就等於反轉再反轉，等於轉回原本的布林值:
+驚嘆號(!)之前有說過是個邏輯運算符，名稱為"Logic NOT"，用在布林值上具有反轉(Inverted)的功能，雙驚嘆號(!!)就等於"**反轉再反轉**"，等於轉回原本的布林值:
 
 ```js
 const aBool = true
@@ -550,8 +551,8 @@ const cBool = !!aBool //true
 
 雙驚嘆號(!!)並不單純是在這樣用的，它是為了要轉換一些可以形成布林值的情況值，列出如下:
 
-- false: 0, -0, null, false, NaN, undefined, 空白字串('')
-- true: 不是false的其他情況
+- `false`: 0, -0, null, false, NaN, undefined, 空白字串('')
+- `true`: 不是false的其他情況
 
 ```js
 const aBool = !!0 //false
@@ -563,7 +564,7 @@ const cBool = !!NaN //false
 
 ### falsy與短路求值
 
-Douglas Crockford是在JavaScript語言界相當知名的大師級人物，他主張使用"truthy"與"falsy"來描述資料類型的值，在邏輯的上下文如何被評價。也就是說，像上面說講的那些會轉換為布林值的false值的資料類型的值，通稱為"falsy"(字典裡是沒這個字詞，意思是"false的")，你可以把它當成是"false家族成員"。
+Douglas Crockford是在JavaScript界相當知名的大師級人物，他主張使用"**truthy**"與"**falsy**"來描述資料類型的值。也就是說，像上面說講的那些會轉換為布林值的false值的資料類型的值，通稱為"falsy"(字典裡是沒這個字詞，意思是"false的")，你可以把它當成是"false家族成員"。
 
 > "falsy"包含了0, -0, null, NaN, undefined, 空白字串('')，當然也一定包含了false值
 
@@ -579,13 +580,13 @@ console.log(true && false) //false
 console.log(true || false) //true
 ```
 
-只不過，因為JavaScript採用了與其他程式語言不同的邏輯運算的回傳值設計，我們把這兩個運算符稱為短路求值(Short-circuit)的運算符。實際上JavaScript中，在經過邏輯與(&&)與邏輯或(||)的運算後，它的回傳值是 - **最後的值(Last value)**，並不是像在常見的Java、C++、PHP程式語言中的是布林值。
+只不過，因為JavaScript採用了與其他程式語言不同的邏輯運算的回傳值設計，我們把這兩個運算符稱為"**短路求值(Short-circuit)**"的運算符。實際上JavaScript中，在經過邏輯與(&&)與邏輯或(||)的運算後，它的回傳值是 - **最後的值(Last value)**，並不是像在常見的Java、C++、PHP程式語言中的是布林值。
 
 因此，短路求值運算變成JavaScript中一種常被使用的特性，尤其是邏輯或(||)。那這與之前所說的"falsy"特性有何關係？關於邏輯或(||)運算在JavaScript語言中的可以這樣說明:
 
 > 邏輯或(Logical OR)(||)運算符在運算時，如果當第1個運算子為"falsy"時，則回傳第2個運算子。否則，將會回傳第1個運算子。
 
-也就是說像下面這樣的程式碼，基本上它的回傳值都不是布林值，而是有其他的資料類型的數值:
+也就是說像下面這樣的程式碼，基本上它的回傳值都不是布林值，而是其他的資料類型的值:
 
 ```js
 console.log('foo' || 'bar') // 'foo'
@@ -605,7 +606,7 @@ console.log(false || null || '' || 0 || NaN || 'Hello' || undefined) //'Hello'
 let a = value || 5 //5是預設值
 ```
 
-不過，這樣的指定預設值的寫法，並不是一種完全精確判斷value屬於哪一種資料類型與值的方式。只要當value是"falsy"時，變數a就會被指定為預設值5。所以在使用時還是需要特別注意，不然你會得到出乎意料的結果。
+不過，這樣的指定預設值的寫法，並不能完全精確判斷value屬於哪一種資料類型與值的方式，在某些情況下會出現意外，例如你可能認為`value=0`也是合法的值，但`value=0`時，a會被短路求值成5。所以，只要當value是"falsy"時，變數a就會被指定為預設值5。所以在使用時還是需要特別注意，不然你會得到出乎意料的結果。
 
 > 註: 每種程式語言都有短路求值的一些設計方式，請參考[Short-circuit evaluation](https://en.wikipedia.org/wiki/Short-circuit_evaluation)
 
@@ -677,6 +678,35 @@ console.log(b) //Error: b is not defined
 
 > 註: 要更深入理解請參考[Exploring the Eternal Abyss of Null and Undefined](http://ryanmorr.com/exploring-the-eternal-abyss-of-null-and-undefined/))
 
-## 小結
+## 家庭作業
 
-## 作業
+### 作業一
+
+[Math.random()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)方法是在JavaScript中產生亂數的一個方法。不論你要作野球拳遊戲，還是線上博杯拿大獎的應用程式，都可以用它來產生亂數。`Math.random`會隨時產生一個0到1的浮點數，它的基本用法如下:
+
+```js
+Math.floor(Math.random() * 6) + 1
+```
+
+- 上面的語句代表要產生1到6的整數亂數
+- 1代表開始數字
+- 6代表可能情況有6種
+
+所以如果是以最大值max，最小值min來寫這個語句，這也是產生整數的亂數，會像下面這樣:
+
+```js
+Math.floor(Math.random() * (max - min + 1)) + min
+```
+
+現在要利用這個產生亂數的方法，作一個線上抽獎的活動，客戶說有下面幾個獎品:
+
+1. 50吋液晶電視 1台
+2. PS4遊戲機 3台
+3. 手機行動充電器 10台
+4. 7-11的100元購物券 100張
+
+預計參與抽獎的人數有1萬人，要如何來寫這個程式的抽獎過程的應用程式？
+
+### 作業二
+
+有一家日本的房地產公司來台灣設立新的分公司，因為日本的房地產用的計算單位與台灣的不同，所以要委託你寫一個程式，這個程式是希望能轉換平方公尺為坪數。要如何來寫這個轉換的公式？
