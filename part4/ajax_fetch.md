@@ -1,4 +1,4 @@
-# AJAX與fetch
+# AJAX與Fetch API
 
 ## AJAX與XMLHttpRequest
 
