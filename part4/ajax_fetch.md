@@ -388,9 +388,9 @@ Fetch在瀏覽器的實作與XHR不同，裡面的功能內容與API也相差很
 
 本表主要參考自[AJAX/HTTP Library Comparison](http://andrewhfarmer.com/ajax-libraries/)。
 
-| 名稱 | 星  | 瀏覽器  | Node  | Promise  | 原生  | 最後更新 |
+| 名稱 | Github星  | 瀏覽器支援  | Node支援  | Promise  | 原生  | 最後發佈日 |
 |---|---|---|---|---|---|---|---|
-| [XMLHttpRequest]()  | -  | 全部  | - | - | 是  | - |  
+| [XMLHttpRequest]()  | -  | 是  | - | - | 是  | - |  
 | [Node HTTP]() | - | - | 是  | - | 是 | - |  
 | [fetch]() |  - | [部份](http://caniuse.com/#feat=fetch) | - | 是 | 是* | - |  
 | [window.fetch polyfill](https://github.com/github/fetch)  | 9269 | 全部 | - | 是 | - | 2016/5 |
