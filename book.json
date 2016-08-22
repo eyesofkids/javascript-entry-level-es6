@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "anchorjs", "disqus"
+        "anchorjs", "disqus", "thumbnail"
     ],
     "pluginsConfig": {
         "theme-default": {
@@ -8,6 +8,9 @@
         },
         "disqus": {
             "shortName": "js-start-book"
+        },
+        "thumbnail": {
+            "path": "https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/cover_small.jpg"
         }
     }
 }
