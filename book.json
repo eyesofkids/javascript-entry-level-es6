@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "anchorjs", "disqus", "thumbnail"
+        "anchorjs", "disqus", "thumbnail", "ga"
     ],
     "pluginsConfig": {
         "theme-default": {
@@ -11,6 +11,9 @@
         },
         "thumbnail": {
             "path": "https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/cover_small.jpg"
+        },
+        "ga": {
+            "token": "UA-273248-19"
         }
     }
 }
