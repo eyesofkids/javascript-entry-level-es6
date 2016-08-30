@@ -352,7 +352,7 @@ var users = [
 
 var names = users.map( ({ user }) => user )
 
-console.log(names);
+console.log(names)
 // => [ 'Name1', 'Name2', 'Name2', 'Name3' ]
 ```
 
