@@ -23,7 +23,7 @@
    * [陣列](part3/array.md)
    * [物件](part3/object.md)
    * [錯誤與例外處理](part3/error.md)
-   * (未完成)日期與時間
+   * [日期與時間](part3/datetime.md)
 * [特性](part4/README.md)
    * [原型基礎物件導向](part4/prototype.md)
    * [this](part4/this.md)
