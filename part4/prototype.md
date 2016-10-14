@@ -1,10 +1,12 @@
 # 原型基礎物件導向
 
-> If you don’t understand prototypes,
-you don’t understand JavaScript.
+> If you don’t understand prototypes, you don’t understand JavaScript.
+
 > 如果你沒搞懂原型，你不算真的懂JavaScript
 
-JavaScript本身就是原型為基礎的物件導向設計，至ES6標準後仍沒變動過。在物件的章節中所介紹的類別定義方式，只是原型物件導向語法的語法糖，骨子裡還是原型，並不是真正的以類型為基礎的物件導向設計。理解JavaScript的原型是很重要的，只是混亂得讓初學者難以理解。
+JavaScript本身就是原型為基礎的物件導向設計，至ES6標準制定後仍沒變動過。在物件的章節中所介紹的類別定義方式，只是原型物件導向語法的語法糖，骨子裡還是原型，並不是真正的以類型為基礎的物件導向設計。理解JavaScript的原型是很重要的，只是混亂得讓初學者難以理解。
+
+> 註: 語法糖(Syntactic sugar)指的是在程式語言中添加的某些語法，這些語法對語言本身的功能並沒有影響，但是能更方便使用，可以讓程式碼更加簡潔，有更高可讀性。另外類似的術語還有"語法糖精"與"語法鹽"。
 
 ## 函式 - 原型的起手式
 
@@ -25,7 +27,7 @@ console.log(Player.prototype.constructor === Player) //true
 
 ![Prototype Image 01](https://raw.githubusercontent.com/eyesofkids/javascript-entry-level-es6/master/assets/prototype_1.png)
 
-再來是`__proto__`這個內部屬性，它是一個存取器(accessor)屬性，意思是用getter和setter函式合成出來的屬性，我們可以用它來更加深入理解整個原型的樣貌。`__proto__`是每一個JavaScript中**物件**都有的內部屬性，代表該物件繼承而來的源頭，也就是指向該物件的原型(prototype)，它會用來連接出**原型鏈**，或可以理解為原型的繼承結構。
+再來是`__proto__`這個內部屬性，它是一個存取器(accessor)屬性，意思是用`getter`和`setter`函式合成出來的屬性，我們可以用它來更加深入理解整個原型的樣貌。`__proto__`是每一個JavaScript中**物件**都有的內部屬性，代表該物件繼承而來的源頭，也就是指向該物件的原型(prototype)，它會用來連接出**原型鏈**，或可以理解為原型的繼承結構。
 
 對於一個函式而言，它本身也是一個物件，它的原型就是最上層的`Function.prototype`，你可以說這是所有函式的發源地。所以`Player`函式本身的`__proto__`指向`Function Prototype`，這應該可以很容易理解。
 
@@ -51,7 +53,7 @@ console.log(Function.prototype.__proto__ === Object.prototype) //true
 
 > 註: `__proto__`注意是前後各有兩條下底線(\_)，不是只有一條而已。
 
-> 註: `__proto__`在一些舊的瀏覽器品牌(例如IE)中不能使用。雖然在ES6中已經正式納入標準之中，它是危險的內部屬性，也不要用在真正的應用程式上。
+> 註: `__proto__`在一些舊的瀏覽器品牌(例如IE)中不能使用。雖然在ES6中已經正式納入標準之中，它是個危險的內部屬性，也不要用在真正的應用程式上。
 
 當進一步使用Player函式作為建構函式，產生物件實體時，也就是使用`new`運算符的語句。像下面這樣簡單的例子，在建構函式中會用`this.name`的方式來指定傳入參數，`this`按照之前在物件篇的內容所說明，指向的是`new`運算符中指定的物件實體。
 
@@ -249,7 +251,7 @@ var Employee = (function() {
 
 new Employee(); //1
 new Employee(); //2
-new Employee();  //3  
+new Employee();  //3
 new Employee();  //4
 ```
 
