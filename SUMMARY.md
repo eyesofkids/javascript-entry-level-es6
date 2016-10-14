@@ -7,7 +7,7 @@
    * [問答與回饋](issue.md)
 * [介紹](part1/README.md)
    * [歷史](part1/history.md)
-   * (未完成)發展
+   * [發展](part1/future.md)
 * [工具](part2/README.md)
    * (未完成)工具
    * [ES6環境](part2/es6_env.md)

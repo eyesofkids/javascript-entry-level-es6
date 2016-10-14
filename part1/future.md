@@ -14,16 +14,20 @@ ES6也因為它是個真正的JavaScript標準，不管如何，很多大公司�
 
 ## 行動裝置
 
-要談到JavaScript語言用於行動裝置開發的發展，就不得不先說目前的兩大生態圈，一是以Facebook為首的ReactJS陣營，ReactJS只是一套視圖用的函式庫，但加入相當創新的想法，使用類似的語法可以使用React Native專案開發手機App，也是跨iOS與Android平台，React Native開發出來的App是Native(原生)的，它目前是新式的一種開發手機App方式。
+要談到JavaScript語言用於行動裝置開發的發展，就不得不先說目前的兩大生態圈，一是以Facebook為首的ReactJS陣營，ReactJS只是一套視圖用的函式庫，但加入相當創新的想法，使用類似的語法可以使用React Native專案開發手機App，是可以跨iOS與Android平台，React Native開發出來的App是Native(原生)的，它目前是新式的一種開發手機App方式。
 
 另一個是以Google為主的[AngularJS](https://angular.io/)陣營，它是一個完整的應用程式框架，另有一個專案是ionic，也是用來開發跨平台手機App，它還基於另一個專案[Apache Cordova](https://cordova.apache.org/)，這個專案原本就是使用HTML、CSS與JS來開發跨平台手機App的工具專案，這種開發出來的App稱為Hybrid(混合) Apps。
 
-當然，使用Hybrid(混合) Apps的開發工具或專案還有很多，例如jQuery Mobile、Framework 7、Sencha Touch等等，各自有各自使用的框架或函式庫。
+使用Hybrid(混合) Apps的開發工具或專案還有很多，例如jQuery Mobile、Framework 7、Sencha Touch等等，各自有各自使用的框架或函式庫。因為React Native的出現，有許多函式庫開始往原生的路線發展，目前原生的App大多使用[JavaScriptCore](https://developer.apple.com/reference/javascriptcore)作為執行的核心技術。
 
 ## 桌面應用程式
 
-Electron是由Github主導的桌面應用程式專案。它原本是用來要開發Atom程式碼撰寫工具使用的專案，後來成為獨立的專案，歷經兩年左右的開發。
+[Electron](http://electron.atom.io/)是由Github公司主導的，桌面應用程式開發框架的開放原始碼專案，基於Chromium與Node.js。它原本是用來要開發Atom程式碼編輯工具所使用的專案，原名稱為Atom Shell，後來成為獨立的專案，歷經兩年左右的開發，現在已有很多廠商使用它來開發桌面軟體。
+
+Electron除了也是使用JavaScript語言與HTML作為基礎程式語言，其優點主要是開發出來的桌面應用可以跨作業系統，能在Mac OS X、Windows、Linux上運行，開發的門檻會低很多。不過，缺點是應用程式的檔案大小會比原生的應用大很多，而且執行效能比原生的應用程式差，對電腦資源如CPU與記憶體的需求會較高，目前這些缺點仍然是需要改進的重點。
+
+此外也有類似的如[NW.js](http://nwjs.io/)專案，也是基於Chromium與Node.js的另一個開發平台。
 
 ## 伺服器端
 
-Node.js
+Node.js的核心是使用高速的V8 JavaScript引擎，可以運行於一般常見的各種作業系統平台之上。Node.js有效的利用JavaScript語言中非阻塞I/O的優勢，在相同的伺服器資源下，可以提供承載高並行的運算處理。從2009年發展至今，已經逐漸成熟，近年來也發展在多核或多執行緒執行環境下的解決方案。目前已有許多大型的網站採用這個執行環境，例如IBM、Microsoft、Yahoo!、Walmart、Groupon、SAP、LinkedIn、Rakuten、PayPal等等公司。
