@@ -435,12 +435,12 @@ obj.hasOwnProperty('key')
 const obj ={}
 obj.prop = 'exists'
 
-console.log(obj.hasOwnProperty('prop') )           
+console.log(obj.hasOwnProperty('prop') )
 console.log(obj.hasOwnProperty('toString'))       // false
 console.log(obj.hasOwnProperty('hasOwnProperty'))   // false
 
-console.log('prop' in obj)   
-console.log('toString' in obj)  
+console.log('prop' in obj)
+console.log('toString' in obj)
 console.log('hasOwnProperty' in obj)
 ```
 
@@ -527,19 +527,9 @@ Object.keys(obj).forEach(function(key){
 
 ## 風格指引
 
-- (Airbnb 22.3) Use PascalCase only when naming constructors or classes.
-- (Airbnb 9.4) It's okay to write a custom toString() method, just make sure it works successfully and causes no side effects.
-- 23.1 Accessor functions for properties are not required.
-- 23.3 If the property/method is a boolean, use isVal() or hasVal().
-- 23.2 Do not use JavaScript getters/setters as they cause unexpected side effects and are harder to test, maintain, and reason about. Instead, if you do make accessor functions, use getVal() and setVal('hello').
-
-
-## 英文解說
-
-function
-method
-
-properties
+- (Airbnb 22.3) 在命名類別或建構式時，使用大駝峰(PascalCase)命名方式。
+- (Airbnb 9.4) 撰寫自訂的toString()方法是很好的，但要確定它是可以運作，而且不會有副作用的。
+- (Airbnb 23.3) 如果 屬性/方法 是布林值，使用像isVal()或hasVal()的命名。
 
 ## 常見問題
 
@@ -564,5 +554,3 @@ properties
 沒有多重繼承，可以用合併多個物件產生新物件(合成 composition)、Mixins(混合)樣式，或是用ES6標準的Proxy物件，來達到類似多重繼承的需求。
 
 介面或抽象類別也沒有，因為這些就是類別為基礎的物件導向才會有的概念。不過，有模擬類似需求的語法或樣式。
-
-## 參考
