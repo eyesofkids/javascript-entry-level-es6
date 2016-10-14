@@ -2,7 +2,7 @@
 
 ## 函式(function)
 
-函式(function)是JavaScript的非常重要的特性。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用。
+函式(function)是JavaScript的非常重要的特性。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用，JavaScript在執行時的呼叫堆疊也是以函式作為單位。
 
 > 注意: 依據ECMAScript標準的定義，函式的`typeof`回傳值是'function'，而不是'object'。由此可見在標準中定義的'object'類型，只是針對"單純"的物件定義而言，具有函式呼叫(call)實作的物件，將會歸類為'function'，例如Date、String、Object這些內建物件，它們的`typeof`回傳值都是'function'。
 
@@ -39,14 +39,14 @@ const sum = function(a, b) {
 }
 ```
 
-函式的呼叫是使用函式名稱加上括號(())，以及在括號中傳入對應的參數，即可呼叫這個函式執行。例如:
+函式的呼叫是使用函式名稱加上括號(())，以及在括號中傳入對應的參數值，即可呼叫這個函式執行。例如:
 
 ```js
 const newValue = sum(100,0)
 console.log(sum(99, 1))
 ```
 
-ES6中有一種新式的函式語法，稱為"箭頭函式(Arrow Function)"，使用肥箭頭符號(Flat Arrow)(=>)，它是一種匿名函式的縮短寫法，只能用於有回傳值(return)的情況，下面這個寫法相當於上面的`sum`函式定義:
+ES6中有一種新式的函式語法，稱為"箭頭函式(Arrow Function)"，使用肥箭頭符號(Flat Arrow)(=>)，它是一種匿名函式的縮短寫法，下面這個寫法相當於上面的`sum`函式定義:
 
 ```js
 const sum = (a, b) =>  a + b
@@ -56,7 +56,7 @@ const sum = (a, b) =>  a + b
 
 > 註: `this`變數與物件有關，在物件的章節會說明。
 
-> 註: 箭頭函式無法使用下面章節內容裡的arguments物件
+> 註: 箭頭函式在"特性篇"有一篇專門的教學文章
 
 ### 傳入參數
 
@@ -84,8 +84,8 @@ const link = function (point, url) {
 
 //另一種設定的方式，typeof是回傳類型的字串值
 const link = function (point, url) {
-    let point = typeof point !== 'undefined' ? point : 10  
-    let url = typeof url !== 'undefined' ? url : 'http://google.com' 
+    let point = typeof point !== 'undefined' ? point : 10
+    let url = typeof url !== 'undefined' ? url : 'http://google.com'
     ...
 }
 ```
@@ -100,13 +100,13 @@ const link = function (point = 10, url = 'http://google.com') {
 }
 ```
 
-> 註: 只有`undefined`的情況下才會觸發預設值的指定
+> 註: 只有`undefined`的情況下才會觸發預設值的指定值。
 
-> 註: 有預設值的參數在習慣上都是擺在傳入參數列表的"後面"
+> 註: 有預設值的參數在習慣上都是擺在傳入參數列表的"後面"，雖然這並不是個強制的作法只是個習慣。
 
 #### 以函式作為傳入參數
 
-前面有說明函式可以作為變數/常數的指定值。不僅如此，在JavaScript中函式也可以作為實際傳入參數的值，將一個函式傳入到另一個函式中作為參數值，而且在函式的最後也可以回傳函式。這種函式的結構稱之為"高階函式(Higher-order function)"，是一種JavaScript程式語言的獨特特性，高階函式可以讓在函式的定義與使用上能有更多的彈性，它也延申出很多不同的應用結構。你可能常聽到JavaScript的callback(回呼、回調)結構，它就是高階函式的應用。
+前面有說明函式可以作為變數/常數的指定值。不僅如此，在JavaScript中函式也可以當作實際傳入參數的值，將一個函式傳入到另一個函式中作為參數值，而且在函式的最後也可以回傳函式。這種函式的結構稱之為"高階函式(Higher-order function)"，是一種JavaScript程式語言的獨特特性，高階函式可以讓在函式的定義與使用上能有更多的彈性，它也延申出很多不同的應用結構。你可能常聽到JavaScript的callback(回呼、回調)結構，它就是高階函式的應用。
 
 習慣上，因為函式在定義時，它的傳入參數並沒辦法限定資料類型，所以當要定義傳入參數將會是個函式時，通常會用fn或func作為傳入參數名稱，以此作為辦別。不過，當你在撰寫一個函式時，最好是要加上傳入值的，以及回傳值的註解說明。以下為一個簡單的範例:
 
@@ -130,11 +130,11 @@ console.log(addOneAndTwo(10, addOne)) //13
 function sum() {
   return arguments[0]+arguments[1]
 }
-  
+
 console.log(sum(1, 100))
 ```
 
-不過，如果你在函式的傳入參數定義名稱中，使用了`arguments`這個參數名稱，或是在函式中的語句裡，定義了一個名稱為`arguments`的自訂變數/常數名稱，這個隱藏的物件就會被覆蓋掉失效。總之它的行為相當怪異，有一說是說它一開始設計時就錯了，隱藏的物件對程式設計師來說，並不像隱藏版的密技，而是比較像是隱藏版的陷阱。
+不過，如果你在函式的傳入參數定義名稱中，使用了`arguments`這個參數名稱，或是在函式中的語句裡，定義了一個名稱為`arguments`的自訂變數/常數名稱，這個隱藏的物件就會被覆蓋掉。總之它的行為相當怪異，有一說是說它一開始設計時就錯了，隱藏的`arguments`物件對開發者來說，並不像隱藏版的密技，而是比較像是隱藏版的陷阱。
 
 > 註: 關於arguments的詳細介紹，可以參考[The JavaScript arguments object…and beyond](https://javascriptweblog.wordpress.com/2011/01/18/javascripts-arguments-object-and-beyond/)
 
@@ -169,7 +169,7 @@ function sum(...value) {
     let total = 0
     for (let i = 0 ; i< value.length; i++){
         total += value[i]
-    }   
+    }
     return total
 }
 
@@ -215,10 +215,10 @@ function addOuter(a, b) {
     function addInner() {
         return a + b
     }
- 
+
     return addInner()
 }
- 
+
 addOuter(1, 2) //3
 ```
 
@@ -238,7 +238,9 @@ addOuter(1, 2) //3
 
 內部函式可以獲取到外部函式所包含的環境值，例如外部函式的傳入參數、宣告變數等等。而內部函式又可以成為外部函式的回傳值，所以當內部函式接收到外部函式的環境值，又被回傳出去，內部函式間接變成一種可以讓函式對外曝露包含在函式內部環境值的溝通管道，這種結構稱之為"閉包(closure)"。
 
-內部函式在JavaScript中被廣泛的使用，因為它可以形成所謂"閉包"(closure)的結構。"閉包"(closure)在特性篇中有一個獨立的章節來說明。
+內部函式在JavaScript中被廣泛的使用，因為它可以形成所謂"閉包"(closure)的結構。
+
+> 註: "閉包"(closure)在特性篇中有一個獨立的章節來說明。
 
 ## 作用範圍(scope)
 
@@ -296,7 +298,7 @@ showMessage('Hello!', 'Eddy', function(param1, param2) {
 ```js
 function showMessage(greeting, name, callback) {
      console.log('you call showMessage')
-    
+
     if (callback && typeof(callback) === 'function') {
         callback(greeting, name)
     }
@@ -336,7 +338,7 @@ console.log(y)
 y = 5
 ```
 
-函式定義也會被提升，而且它變成可以先呼叫再定義，也就是整個函式定義內容都會被提升到程式碼最前面。不過這對程式設計師來說是合理的，很多程式語言中都可以這樣作:
+函式定義也會被提升，而且它變成可以先呼叫再定義，也就是整個函式定義內容都會被提升到程式碼最前面。不過這對程式設計師來說是合理的，在很多程式語言中都可以這樣作:
 
 ```js
 foo() //可執行
@@ -504,12 +506,12 @@ const sum = function(a, b) {
 }
 
 //箭頭函式
-const sum = (a, b) => a+b 
+const sum = (a, b) => a+b
 ```
 
 那麼，到底那一種是比較建議的方式？
 
-首先，由於第二種方式(函式表達式)完全可以被箭頭函式取代，箭頭函式又有另外的好處(綁定`this`), 所以它幾乎可以不用了。
+首先，由於第二種方式(函式表達式)完全可以被箭頭函式取代，箭頭函式又有另外的好處(綁定`this`)，所以它幾乎可以不用了。
 
 而第一種方式(函式定義)有一些特點，所以它會被用以下的情況:
 
@@ -517,7 +519,7 @@ const sum = (a, b) => a+b
 - 模組作用範圍
 - Object.prototype的屬性值
 
-函式定義的特點:
+函式定義的優點:
 
 - 函式定義名稱可以加入到執行期間的呼叫堆疊(call stack)中，除錯方便
 - 函式定義可以被提升，也就是可以在定義前呼叫(請參考上面的說明內容)
@@ -532,7 +534,7 @@ const sum = (a, b) => a+b
 
 ### IIFE語法結構還要用嗎？
 
-看情況而定。如果是有一些函式庫例如jQuery中的擴充方式會用到，這當然避免不了。如果是其他的已經採用新式的模組系統，當然是根本不需要，也儘量不要再使用。
+看情況而定。如果是有一些函式庫例如jQuery中的擴充方式會用到，這當然避免不了。如果是其他的已經採用新式的模組系統，可能是根本不需要。
 
 ## 英文解說
 
@@ -544,4 +546,3 @@ Context/康鐵斯/ ，中文有"上下文"、"環境"的意思。在程式語言
 - Scope指的是在程式碼函式中的變數的可使用範圍。而Context指的是`this`，也就是指向擁有(或執行)目前執行的程式碼的物件。
 
 ## 家庭作業
-
