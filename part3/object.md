@@ -65,7 +65,7 @@ console.log(bObject.thirdKey) //yes
 
 > 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，也是不需要使用它。
 
-> 註: 物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，不過這大概只會在成員(方法與屬性)不確定的函式定義裡面才使用，其它情況不要使用，以免與陣列的成員存取語法混淆。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
+> 註: 物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，有一些情況下會這樣使用，例如在成員(方法與屬性)還未確定的函式裡面使用，一般情況下為避免與陣列的成員存取語法混淆，所以很少用。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
 
 ```js
 const luke = {
