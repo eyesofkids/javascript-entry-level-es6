@@ -27,13 +27,13 @@ for (let count = 0 ; count < 10 ; count++){
 
 整個程式碼的解說是:
 
-- 在迴圈一開始時，將count變數指定為數字0
-- 定義當`count < 10`時，才能滿足執行for中區塊語句的條件。也就是只有在`count < 10`時才能執行for中區塊語句。
-- 每次當執行for中區塊的語句執行後，即會執行`count++`
+- 在迴圈一開始時，將`count`變數指定為數字`0`
+- 定義當`count < 10`時，才能滿足執行`for`中區塊語句的條件。也就是只有在`count < 10`時才能執行for中區塊語句。
+- 每次當執行`for`中區塊的語句執行後，即會執行`count++`
 
 ### 可自訂的表達式們
 
-`for`語句中共有三個表達式，分別代表迴圈進行時的設定與功用，這三個表達式的運用方式就可以視不同的應用情況而調整。所有的三個表達式都是可自訂的，也就是可有可無。下面這個看起來怪異的for語句是一個無窮迴圈，用了你的瀏覽器會當掉:
+`for`語句中共有三個表達式，分別代表迴圈進行時的設定與功用，這三個表達式的運用方式就可以視不同的應用情況而調整。所有的三個表達式都是可自訂的，也是可有可無。下面這個看起來怪異的`for`語句是一個無窮迴圈，執行這個語句會讓你的瀏覽器當掉:
 
 ```js
 //錯誤示範
@@ -42,7 +42,7 @@ for (;;){
 }
 ```
 
-> 註: 用`for(;;)`這樣的語法，基本上失去for語句原本的意義，完全不建議使用。
+> 註: 用`for(;;)`這樣的語法，基本上失去`for`語句原本的意義，完全不建議使用。
 
 > 注意: 迴圈是一個破壞性相當高的語句，如果不小心很容易造成整個程式錯誤或當掉。
 
@@ -54,7 +54,7 @@ for (let count = 0, total = 10 ; count < 10 ; count++){
 }
 ```
 
-> 註: 初始值同樣也可以定義在迴圈之外，但它的使用範圍會擴大到迴圈之外。
+> 註: 初始值同樣也可以定義在迴圈之外，但它的作用範圍會擴大到迴圈之外。
 
 第二個表達式是用於判斷情況(condition)，也就是每次執行迴圈中區塊的語句前，都會來測試(檢查)一下，是不是滿足其中的條件，如果滿足的話(布林`true`值)，就執行迴圈中區塊的語句，不滿足的話(布林`false`值)，就跳出迴圈語句或略過它。這個表達式就是會造成無止盡的或重覆執行次數不正確的原兇，所以它是這三個表達式中要特別注意的一個。
 
@@ -66,7 +66,7 @@ for (let count = 0, total = 10 ; count < 10 && total < 20 ; count++){
 }
 ```
 
-第三個表達式是用於更新的，常常被稱為遞增表達式(incrementExpression)。不過它也不只用在遞增(increment)，應該說用在"更動(update)"或許會比較恰當，每次一執行完迴圈內部語句就會執行一次的表達式。它的作用相當於在迴圈內的區塊中的最後面加上這個語句，例如下面這個for迴圈和最上面一開始的範例的結果是一樣的:
+第三個表達式是用於更新的，常被稱為遞增表達式(incrementExpression)。不過它也不只用在遞增(increment)，應該說用在"更動(update)"或許會比較恰當，每次一執行完迴圈內部語句就會執行一次的表達式。它的作用相當於在迴圈內的區塊中的最後面加上這個語句，例如下面這個for迴圈和最上面一開始的範例的結果是一樣的:
 
 ```js
 for (let count = 0 ; count < 10 ;){
@@ -75,7 +75,7 @@ for (let count = 0 ; count < 10 ;){
 }
 ```
 
-多個表達式也是可以的，同樣也是用逗點分隔(,)不同的表達式:
+多個表達式也是可以的，同樣也是用逗點(,)分隔不同的表達式:
 
 ```js
 for (let count = 0, total = 30 ; count < 10 && total > 20 ; count++, total--){
@@ -102,9 +102,9 @@ console.log(y) //2
 
 #### 小結
 
-實際上這三個表達式並沒有限定只能用哪些表達式，只要是合法的表達式都可以，只不過第二個表達式會作判斷情況，也就是轉換為布林值，這一點要注意的。有些程式設計師會喜歡用這個特性撰寫感覺很高超的語法，只是讓別人更難看懂在寫什麼而已，我完全不建議這種語法。
+實際上這三個表達式並沒有限定只能用哪些表達式，只要是合法的表達式都可以，只不過第二個表達式會作判斷情況，也就是轉換為布林值，這一點要注意的。有些程式設計師喜歡用這個特性寫出感覺很高超的語法，只是讓別人更難看懂在寫什麼而已，我完全不認同這種寫法，如何提供高閱讀性的程式碼才是最好的寫法。
 
-至於每個表達式執行的情況，第一個表達式(初始化值)只會在讀取到for語句時執行一次，之後不會再執行。第二個表達式(判斷情況)會在讀取到for語句時執行一次，之後每次重覆開始時都會執行一次。第三個表達式會在有滿足條條下，執行到for語句區塊內部的語句的最後才執行。
+至於每個表達式執行的情況，第一個表達式(初始化值)只會在讀取到`for`語句時執行一次，之後不會再執行。第二個表達式(判斷情況)會在讀取到`for`語句時執行一次，之後每次重覆開始時都會執行一次。第三個表達式會在有滿足條件下，執行到`for`語句區塊內部的語句的最後才執行。
 
 ### 多重迴圈
 
@@ -218,7 +218,7 @@ let count = 0
 
 while (count < 10) {
     console.log(count)
-    //count的值為6時將會跳出廻圈  
+    //count的值為6時將會跳出廻圈
     if(count === 6) break
     count++
 }
@@ -245,9 +245,9 @@ while (count < 10) {
 
 ## 風格指引
 
-- 18.3 18.3 Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations. eslint: keyword-spacing jscs: requireSpaceAfterKeywords
-- 7.3 Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears. eslint: no-loop-func
-- (Google) for-in loops are often incorrectly used to loop over the elements in an Array.Always use normal for loops when using arrays.
+- (Airbnb 18.3) 在控制語句的圓括號開頭(()前放一個空格(if, while等等)。在函式呼叫與定義的函式名稱與傳入參數之間就不需要空格。eslint: keyword-spacing jscs: requireSpaceAfterKeywords
+- (Airbnb 7.3) 絕對不要在非函式區塊中宣告一個函式(if, while等等)。改用指定一個函式給一個變數。瀏覽器可以允許你可以這樣作，但是壞消息是，不同瀏覽器可能會轉譯為不同的結果。eslint: no-loop-func
+- (Google) for-in迴圈經常會錯誤地被使用在陣列上。當使用陣列時，總是使用一般的for迴圈。
 - 在迴圈中區塊語句裡，定義變數/常數是個壞習慣，應該是要定義在迴圈外面或for迴圈的第一個表達式中。
 
 ```js
