@@ -1,6 +1,11 @@
-#工具
+# 工具
 
 本書使用的工具與其他週邊軟體/服務如下。
+
+## 快速開始樣版文件
+
+- [webpack-es6-startkit](https://github.com/eyesofkids/webpack-es6-startkit)
+
 
 ## 快速學習與使用時候
 
@@ -19,6 +24,6 @@ JS Bin中的JSHint設定值
 
 ## 本機電腦端使用時
 
-- 程式碼撰寫軟體是Atom 
+- 程式碼撰寫軟體是Atom
 - 環境Node.js與npm(待補)
 - 樣版文件(待補)

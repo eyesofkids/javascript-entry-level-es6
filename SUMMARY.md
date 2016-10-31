@@ -9,7 +9,7 @@
    * [歷史](part1/history.md)
    * [發展](part1/future.md)
 * [工具](part2/README.md)
-   * (未完成)工具
+   * [工具](part2/tools.md)
    * [ES6環境](part2/es6_env.md)
    * [輸出](part2/output.md)
    * (未完成)除錯
