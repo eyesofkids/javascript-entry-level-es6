@@ -6,10 +6,12 @@
 
 - [webpack-es6-startkit](https://github.com/eyesofkids/webpack-es6-startkit)
 
+需先安裝[Node.js](https://nodejs.org/en/)，安裝目前最新的LTS版本即可。
+
 
 ## 快速學習與使用時候
 
-- 測試與觀看結果的瀏覽器是Google Chrome
+- 測試、除錯與觀看結果的瀏覽器是Google Chrome。
 - 學習用的網路線上撰寫平台是[JS Bin](http://jsbin.com/)
 
 JS Bin中的JSHint設定值
@@ -20,10 +22,3 @@ JS Bin中的JSHint設定值
   "asi": "false"
 }
 ```
-
-
-## 本機電腦端使用時
-
-- 程式碼撰寫軟體是Atom
-- 環境Node.js與npm(待補)
-- 樣版文件(待補)
