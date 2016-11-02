@@ -2,9 +2,9 @@
 
 ## 函式(function)
 
-函式(function)是JavaScript的非常重要的特性。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用，JavaScript在執行時的呼叫堆疊也是以函式作為單位。
+函式(function/訪遜/)是JavaScript的非常重要的特性。函式用於程式碼的重覆使用、資訊的隱藏與複合(composition)。我們經常會把一整組的功能程式碼，寫成一個函式，之後可以重覆再使用，JavaScript在執行時的呼叫堆疊也是以函式作為單位。
 
-> 注意: 依據ECMAScript標準的定義，函式的`typeof`回傳值是'function'，而不是'object'。由此可見在標準中定義的'object'類型，只是針對"單純"的物件定義而言，具有函式呼叫(call)實作的物件，將會歸類為'function'，例如Date、String、Object這些內建物件，它們的`typeof`回傳值都是'function'。
+> 注意: 依據ECMAScript標準的定義，函式的`typeof`回傳值是'function'，而不是'object'。由此可見在標準中定義的'object'類型，只是針對"單純"的物件定義而言，但具有函式呼叫(call)實作的物件，將會歸類為'function'，因為它們的內部都有建構函式的特性，例如Date、String、Object這些內建物件，它們的`typeof`回傳值都是'function'。`typeof`的回傳值只能作為參考用，有很多複雜的應用下並沒有辦法辦別得出是什麼樣的物件。
 
 > 註: 那麼要如何精確又有效的檢查一個變數/常數是否為函式類型？請參考這篇[How can I check if a javascript variable is function type?](http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type)的問答。
 
@@ -202,7 +202,7 @@ function(a, b, ...theArgs) {
 其餘參數與`arguments`物件的幾個簡單比較:
 
 - 其餘參數只是代表其餘的傳入參數值，而`arguments`物件是代表所有傳入的參數值
-- 其餘參數的傳入值是一個標準陣列，可以使用所有的陣列方法。而`arguments`物件是"偽"陣列的物件類型，不能使用陣列的大部份方法
+- 其餘參數的傳入值是一個標準陣列，可以使用所有的陣列方法。而`arguments`物件是"偽"陣列的物件類型，不能使用陣列的大部份內建方法
 - 其餘參數需要定義才能使用，`arguments`物件不需要定義即可使用，它是隱藏機制
 
 ### 內部(巢狀)函式
@@ -348,7 +348,7 @@ function foo(){
 }
 ```
 
-不過使用匿名函式的指定方式(函式表達式)，就不會有整個函式定義都被提升的情況，只有變數名稱被提升:
+不過使用匿名函式的指定值方式(函式表達式, FE)，就不會有整個函式定義都被提升的情況，只有變數名稱被提升，這與上面的變數宣告方式的結果一致:
 
 ```js
 foo() //錯誤: foo is not a function
@@ -492,7 +492,7 @@ function returnEarly( foo ) {
 
 ### 函式要用那種定義方式比較好？
 
-由上面的內容來說，有三種定義函式的方式，一種是傳統的函式定義，另一種是用常數或變數指定匿名函式的方式(函式表達式)，最後一種是新式的箭頭函式，這三種的範例如下:
+由上面的內容來說，有三種定義函式的方式，一種是傳統的函式定義(FD)，另一種是用常數或變數指定匿名函式的方式(函式表達式, FE)，最後一種是新式的箭頭函式，這三種的範例如下:
 
 ```js
 //函式定義
