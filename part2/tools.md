@@ -8,6 +8,10 @@
 
 需先安裝[Node.js](https://nodejs.org/en/)，安裝目前最新的LTS版本即可。
 
+## Flow檢查工具
+
+- [Flow靜態資料類型的檢查工具，10分鐘快速入門](http://eddychang.me/blog/javascript/90-flowtype-10-min.html)
+
 
 ## 快速學習與使用時候
 
