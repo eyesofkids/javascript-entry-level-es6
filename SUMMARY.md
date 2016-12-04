@@ -36,8 +36,8 @@
    * [展開運算符與其餘運算符](part4/rest_spread.md)
    * [AJAX與Fetch API](part4/ajax_fetch.md)
    * [解構賦值](part4/destructuring.md)
+   * [模組系統](part4/module_system.md)
    * (未完成)JSON
-   * (未完成)模組系統
 * [附錄](part5/README.md)
    * (未完成)程式語言符號
    * (未完成)關鍵字與保留字

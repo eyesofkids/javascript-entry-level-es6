@@ -1,5 +1,7 @@
 # 模組系統
 
+> 注意: 本文尚在撰寫中，有一些部份還未完成。
+
 JavaScript語言長期以來並未內建支援模組系統，社群上發展了兩套知名的模組系統，但它們並不相容:
 
 - CommonJS Modules
@@ -163,12 +165,10 @@ import { $ as jQuery } from 'jquery';   // import a named export to a different 
 import * as crypto from 'crypto';    // import an entire module instance object
 ```
 
-http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281
+## 參考資料
 
-http://exploringjs.com/es6/ch_modules.html
-
-http://www.2ality.com/2014/09/es6-modules-final.html
-
-https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modularjavascript
-
-https://www.nczonline.net/blog/2016/04/es6-module-loading-more-complicated-than-you-think/
+- http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281
+- http://exploringjs.com/es6/ch_modules.html
+- http://www.2ality.com/2014/09/es6-modules-final.html
+- https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modularjavascript
+- https://www.nczonline.net/blog/2016/04/es6-module-loading-more-complicated-than-you-think/
