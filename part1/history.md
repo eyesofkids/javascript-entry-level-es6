@@ -26,7 +26,7 @@ Google Chrome瀏覽器中的V8 JavaScript 引擎，大幅度的提升了JavaScri
 
 ## 規格版本
 
-ECMAScript是Javascript規格標準的制定組織，以下是各版本的發行日期，但標準發行並不代表在各個瀏覽器品牌中，即可使用其中的功能規格，還需等待各瀏覽器品牌廠商進行實作。
+ECMAScript是Javascript規格標準，以下是各版本的發行日期，但標準發行並不代表在各個瀏覽器品牌中，即可使用其中的功能規格，還需等待各瀏覽器品牌廠商進行實作。
 
 - ECMAScript 6 (ES6) 發行於2015年中，為目前最新的官方版本
 - ECMAScript 5 (ES5) 發行於2009年底
