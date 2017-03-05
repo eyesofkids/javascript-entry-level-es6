@@ -114,7 +114,7 @@ const m = 0o644 // 420
 
 ```js
 const x = 0xFF
-const y = 0xAA33BC   
+const y = 0xAA33BC
 ```
 
 在ES6之前，對於2或8進位並沒有內建的直接可定義方式，需要透過一個字串轉數字(整數)的方法`parseInt(string, radix)`，將一個2進位或8進位的數字字串轉換，這方式也可以轉換16進位的數字字串:
@@ -190,8 +190,10 @@ const intValueThree = Math.round( floatValue ) //四捨五入值 11
 const myString = (3).toFixed(2) //string, 3.00
 
 const numObj = 12345.6789
-const numObjString = numObj.toFixed() //string, 123456
+const numObjString = numObj.toFixed() //string, 12346
 ```
+
+> 註: toFixed方法如果不加傳入參數，會視為0位小數點，而且會作四捨五入。
 
 ### 其他類型轉換為整數
 
@@ -399,7 +401,7 @@ const bStringLength = bString.length //2
 `toUpperCase`與`toLowerCase`兩個方法，用於將英文字串轉變為大寫或小寫:
 
 ```js
-const aString = 'Hello World!'       
+const aString = 'Hello World!'
 const bString = aString.toUpperCase()
 const cString = aString.toLowerCase()
 ```
