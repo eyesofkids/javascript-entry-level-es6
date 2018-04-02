@@ -236,7 +236,7 @@ const op1 = new Option('color', 'red')
 op1.color = 'yellow'
 
 const op2 = new Option('action', 'run')
-op2.color = 'yellow'
+op2.color = 'yellow' //no color prop
 ```
 
 > 註: 所以getter不會有傳入參數，setter只會有一個傳入參數。

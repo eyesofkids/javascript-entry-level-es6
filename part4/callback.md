@@ -33,7 +33,7 @@ function func(x, cb) {
 ```js
 function getAvatar(user){
    //...一些程式碼
-   return avatar
+   return user
 }
 
 function display(avatar){
@@ -41,7 +41,7 @@ function display(avatar){
 }
 
 const avatar = getAvatar('eddy')
-display(avatar)   
+display(avatar)
 ```
 
 用CPS風格的寫法，像下面這樣:
@@ -49,7 +49,7 @@ display(avatar)
 ```js
 function getAvatar(user, cb){
   //...一些程式碼
-   cb(avatar)
+   cb(user)
 }
 
 function display(avatar){
@@ -381,7 +381,7 @@ function foo(err, callback) {
     if (err) {
         callback(err);
     } else {
-        callback();    
+        callback();
     }
 }
 ```
