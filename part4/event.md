@@ -45,7 +45,7 @@ Event物件方法:
 
 Event介面只是個基礎物件，從它擴充了使用於特定情況的事件，包含對特定事件的資訊，詳見以下的階層圖(出自[這個網站](https://www.w3.org/TR/uievents/)):
 
-![event-inheritance](https://www.w3.org/TR/uievents/images/event-inheritance.svg)
+![event-inheritance](https://www.w3.org/TR/2011/WD-DOM-Level-3-Events-20110531/images/event-inheritance.png)
 
 依照事件階層圖中，UIEvent與CustomEvent(自訂事件)繼承自Event物件，從UIEvent中又擴充出各種不同的對應事件，例如針對滑鼠與鍵盤的，FocusEvent是設計給Focus(鎖定、聚焦)事件使用的，CompositionEvent是針對輸入文字事件使用的，這是因為輸入文字並不一定單純使用鍵盤(用輸入法輸入或用語音輸入等等)，它與鍵盤事件也可以相互輔助。而WheelEvent是有滾輪的設備使用的。
 

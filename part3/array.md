@@ -671,8 +671,9 @@ console.log(fruitArray)
 //["大香蕉", "芒果", "蘋果", "香蕉", "小香蕉", "櫻桃"]
 
 fruitArray.sort(function(a, b){
-  //按筆劃從小到大排序
-  return a.localeCompare(b, 'zh-Hans-TW-u-co-stroke')
+  // 按筆劃從小到大排序
+  // 與zh-Hant-TW相同
+  return a.localeCompare(b, 'zh-Hant-TW-u-co-stroke')
 })
 
 console.log(fruitArray)

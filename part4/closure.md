@@ -91,7 +91,7 @@ func('b')
 
 用簡單的圖來表示上面的例子，內部(Inner)函式被回傳後，除了自己本身的程式碼外，也會捕抓到了環境的變數值，記住了執行當時的環境：
 
-![Closure](http://eddychang.me/images/closure.png)
+![Closure](http://oldblog.eddychang.me/images/closure.png)
 
 ### 為什麼可以這麼作？
 
