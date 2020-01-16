@@ -765,7 +765,7 @@ function purePop(aArray){
   return aArray.slice(0, -1)     
 }
 
-const purePush = aArray => aArray.slice(0, -1)
+const purePop = aArray => aArray.slice(0, -1)
 ```
 
 ### shift
