@@ -375,7 +375,7 @@ const newObj = Object.assign(aObj, bObj)
 console.log(newObj) //{a: 2, b: "Test", c: "boo"}
 ```
 
-> 註: undefined`在拷貝過程中會被無視。
+> 註: `undefined`在拷貝過程中會被無視。
 
 > 註: 如果需要額外的擴充(Polyfill)可以參考[Object.assign(MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)，或是[ES2015 Object.assign() ponyfill](https://github.com/sindresorhus/object-assign)
 
