@@ -90,7 +90,7 @@ JavaScript中並沒有關聯陣列(Associative Array)這種資料結構，關聯
 雖然並沒有規定說，你只能在同一個陣列中使用單一種資料類型。但是，在陣列中儲存多種不同的資料類型，絕對是個壞主意。在包含有大量資料的陣列中會嚴重影響處理效能，例如像下面這樣的例子。如果是多種資料類型，還不如先直接都用字串類型，需要取值時再作轉換。
 
 ```js
-var arr = [1, '1', undefined, true, 'true']
+const arr = [1, '1', undefined, true, 'true']
 ```
 
 另外你需要注意的是，雖然數字類型在JavaScript中並沒有分浮點數或整數，但實際上在瀏覽器的JavaScript引擎(例如Google Chrome的V8引擎)中，整數的陣列的處理效率高於浮點數的陣列，可見其實引擎可以分辦各種不同的資料類型，然後會作最有效的儲存與運算，比你想像中聰明得很。
@@ -538,11 +538,11 @@ const monthString = 'Jan,Feb,Mar,Apr,May'
 const monthArray1 = monthString.split(',') //["Jan", "Feb", "Mar", "Apr", "May"]
 
 //以下為錯誤示範
-const monthArray2 = monthString.split()  //["Jan,Feb,Mar,Apr,May"]
+const monthArray2 = monthString.split()  //"Jan,Feb,Mar,Apr,May"
 const monthArray3 = monthString.split('') //["J", "a", "n", ",", "F", "e", "b", ",", "M", "a", "r", ",", "A", "p", "r", ",", "M", "a", "y"]
 ```
 
-#### 迭代
+#### 迭代(Iteration)
 
 > forEach為副作用方法
 
@@ -580,6 +580,16 @@ forEach雖然可以與for迴圈語句相互替代，但他們兩個設計原理�
 - forEach被呼叫時，`this`會傳遞到回調函式(callback)裡
 - forEach方法具有副作用
 
+那為什麼要使用迭代方法forEach，而不直接用for語法？原因有幾個：
+
+- 可閱讀性提高
+- 安全性提高，減少潛在錯誤發生：變數(常數)作用域必位於callback內
+
+for迴圈的優點：
+
+- 效能最佳
+- 可作流程控制與中斷
+
 ##### map(映射)
 
 map(映射)反而是比較常被使用的迭代方法，由於它並不會改變輸入陣列(呼叫map的陣列)的成員值，所以並不會產生副作用，現在有很多程式設計師改用它來作為陣列迭代的首選使用方法。
@@ -587,8 +597,8 @@ map(映射)反而是比較常被使用的迭代方法，由於它並不會改變
 map(映射)一樣會使用回調函式(callback)與三個參數，而且行為與forEach幾乎一模一樣，不同的地方是它會回傳一個新的陣列，也因為它可以回傳新陣列，所以map(映射)可以用於串接(chain)語法結構。
 
 ```js
-var aArray = [1, 2, 3, 4];
-var newArray = aArray.map(function (value, index, array) {
+const aArray = [1, 2, 3, 4];
+const newArray = aArray.map(function (value, index, array) {
     return value + 100
 })
 
