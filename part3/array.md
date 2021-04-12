@@ -180,7 +180,7 @@ const newArray = [].concat(oldArray)
 ```js
 const newArray = []
 
-for (let i = 0, len = oldArray.length ; i < len ; i++){
+for (let i = 0 ; i < oldArray.length ; i++){
     newArray[i] = oldArray[i]
 }
 ```
@@ -481,7 +481,7 @@ if (bIndex > -1) {
 ```js
 const dictionary = ['x', 'b', 'x', 'x', 'b']
 
-for (let i = 0, len = dictionary.length; i < len; i++){
+for (let i = 0; i < dictionary.length; i++){
 
     if (dictionary[i] === 'x'){
         dictionary.splice(i, 1, 'c')
@@ -512,7 +512,7 @@ if (xIndex > -1) {
 ```js
 const dictionary = ['x', 'b', 'x', 'x', 'b']
 
-for (let i = 0, len = dictionary.length; i < len; i++){
+for (let i = 0; i < dictionary.length; i++){
 
     if (dictionary[i] === 'x'){
         dictionary.splice(i, 1)
@@ -554,7 +554,7 @@ const monthArray3 = monthString.split('') //["J", "a", "n", ",", "F", "e", "b", 
 
 ```js
 const aArray = [1, 2, 3, 4, 5]
-for (let i = 0, len = aArray.length; i < len; i++) {
+for (let i = 0; i < aArray.length; i++) {
     // 對陣列元素作某些事
     console.log(i, aArray[i])
 }
