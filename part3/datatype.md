@@ -688,6 +688,8 @@ console.log(b) //Error: b is not defined
 
 > 註: 要更深入理解請參考[Exploring the Eternal Abyss of Null and Undefined](http://ryanmorr.com/exploring-the-eternal-abyss-of-null-and-undefined/))
 
+> 供作參考：JS大師Douglas Crockford認為[null是個壞主意](https://hamednourhani.gitbooks.io/typescript-book/content/docs/tips/null.html)，當然他指的是JS中的null設計。TypeScript團隊[不建議使用null](https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines#null-and-undefined)。
+
 ## 家庭作業
 
 ### 作業一
