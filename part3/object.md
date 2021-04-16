@@ -65,7 +65,7 @@ console.log(bObject.thirdKey) //yes
 
 > 註: 相較於陣列中不建議使用的`new Array()`語法，也有`new Object()`的語法，也是不需要使用它。
 
-> 註: 物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，有一些情況下會這樣使用，例如在成員(方法與屬性)還未確定的函式裡面使用，一般情況下為避免與陣列的成員存取語法混淆，所以很少用。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
+物件內的成員(方法與屬性)的存取，的確也可以使用像`obj[prop]`的語法，有一些情況下會這樣使用，例如在成員(方法與屬性)還未確定的函式裡面使用，一般情況下為避免與陣列的成員存取語法混淆，所以很少用。以下範例來自[這裡](https://github.com/airbnb/javascript#properties):
 
 ```js
 const luke = {
@@ -78,6 +78,18 @@ function getProp(prop) {
 }
 
 const isJedi = getProp('jedi');
+```
+
+這種以字串加上方括號([])的存取方式，目的經常是使用在不確定屬性名稱的函式中，或是從`html`中得到的字串值作為屬性名稱的作法，要注意的是必需為*字串值*，例如以下兩種方式存取屬性的值是相同的：
+
+```js
+const luke = {
+  jedi: true,
+  age: 28,
+}
+
+luke.age
+luke['age']
 ```
 
 上面這種定義物件的字面文字方式，這是一種單例(singleton)的物件，也就是在程式碼中只能有唯一一個物件實體，就是你定義的這個物件。當你需要產生同樣內容的多個物件時，那又該怎麼作？那就是要用另一種定義方式了。
