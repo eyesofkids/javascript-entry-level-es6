@@ -357,6 +357,19 @@ console.log(eddy instanceof Student) //true
 
 在陣列的章節中，有談到淺拷貝(shallow copy)與深拷貝(deep copy)的概念，同樣在物件資料結構中，在拷貝時也同樣會有這個問題。陣列基本上也是一種特殊的物件資料結構，其實這個概念應該是由物件為主的發展出來的。詳細的內容就不多說，以下只針對淺拷貝的部份說明:
 
+#### 展開運算子(...)
+
+> 推薦方式
+
+在ECMAScript 2018(ES9)標準定案之後的新特性，一樣可以使用展開運算子作物件的淺拷貝，為目前推薦的方式之一，範例如下：
+
+```js
+//物件拷貝
+const objClone = { ...obj }
+```
+
+> 註：原始草案的內容在此供作參考：[Object Rest/Spread Properties for ECMAScript](https://github.com/tc39/proposal-object-rest-spread)
+
 #### Object.assign()
 
 > 推薦方式
