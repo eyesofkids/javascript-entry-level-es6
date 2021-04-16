@@ -620,29 +620,37 @@ let a = value || 5 //5是預設值
 
 比較其它程式語言的設計，一般都只有一種類似Null的空值原始資料類型。而JavaScript多了一種未定義(undefined)類型，會這樣設計是有它的歷史背景與原因。
 
-> 空(null)就是空值，代表的是沒有值的意思。
+依照ECMAScript的定義`null`的說明([出處](https://tc39.es/ecma262/#sec-null-value))：
+
+> primitive value that represents the intentional absence of any object value
+
+> 中譯：一種原始值，代表刻意缺少(有意短少)的任何物件值
+
+依照ECMAScript的定義`undefined`的說明([出處](https://tc39.es/ecma262/#sec-undefined-value))：
+
+> primitive value used when a variable has not been assigned a value
+
+> 中譯：一種原始值，當變數沒有被指定一個值時而使用
+
+簡單說明上述的想法：
+
+> 空(null)就是空值，代表的是沒有值的意思。(有隱含不存在的物件值，並非空白物件)
 
 > 未定義(undefined)即是尚未被定義類型，或也有可能是根本不存在，完全不知道是什麼。
 
-以下是最簡單的一種解釋說法:
+> 註：有一說是兩個空值的設計，是自一開始就是錯誤設計(由創作者Brendan Eich說明過)，但JavaScript長久以來一向有向下版本的相容性設計，所以現今不可能更動這個設計。
+
+### 轉為數字(或進行算術運算)
+
+這兩者在進行轉換為數字或算術運算時的行為也不太一樣。
 
 ```js
-let name //當name從來未被定義完成，不知道其類型
++null // 0
++undefined // NaN
+
+1 - null //1
+1 - undefined //NaN
 ```
-
-你問JavaScript: name是什麼?
-
-JavaScript回答: name? 從來沒聽過? 我不知道你在說什麼。
-
-```js
-let name = null //name沒有值
-```
-
-你問JavaScript: name是什麼?
-
-JavaScript回答: 我不知道
-
-以上的回答來自: [Why is null an object and what's the difference between null and undefined?](http://stackoverflow.com/questions/801032/why-is-null-an-object-and-whats-the-difference-between-null-and-undefined)
 
 ### 比較運算
 
@@ -656,7 +664,7 @@ null === undefined // false
 而在`typeof`運算符回傳的類型時，目前null的類型仍然是`object`，而不是`null`。關於這一點要特別注意，有人或許它是個bug，但目前仍然沒有更動。
 
 ```js
-typeof null        // object (bug in ECMAScript, should be null)
+typeof null        // object
 typeof undefined   // undefined
 ```
 
